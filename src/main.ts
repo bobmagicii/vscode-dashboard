@@ -10,6 +10,8 @@ export function activate(context: vscode.ExtensionContext) {
 	dash.open();
 
 	Util.println('Dashboard Activated.');
+	dash.sendv('hey');
+
 	return;
 };
 

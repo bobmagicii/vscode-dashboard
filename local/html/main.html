@@ -3,13 +3,24 @@
 <head>
 	<title>Dashboard</title>
 	<meta charset="utf-8" />
+	<meta http-equiv="content-security-policy" content="default-src 'none'; style-src %CSPSOURCE%; img-src %CSPSOURCE%; script-src %CSPSOURCE%;" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="%CSSROOT%/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="%CSSROOT%/main.css" />
+	<script type="module" src="%JSROOT%/main.js"></script>
 </head>
 <body>
 
-	hello there
+	<div id="Toolbar">
+		<div class="row">
+			<div class="col">Dashboard</div>
+			<div class="col-auto">
+				<button class="btn btn-dark">+ Group</button>
+			</div>
+		</div>
+	</div>
+	<div id="Dashboard"></div>
+	<div id="MessageDebug" class="d-none mt-4"></div>
 
 </body>
 </html>

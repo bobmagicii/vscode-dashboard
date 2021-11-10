@@ -1,4 +1,20 @@
+body.vscode-light { color: var(--vscode-foreground); }
+body.vscode-high-contrast { color: var(--vscode-foreground); }
+body.vscode-dark { color: var(--vscode-foreground); }
+
 body {
 	background: transparent;
 	color: var(--vscode-foreground);
+
+	--BorderRGB: 255, 255, 255;
+}
+
+#MessageDebug {
+	border: 1px solid rgba(var(--BorderRGB), 0.5);
+	border-radius: 6px;
+	color: rgba(var(--BorderRGB), 0.5);
+	font-family: 'Consolas', monospace;
+	font-size: 0.8em;
+	padding: 6px;
+	white-space: pre;
 }
