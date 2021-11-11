@@ -28,10 +28,15 @@
 					"default": false,
 					"description": "Enable debugging output."
 				},
+				"projectsyeah.title": {
+					"type": "string",
+					"default": "Projects",
+					"description": "Dashboard Title"
+				},
 				"projectsyeah.database": {
 					"type": "object",
 					"default": [],
-					"description": "List of Project Groups"
+					"description": "List of projects stored in your user config so that it can be synced."
 				}
 			}
 		}

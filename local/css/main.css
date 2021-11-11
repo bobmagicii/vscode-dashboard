@@ -13,11 +13,13 @@ body.vscode-dark {
 	--DashboardToolbarText: #ffffff;
 
 	--DashboardProjectBg: #00000044;
+	--DashboardProjectBgHover: #00000066;
 	--DashboardProjectText: #ffffff;
+
+	--DashboardOverlayBg: #000000aa;
 
 	--DashboardDebugBg: #00000044;
 	--DashboardDebugText: #ffffff;
-	--DashboardOpacity: 0.25;
 }
 
 /*******************************************************************************
@@ -26,7 +28,6 @@ body.vscode-dark {
 #Debug {
 	background: var(--DashboardDebugBg);
 	color: var(--DashboardDebugText);
-	opacity: var(--DashboardOpacity);
 
 	border-radius: 6px;
 	font-size: 0.8em;
@@ -67,11 +68,18 @@ body.vscode-dark {
 }
 
 .ProjectEntry {
-	background: var(--DashboardProjectBg);
+	background-color: var(--DashboardProjectBg);
 
 	border-radius: 6px;
+	cursor: pointer;
 	display: flex;
 	padding: 16px;
+	transition: background-color 250ms;
+}
+
+.ProjectEntry:hover {
+	background-color: var(--DashboardProjectBgHover);
+	transition: background-color 250ms;
 }
 
 .ProjectEntry .Icon {
@@ -101,17 +109,23 @@ body.vscode-dark {
 	white-space: nowrap;
 }
 
-.ProjectEntry .Open {
-	align-self: center;
-}
-
-.ProjectEntry button {
+.ProjectEntry .Config {
 	color: var(--DashboardProjectText);
 
 	background: transparent;
 	border: 0px;
 	border-radius: 6px;
 	padding: 4px;
+}
+
+#Overlay {
+	background: var(--DashboardOverlayBg);
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100vh;
+	width: 100vw;
 }
 
 /*******************************************************************************

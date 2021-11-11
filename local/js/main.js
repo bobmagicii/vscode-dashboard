@@ -21,10 +21,13 @@ class Dashboard {
 
 	elMain = null;
 	elMessageDebug = null;
+	elToolbar = null;
 	elProjectBox = null;
+	body = null;
+	template = null;
 
 	database = null;
-	template = null;
+	title = 'Dashboard';
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
@@ -40,8 +43,10 @@ class Dashboard {
 	init() {
 
 		this.vscode = acquireVsCodeApi();
+		this.body = jQuery('body');
 		this.elMain = jQuery('#Dashboard')
 		this.elProjectBox = jQuery('#ProjectBox');
+		this.elToolbar = jQuery('#Toolbar');
 		this.elMessageDebug = jQuery('#Debug');
 		this.setDebug(this.debug);
 
@@ -67,6 +72,14 @@ class Dashboard {
 
 		if(!this.database)
 		return;
+
+		////////
+
+		(this.body)
+		.find('.DashboardTitle')
+		.text(this.title);
+
+		////////
 
 		this.elProjectBox.empty();
 
@@ -140,6 +153,7 @@ class Dashboard {
 	onHeySup(msg) {
 
 		this.database = msg.data.database;
+		this.title = msg.data.title;
 		this.setDebug(msg.data.debug);
 
 		if(this.debug)

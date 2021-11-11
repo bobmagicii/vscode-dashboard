@@ -176,15 +176,24 @@ class Dashboard {
 
 		switch(msg.type) {
 			case 'hey':
-				this.sendv('sup', {
-					debug: this.conf.debug,
-					database: this.conf.database
-				});
+				this.onHey(msg);
 			break;
 		}
 
 		return;
 	};
+
+	public onHey(msg: Message):
+	void {
+
+		this.sendv('sup', {
+			debug: this.conf.debug,
+			database: this.conf.database,
+			title: this.conf.title
+		});
+
+		return;
+	}
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////

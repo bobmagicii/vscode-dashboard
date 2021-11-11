@@ -4,19 +4,21 @@ import Util from './util';
 
 class Config {
 
+	title: string;
 	debug: boolean;
 	database: Array<ProjectEntry>;
 
 	constructor() {
 
+		this.title = 'Projects';
 		this.debug = false;
 		this.database = [];
 
-		this.fillFromEditor();
+		this.fillFromEditorConfig();
 		return;
 	};
 
-	public fillFromEditor():
+	public fillFromEditorConfig():
 	void {
 
 		let data = (
