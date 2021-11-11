@@ -4,17 +4,138 @@ body.vscode-dark { color: var(--vscode-foreground); }
 
 body {
 	background: transparent;
-	color: var(--vscode-foreground);
-
-	--BorderRGB: 255, 255, 255;
+	margin: 0px;
+	padding: 16px;
 }
 
-#MessageDebug {
-	border: 1px solid rgba(var(--BorderRGB), 0.5);
+body.vscode-dark {
+	--DashboardToolbarBg: #00000066;
+	--DashboardToolbarText: #ffffff;
+
+	--DashboardProjectBg: #00000044;
+	--DashboardProjectText: #ffffff;
+
+	--DashboardDebugBg: #00000044;
+	--DashboardDebugText: #ffffff;
+	--DashboardOpacity: 0.25;
+}
+
+/*******************************************************************************
+*******************************************************************************/
+
+#Debug {
+	background: var(--DashboardDebugBg);
+	color: var(--DashboardDebugText);
+	opacity: var(--DashboardOpacity);
+
 	border-radius: 6px;
-	color: rgba(var(--BorderRGB), 0.5);
+	font-size: 0.8em;
+	padding: 16px;
+}
+
+#Debug > h4 {
+	color: var(--DashboardDebugText);
+
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1em;
+	margin: 0px;
+	padding: 0px 0px 4px 0px;
+	text-transform: uppercase;
+}
+
+#Debug > code {
+	color: var(--DashboardDebugText);
+
+	display: block;
 	font-family: 'Consolas', monospace;
 	font-size: 0.8em;
-	padding: 6px;
+	padding: 8px 0px 10px 0px;
 	white-space: pre;
+}
+
+/*******************************************************************************
+*******************************************************************************/
+
+#Toolbar {
+	background: var(--DashboardToolbarBg);
+	color: var(--DashboardToolbarText);
+
+	border-radius: 6px;
+	margin-bottom: 1.5rem;
+	padding: 12px 16px;
+}
+
+.ProjectEntry {
+	background: var(--DashboardProjectBg);
+
+	border-radius: 6px;
+	display: flex;
+	padding: 16px;
+}
+
+.ProjectEntry .Icon {
+	font-size: 3em;
+	margin-right: 16px;
+}
+
+.ProjectEntry .Info {
+	min-width: 0px;
+	flex-grow: 1;
+}
+
+.ProjectEntry .Name {
+	font-weight: normal;
+	font-size: 1.25em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ProjectEntry .Path {
+	font-weight: light;
+	font-size: 0.8em;
+	opacity: 0.50;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ProjectEntry .Open {
+	align-self: center;
+}
+
+.ProjectEntry button {
+	color: var(--DashboardProjectText);
+
+	background: transparent;
+	border: 0px;
+	border-radius: 6px;
+	padding: 4px;
+}
+
+/*******************************************************************************
+** codicon hacks **************************************************************/
+
+.codicon[class*='codicon-'] {
+	display: block;
+	justify-content: center;
+	font-size: inherit;
+}
+
+.codicon[class*='codicon-']::before {
+	display: block;
+}
+
+/*******************************************************************************
+** bootstrap hacks ************************************************************/
+
+.row.tight {
+	margin-left: -0.25rem;
+	margin-right: -0.25rem;
+}
+
+.row.tight > [class^="col"] {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
 }

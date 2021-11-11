@@ -3,7 +3,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 import Util from './util';
+import Config from './config';
 import Message from './message';
+import ProjectEntry from './project-entry';
 
 class Dashboard {
 
@@ -13,12 +15,16 @@ class Dashboard {
 	private ext:
 	vscode.ExtensionContext;
 
+	private conf:
+	Config;
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
 	public constructor(ext: vscode.ExtensionContext) {
 
 		this.ext = ext;
+		this.conf = new Config;
 
 		return;
 	};
@@ -94,12 +100,18 @@ class Dashboard {
 	public generateContent():
 	string {
 
+		if(!this.panel)
+		return '';
+
 		let filename = path.join(
 			this.ext.extensionPath, 'local', 'html', 'main.html'
 		);
 
 		let tokens = {
-			"%CSPSOURCE%": this.panel?.webview.cspSource,
+			"%CSPSOURCE%": this.panel.webview.cspSource,
+			"%NMROOT%": this.localToWebpath(path.join(
+				this.ext.extensionPath, 'node_modules'
+			)),
 			"%CSSROOT%": this.localToWebpath(path.join(
 				this.ext.extensionPath, 'local', 'css'
 			)),
@@ -130,6 +142,15 @@ class Dashboard {
 		return content;
 	};
 
+	public generateDatabase():
+	object {
+
+
+		return {
+
+		};
+	};
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
@@ -142,13 +163,25 @@ class Dashboard {
 		return;
 	};
 
-	public onMessage(input: object):
+	public onMessage(input: {type: string, data: object}):
 	void {
 
+		let msg = Message.FromObject(input);
+
+		if(this.conf.debug)
 		Util.println(
-			JSON.stringify(input),
+			JSON.stringify(msg),
 			'Dashboard::onMessage'
 		);
+
+		switch(msg.type) {
+			case 'hey':
+				this.sendv('sup', {
+					debug: this.conf.debug,
+					database: this.conf.database
+				});
+			break;
+		}
 
 		return;
 	};

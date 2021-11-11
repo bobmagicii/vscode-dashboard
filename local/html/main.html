@@ -3,24 +3,53 @@
 <head>
 	<title>Dashboard</title>
 	<meta charset="utf-8" />
-	<meta http-equiv="content-security-policy" content="default-src 'none'; style-src %CSPSOURCE%; img-src %CSPSOURCE%; script-src %CSPSOURCE%;" />
+	<meta http-equiv="content-security-policy" content="default-src 'none'; style-src %CSPSOURCE%; img-src %CSPSOURCE%; script-src %CSPSOURCE%; font-src %CSPSOURCE%;" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="%NMROOT%/@vscode/codicons/dist/codicon.css" />
 	<link rel="stylesheet" type="text/css" href="%CSSROOT%/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="%CSSROOT%/main.css" />
+	<script type="module" src="%JSROOT%/jquery.min.js"></script>
 	<script type="module" src="%JSROOT%/main.js"></script>
 </head>
 <body>
 
 	<div id="Toolbar">
-		<div class="row">
-			<div class="col">Dashboard</div>
+		<div class="row tight align-items-center">
 			<div class="col-auto">
-				<button class="btn btn-dark">+ Group</button>
+				<i class="codicon codicon-home"></i>
+			</div>
+			<div class="col">
+				Dashboard
+			</div>
+			<div class="col-auto">
+				<i class="codicon codicon-add"></i>
 			</div>
 		</div>
 	</div>
-	<div id="Dashboard"></div>
-	<div id="MessageDebug" class="d-none mt-4"></div>
+
+	<div id="Dashboard">
+		<div id="ProjectBox" class="row">
+			<div class="col-12 col-md-6 col-lg-4 mb-4 d-none Template">
+				<div class="ProjectEntry">
+					<div class="Icon">
+						<i class="codicon"></i>
+					</div>
+					<div class="Info">
+						<div class="Name">Project Name</div>
+						<div class="Path">Project Path</div>
+					</div>
+					<div class="Open">
+						<button><i class="codicon codicon-settings-gear"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="Debug" class="d-none">
+		<h4>Debug:</h4>
+		<code></code>
+	</div>
 
 </body>
 </html>

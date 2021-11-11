@@ -19,7 +19,22 @@
 				"command": "projectsyeah.helloWorld",
 				"title": "Hello World"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Dashboard",
+			"properties": {
+				"projectsyeah.debug": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable debugging output."
+				},
+				"projectsyeah.database": {
+					"type": "object",
+					"default": [],
+					"description": "List of Project Groups"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -29,16 +44,19 @@
 		"lint": "eslint src --ext ts"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.62.0",
 		"@types/glob": "^7.1.4",
 		"@types/mocha": "^9.0.0",
 		"@types/node": "14.x",
+		"@types/vscode": "^1.62.0",
 		"@typescript-eslint/eslint-plugin": "^5.1.0",
 		"@typescript-eslint/parser": "^5.1.0",
+		"@vscode/test-electron": "^1.6.2",
 		"eslint": "^8.1.0",
 		"glob": "^7.1.7",
 		"mocha": "^9.1.3",
-		"typescript": "^4.4.4",
-		"@vscode/test-electron": "^1.6.2"
+		"typescript": "^4.4.4"
+	},
+	"dependencies": {
+		"@vscode/codicons": "^0.0.26"
 	}
 }

@@ -4,7 +4,7 @@ class Message {
 	type = null;
 	data = null;
 
-	constructor(type, data) {
+	constructor(type, data=null) {
 		this.type = type;
 		this.data = data;
 		return;
@@ -14,14 +14,17 @@ class Message {
 
 class Dashboard {
 
-	debug = true;
+	debug = false;
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
-	onMessageBinding = null;
-	element = null;
+	elMain = null;
 	elMessageDebug = null;
+	elProjectBox = null;
+
+	database = null;
+	template = null;
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
@@ -37,21 +40,80 @@ class Dashboard {
 	init() {
 
 		this.vscode = acquireVsCodeApi();
-		this.onMessageBinding = this.onMessage.bind(this);
-		this.element = document.getElementById('Dashboard');
-		this.elMessageDebug = document.getElementById('MessageDebug');
+		this.elMain = jQuery('#Dashboard')
+		this.elProjectBox = jQuery('#ProjectBox');
+		this.elMessageDebug = jQuery('#Debug');
+		this.setDebug(this.debug);
 
-		window.addEventListener(
-			'message',
-			this.onMessageBinding
+		this.template = (
+			(this.elProjectBox)
+			.find('.Template')
+			.remove()
+			.clone()
+			.removeClass('d-none')
+			.removeClass('Template')
 		);
 
-		if(this.debug) {
-			(this.elMessageDebug.classList)
-			.remove('d-none');
+		jQuery(window)
+		.on('message', this.onMessage.bind(this));
+
+		(this.vscode)
+		.postMessage(new Message('hey'));
+
+		return;
+	};
+
+	render() {
+
+		if(!this.database)
+		return;
+
+		this.elProjectBox.empty();
+
+		for(const item of this.database) {
+			let entry = this.template.clone();
+
+			entry.find('.Icon i').addClass(`codicon-${item.icon}`);
+			entry.find('.Name').text(item.name);
+			entry.find('.Path').text(item.path);
+
+			(this.elProjectBox)
+			.append(entry);
 		}
 
 		return;
+	};
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	debugMessage(msg) {
+
+		(this.elMessageDebug)
+		.find('code')
+		.empty()
+		.text(JSON.stringify(msg, null, "\t"));
+
+		console.log(msg);
+		return;
+	};
+
+	setDebug(state) {
+
+		this.debug = state;
+
+		if(this.debug) {
+			(this.elMessageDebug)
+			.removeClass('d-none');
+		}
+
+		else {
+			(this.elMessageDebug)
+			.addClass('d-none');
+		}
+
+		console.log(`[Dashboard] debug set to: ${this.debug}`);
+		return this;
 	};
 
 	////////////////////////////////////////////////////////////////
@@ -59,41 +121,38 @@ class Dashboard {
 
 	onMessage(ev) {
 
-		let msg = new Message(ev.data.type, ev.data.data);
+		let msg = new Message(
+			ev.originalEvent.data.type,
+			ev.originalEvent.data.data
+		);
 
 		if(this.debug)
-		this.elMessageDebug.innerHTML = JSON.stringify(msg, null, "\t");
+		this.debugMessage(msg);
 
 		switch(msg.type) {
-			case 'hey': this.onHey(); break;
+			case 'sup': this.onHeySup(msg); break;
 			case 'render': this.onRender(msg); break;
 		}
 
 		return;
 	};
 
-	onHey() {
+	onHeySup(msg) {
 
-		let msg = new Message('sup', null);
-		this.vscode.postMessage(msg);
+		this.database = msg.data.database;
+		this.setDebug(msg.data.debug);
 
-		return;
-	};
+		if(this.debug)
+		this.debugMessage(msg);
 
-	onRender(msg) {
-
-		(this.element)
-		.innerHTML = JSON.stringify(msg.data);
-
+		this.render();
 		return;
 	};
 
 };
 
-document.addEventListener(
-	'DOMContentLoaded',
-	function(Ev){
-		new Dashboard;
-		return;
-	}
-);
+jQuery(document)
+.ready(function(){
+	new Dashboard;
+	return;
+});
