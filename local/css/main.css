@@ -4,8 +4,9 @@ body.vscode-dark { color: var(--vscode-foreground); }
 
 body {
 	background: transparent;
-	margin: 0px;
-	padding: 16px;
+	-margin: 0px;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
 }
 
 body.vscode-dark {
@@ -15,6 +16,7 @@ body.vscode-dark {
 	--DashboardProjectBg: #00000044;
 	--DashboardProjectBgHover: #00000066;
 	--DashboardProjectText: #ffffff;
+	--DashboardProjectAccent: #aa5050;
 
 	--DashboardOverlayBg: #000000aa;
 
@@ -31,6 +33,7 @@ body.vscode-dark {
 
 	border-radius: 6px;
 	font-size: 0.8em;
+	opacity: 0.50;
 	padding: 16px;
 }
 
@@ -69,6 +72,7 @@ body.vscode-dark {
 
 .ProjectEntry {
 	background-color: var(--DashboardProjectBg);
+	border-left: 4px solid var(--DashboardProjectAccent);
 
 	border-radius: 6px;
 	cursor: pointer;

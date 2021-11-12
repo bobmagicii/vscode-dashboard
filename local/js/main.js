@@ -75,6 +75,8 @@ class Dashboard {
 
 		////////
 
+		let self = this;
+
 		(this.body)
 		.find('.DashboardTitle')
 		.text(this.title);
@@ -86,13 +88,34 @@ class Dashboard {
 		for(const item of this.database) {
 			let entry = this.template.clone();
 
-			entry.find('.Icon i').addClass(`codicon-${item.icon}`);
-			entry.find('.Name').text(item.name);
-			entry.find('.Path').text(item.path);
+			entry.find('.Icon i')
+			.addClass(`codicon-${item.icon}`);
+
+			entry.find('.Name')
+			.text(item.name);
+
+			entry.find('.Path')
+			.text(item.path);
+
+			entry
+			.attr('data-id', item.id)
+			.attr('data-path-uri', item.path)
+			.on('click', function(){
+				self.onProjectClick(jQuery(this));
+				return false;
+			});
 
 			(this.elProjectBox)
 			.append(entry);
 		}
+
+		return;
+	};
+
+	send(msg) {
+
+		(this.vscode)
+		.postMessage(msg);
 
 		return;
 	};
@@ -160,6 +183,15 @@ class Dashboard {
 		this.debugMessage(msg);
 
 		this.render();
+		return;
+	};
+
+	onProjectClick(Item) {
+
+		let goto = Item.attr('data-path-uri');
+
+		this.send(new Message('open', { goto }));
+
 		return;
 	};
 

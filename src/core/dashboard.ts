@@ -108,17 +108,29 @@ class Dashboard {
 		);
 
 		let tokens = {
-			"%CSPSOURCE%": this.panel.webview.cspSource,
-			"%NMROOT%": this.localToWebpath(path.join(
+			"%COLUMNSIZING%":
+			this.conf.columnSizing,
+
+			"%CSPSOURCE%":
+			this.panel.webview.cspSource,
+
+			"%NMROOT%":
+			this.localToWebpath(path.join(
 				this.ext.extensionPath, 'node_modules'
 			)),
-			"%CSSROOT%": this.localToWebpath(path.join(
+
+			"%CSSROOT%":
+			this.localToWebpath(path.join(
 				this.ext.extensionPath, 'local', 'css'
 			)),
-			"%JSROOT%": this.localToWebpath(path.join(
+
+			"%JSROOT%":
+			this.localToWebpath(path.join(
 				this.ext.extensionPath, 'local', 'js'
 			)),
-			"%IMGROOT%": this.localToWebpath(path.join(
+
+			"%IMGROOT%":
+			this.localToWebpath(path.join(
 				this.ext.extensionPath, 'local', 'img'
 			))
 		};
@@ -178,6 +190,9 @@ class Dashboard {
 			case 'hey':
 				this.onHey(msg);
 			break;
+			case 'open':
+				this.onOpen(msg);
+			break;
 		}
 
 		return;
@@ -193,7 +208,28 @@ class Dashboard {
 		});
 
 		return;
-	}
+	};
+
+	public onOpen(msg: Message):
+	void {
+
+		for(const project of this.conf.database)
+		if(project.id === msg.data.goto) {
+			Util.println(
+				`open ${msg.data.goto}`,
+				'Dashboard::onOpen'
+			);
+
+			vscode.commands.executeCommand(
+				'vscode.openFolder',
+				project.getUriObject()
+			);
+
+			return;
+		}
+
+		return;
+	};
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////

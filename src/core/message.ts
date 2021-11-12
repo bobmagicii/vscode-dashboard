@@ -6,9 +6,9 @@ class Message {
 	string|null = null;
 
 	data:
-	object|null = null;
+	any|null = null;
 
-	constructor(type: string, data: object|null=null) {
+	constructor(type: string, data: any|null=null) {
 
 		this.type = type;
 		this.data = data;
@@ -16,7 +16,7 @@ class Message {
 		return;
 	};
 
-	static FromObject(input: { type: string, data: object }):
+	static FromObject(input: { type: string, data: any }):
 	Message {
 
 		let type = 'unknown';

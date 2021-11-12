@@ -33,6 +33,11 @@
 					"default": "Projects",
 					"description": "Dashboard Title"
 				},
+				"projectsyeah.columnSizing": {
+					"type": "string",
+					"default": "col-12 col-sm-6 col-md-4 col-lg-3",
+					"description": "The Bootstrap CSS classes used to adjust how the columns scale to your window size."
+				},
 				"projectsyeah.database": {
 					"type": "object",
 					"default": [],
