@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as uuid from 'uuid';
 
 import Util from './util';
 
@@ -13,7 +14,7 @@ class ProjectEntry {
 
 	constructor(name: string, path: string) {
 
-		this.id = path;
+		this.id = uuid.v4();
 		this.name = name;
 		this.path = path;
 		this.icon = this.getIcon();

@@ -1,3 +1,5 @@
+/* fold-level=1 */
+
 body.vscode-light { color: var(--vscode-foreground); }
 body.vscode-high-contrast { color: var(--vscode-foreground); }
 body.vscode-dark { color: var(--vscode-foreground); }
@@ -9,17 +11,45 @@ body {
 	padding-bottom: 1.5rem;
 }
 
+/*******************************************************************************
+*******************************************************************************/
+
+/* build a patch panel for all the css vars vscode sets on the webview that
+allows us to style our contents with the current theme colours. this is mostly
+because i am not personally convinced yet that their naming is solid. if they
+break somethign on me later i want them all crossreferenced here. */
+
 body.vscode-dark {
+
+	/* themes the top toolbar */
 	--DashboardToolbarBg: #00000066;
 	--DashboardToolbarText: #ffffff;
 
+	/* themes each project box */
 	--DashboardProjectBg: #00000044;
 	--DashboardProjectBgHover: #00000066;
 	--DashboardProjectText: #ffffff;
 	--DashboardProjectAccent: #aa5050;
 
-	--DashboardOverlayBg: #000000aa;
+	/* themes the overlay block */
+	--DashboardOverlayBg: #000000;
+	--DashboardOverlayOpacity: 0.90;
 
+	/* themes the dialogs inside overlays */
+	--DashboardDialogBg: var(--vscode-editor-background);
+	--DashboardDialogFg: var(--vscode-editor-foreground);
+
+	/* themes buttons */
+	--DashboardButtonBg: var(--vscode-button-background);
+	--DashboardButtonBorder: var(--vscode-button-background);
+	--DashboardButtonFg: var(--vscode-button-foreground);
+
+	/* themes input fields. */
+	--DashboardInputBg: var(--vscode-editorWidget-background);
+	--DashboardInputBorder: var(--vscode-editorWidget-border);
+	--DashboardInputFg: var(--vscode-editorWidget-foreground);
+
+	/* themes the debug widget */
 	--DashboardDebugBg: #00000044;
 	--DashboardDebugText: #ffffff;
 }
@@ -123,13 +153,108 @@ body.vscode-dark {
 }
 
 #Overlay {
-	background: var(--DashboardOverlayBg);
-
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left: 0px;
 	height: 100vh;
 	width: 100vw;
+}
+
+#Overlay .Wash {
+	background-color: var(--DashboardOverlayBg);
+	opacity: var(--DashboardOverlayOpacity);
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	z-index: 99;
+}
+
+#Overlay .Mount {
+	position: relative;
+	z-index: 100;
+}
+
+.Dialog {
+	background-color: var(--DashboardDialogBg);
+	color: var(--DashboardDialogFg);
+
+	border-radius: 6px;
+	width: 50vw;
+}
+
+.Dialog > header {
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	flex-wrap: nowrap;
+	text-transform: uppercase;
+}
+
+.Dialog > header > div:nth-of-type(1) {
+	flex-grow: 1;
+	font-weight: bold;
+	padding: 8px;
+}
+
+.Dialog > header > div:nth-of-type(2) {
+	flex-grow: 0;
+	padding: 8px;
+}
+
+.Dialog > section {
+	padding: 8px;
+}
+
+.Dialog > footer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: nowrap;
+}
+
+.Dialog > footer > div {
+	padding: 8px;
+}
+
+.Dialog .Close {
+	background-color: var(--DashboardDialogCloseBg);
+	color: var(--DashboardDialogCloseFg);
+
+	cursor: pointer;
+	border-radius: 6px;
+	opacity: 0.5;
+	transition: opacity 250ms;
+}
+
+.Dialog .Close:hover {
+	opacity: 1.0;
+	transition: opacity 250ms;
+}
+
+.Dialog .btn {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+@media(max-width: 1199.98px) {
+	.Dialog {
+		width: 65%;
+	}
+}
+
+@media(max-width: 991.98px) {
+	.Dialog {
+		width: 60%;
+	}
+}
+
+@media(max-width: 767.98px) {
+	.Dialog {
+		width: 92%;
+	}
 }
 
 /*******************************************************************************
@@ -156,4 +281,39 @@ body.vscode-dark {
 .row.tight > [class^="col"] {
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
+}
+
+.btn:focus {
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.btn-primary {
+	background-color: var(--DashboardButtonBg) !important;
+	border-color: var(--DashboardButtonBorder) !important;
+	color: var(--DashboardButtonFg) !important;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.cased {
+	text-transform: none !important;
+}
+
+/*******************************************************************************
+** misc hacks *****************************************************************/
+
+em {
+	border-bottom: 1px dotted var(--DashboardToolbarText);
+
+	font-style: normal;
+	font-weight: bold;
+}
+
+input {
+	background-color: var(--DashboardInputBg) !important;
+	border-color: var(--DashboardInputBorder) !important;
+	color: var(--DashboardInputFg) !important;
 }

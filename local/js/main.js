@@ -62,6 +62,9 @@ class Dashboard {
 		jQuery(window)
 		.on('message', this.onMessage.bind(this));
 
+		this.prepareUI();
+		this.prepareDialogs();
+
 		(this.vscode)
 		.postMessage(new Message('hey'));
 
@@ -96,6 +99,28 @@ class Dashboard {
 
 			entry.find('.Path')
 			.text(item.path);
+
+			// clicking the delete button
+
+			entry.find('.Delete')
+			.on('click', function(){
+
+				// @todo 2021-12-31
+				// confirm dialog before really doing it. cannot use
+				// the old confirm() method in this context apparently.
+
+				self.send(new Message(
+					'projectdel',
+					{ id: item.id }
+				));
+
+				entry.empty();
+				entry.remove();
+
+				return false;
+			});
+
+			// clicking the main button will open the project.
 
 			entry
 			.attr('data-id', item.id)
@@ -152,6 +177,126 @@ class Dashboard {
 		return this;
 	};
 
+	prepareDialogs() {
+
+		jQuery('.Dialog .Close')
+		.on('click', function(){
+
+			jQuery('.Dialog')
+			.addClass('d-none');
+
+			jQuery('#Overlay')
+			.addClass('d-none');
+
+			return;
+		});
+
+		this.prepareDialogProjectNew();
+
+		return;
+	};
+
+	prepareDialogProjectNew() {
+
+		let self = this;
+
+		// rig up the selector.
+
+		jQuery('#ProjectNewType .btn')
+		.on('click', function(){
+
+			let that = jQuery(this);
+			let selector = that.parent();
+			let type = that.attr('data-type');
+			let form = null;
+
+			selector
+			.find('.btn')
+			.addClass('btn-dark')
+			.removeClass('btn-primary');
+
+			that
+			.addClass('btn-primary')
+			.removeClass('btn-dark');
+
+			jQuery('.ProjectNewForm')
+			.addClass('d-none');
+
+			jQuery(that.attr('data-show'))
+			.removeClass('d-none')
+
+			jQuery('#DialogProjectNew')
+			.find('footer')
+			.removeClass('d-none');
+
+			jQuery('#ProjectNewType')
+			.attr('data-selected', type);
+
+			return;
+		});
+
+		// rig up the save button.
+		jQuery('#ProjectNewSave')
+		.on('click',function(){
+
+			let type = jQuery('#ProjectNewType').attr('data-selected');
+			let name = jQuery.trim(jQuery('#ProjectNewName').val());
+			let uri = null;
+
+			switch(type) {
+				case 'local':
+					uri = jQuery.trim(
+						jQuery('#ProjectFolderChoose')
+						.attr('data-uri')
+					);
+				break;
+				case 'ssh':
+					let user = jQuery.trim(jQuery('#ProjectNewSshUser').val());
+					let host = jQuery.trim(jQuery('#ProjectNewSshHost').val());
+					let path = jQuery.trim(jQuery('#ProjectNewSshPath').val());
+					uri = `vscode-remote://ssh-remote+${user}@${host}${path}`;
+				break;
+				case 'promode':
+					uri = jQuery.trim(
+						jQuery('#ProjectNewPromodeEntry')
+						.val()
+					);
+				break;
+			}
+
+			if(uri === null)
+			return;
+
+			self.send(new Message('projectnew', { name, uri }));
+			return;
+		});
+
+		// rig up the folder chooser.
+
+		jQuery('#ProjectFolderChoose')
+		.on('click', function(){
+
+			self.send(new Message('pickdir'));
+			return;
+		});
+
+		return;
+	};
+
+	prepareUI() {
+
+		jQuery('.CmdProjectNew')
+		.on('click',function(){
+
+			jQuery('#DialogProjectNew, #Overlay')
+			.removeClass('d-none');
+
+			return;
+		});
+
+		return;
+	};
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
@@ -168,6 +313,7 @@ class Dashboard {
 		switch(msg.type) {
 			case 'sup': this.onHeySup(msg); break;
 			case 'render': this.onRender(msg); break;
+			case 'dirpick': this.onDirPicked(msg); break;
 		}
 
 		return;
@@ -185,6 +331,19 @@ class Dashboard {
 		this.render();
 		return;
 	};
+
+	onDirPicked(msg) {
+
+		jQuery('#ProjectFolderChoose')
+		.addClass('cased')
+		.text(msg.data.label)
+		.attr('data-uri', msg.data.uri);
+
+		return;
+	};
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
 	onProjectClick(Item) {
 

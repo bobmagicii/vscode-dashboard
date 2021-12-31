@@ -10,6 +10,22 @@ class Util {
 	}
 
 
+	public static filterArrayStrip(input: Array<any>, whatYouSeek: any) {
+		return input.filter(function(val: any, key: any){
+			return val !== whatYouSeek;
+		});
+	};
+
+	public static filterArrayStripById(input: Array<object>, whatYouSeek: any):
+	Array<any> {
+		return input.filter(function(val: any, key: any){
+			return (
+				(typeof val.id !== 'undefined')
+				&& (val.id !== whatYouSeek)
+			);
+		});
+	};
+
 
 };
 

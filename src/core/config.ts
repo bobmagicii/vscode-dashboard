@@ -34,10 +34,6 @@ class Config {
 	public fillFromEditorConfig():
 	void {
 
-
-
-		////////
-
 		this.title = this.api.title;
 		this.debug = this.api.debug;
 		this.columnSizing = this.api.columnSizing;
@@ -52,10 +48,34 @@ class Config {
 	void {
 
 		for(const key of this.keepers)
-		this.api.update(key, this[key as keyof typeof this], true);
+		this.api.update(key, this[key as keyof this], true);
 
 		return;
-	}
+	};
+
+	public addProject(name: string, uri: string):
+	void {
+
+		(this.database)
+		.push(new ProjectEntry(
+			name,
+			uri
+		));
+
+		this.save();
+
+		return;
+	};
+
+	public removeProject(id: string):
+	void {
+
+		this.database = Util.filterArrayStripById(this.database, id);
+
+		this.save();
+
+		return;
+	};
 
 };
 

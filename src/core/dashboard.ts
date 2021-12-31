@@ -193,6 +193,15 @@ class Dashboard {
 			case 'open':
 				this.onOpen(msg);
 			break;
+			case 'pickdir':
+				this.onPickDir(msg);
+			break;
+			case 'projectnew':
+				this.onProjectNew(msg);
+			break;
+			case 'projectdel':
+				this.onProjectDel(msg);
+			break;
 		}
 
 		return;
@@ -227,6 +236,57 @@ class Dashboard {
 
 			return;
 		}
+
+		return;
+	};
+
+	public onPickDir(msg: Message):
+	void {
+
+		let self = this;
+
+		(vscode.window)
+		.showOpenDialog({
+			canSelectFiles: false,
+			canSelectFolders: true,
+			canSelectMany: false
+		})
+		.then(function(Selected: vscode.Uri[] | undefined){
+
+			if(typeof Selected === 'undefined')
+			return;
+
+			if(typeof Selected[0] === 'undefined')
+			return;
+
+			self.sendv('dirpick',{
+				label: Selected[0].fsPath,
+				uri: Selected[0].toString()
+			});
+
+			return;
+		});
+
+		return;
+	};
+
+	public onProjectNew(msg: Message):
+	void {
+
+		this.conf.addProject(
+			msg.data.name,
+			msg.data.uri
+		);
+
+		this.onHey(msg);
+
+		return;
+	};
+
+	public onProjectDel(msg: Message):
+	void {
+
+		this.conf.removeProject(msg.data.id);
 
 		return;
 	};
