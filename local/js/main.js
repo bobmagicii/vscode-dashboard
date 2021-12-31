@@ -347,9 +347,9 @@ class Dashboard {
 
 	onProjectClick(Item) {
 
-		let goto = Item.attr('data-path-uri');
+		let id = Item.attr('data-id');
 
-		this.send(new Message('open', { goto }));
+		this.send(new Message('open', { id }));
 
 		return;
 	};

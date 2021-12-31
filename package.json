@@ -39,7 +39,7 @@
 					"description": "The Bootstrap CSS classes used to adjust how the columns scale to your window size."
 				},
 				"projectsyeah.database": {
-					"type": "object",
+					"type": "array",
 					"default": [],
 					"description": "List of projects stored in your user config so that it can be synced."
 				}

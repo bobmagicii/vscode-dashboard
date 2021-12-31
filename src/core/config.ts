@@ -6,17 +6,21 @@ class Config {
 
 	api: vscode.WorkspaceConfiguration;
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
 	title: string;
 	debug: boolean;
 	database: Array<ProjectEntry>;
 	columnSizing: string;
 
-	private keepers: Array<string> = [
-		'title',
-		'debug',
-		'database',
-		'columnSizing'
+	private keepers:
+	Array<string> = [
+		'title', 'debug', 'database', 'columnSizing'
 	];
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
 	constructor() {
 
@@ -30,6 +34,9 @@ class Config {
 		this.fillFromEditorConfig();
 		return;
 	};
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
 	public fillFromEditorConfig():
 	void {
@@ -53,6 +60,9 @@ class Config {
 		return;
 	};
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
 	public addProject(name: string, uri: string):
 	void {
 
@@ -70,7 +80,10 @@ class Config {
 	public removeProject(id: string):
 	void {
 
-		this.database = Util.filterArrayStripById(this.database, id);
+		this.database = Util.filterArrayStripById(
+			this.database,
+			id
+		);
 
 		this.save();
 

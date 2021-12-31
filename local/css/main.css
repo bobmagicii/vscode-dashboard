@@ -143,7 +143,7 @@ body.vscode-dark {
 	white-space: nowrap;
 }
 
-.ProjectEntry .Config {
+.IconButton {
 	color: var(--DashboardProjectText);
 
 	background: transparent;
@@ -151,6 +151,8 @@ body.vscode-dark {
 	border-radius: 6px;
 	padding: 4px;
 }
+
+
 
 #Overlay {
 	position: fixed;

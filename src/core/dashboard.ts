@@ -223,9 +223,9 @@ class Dashboard {
 	void {
 
 		for(const project of this.conf.database)
-		if(project.id === msg.data.goto) {
+		if(project.id === msg.data.id) {
 			Util.println(
-				`open ${msg.data.goto}`,
+				`open ${msg.data.id}`,
 				'Dashboard::onOpen'
 			);
 
