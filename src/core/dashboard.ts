@@ -211,6 +211,9 @@ class Dashboard {
 			case 'projectdel':
 				this.onProjectDel(msg);
 			break;
+			case 'configset':
+				this.onConfigSet(msg);
+			break;
 		}
 
 		return;
@@ -219,11 +222,7 @@ class Dashboard {
 	public onHey(msg: Message):
 	void {
 
-		this.sendv('sup', {
-			debug: this.conf.debug,
-			database: this.conf.database,
-			title: this.conf.title
-		});
+		this.sendv('sup', this.conf.getObject());
 
 		return;
 	};
@@ -296,6 +295,16 @@ class Dashboard {
 	void {
 
 		this.conf.removeProject(msg.data.id);
+
+		this.onHey(msg);
+
+		return;
+	};
+
+	public onConfigSet(msg: Message):
+	void {
+
+		this.conf.setObject(msg.data);
 
 		this.onHey(msg);
 

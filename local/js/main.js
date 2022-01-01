@@ -264,7 +264,22 @@ class DialogDashboardConfig
 extends Dialog {
 	constructor(api, selector='#DialogDashboardConfig') {
 		super(api, selector);
+		this.bindElements();
 		this.bindPresetButtons();
+		this.bindAcceptButton();
+		this.bindCancelButton();
+		return;
+	};
+
+	bindElements() {
+
+		this.inputTitle = this.el.find('#DashboardConfigTitle');
+		this.inputColumnSizing = this.el.find('#DashboardConfigColumnSizing');
+
+		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
+		this.btnAccept = this.el.find('#DashboardConfigSave');
+		this.btnCancel = this.el.find('#DashboardConfigCancel');
+
 		return;
 	};
 
@@ -272,13 +287,13 @@ extends Dialog {
 
 		let self = this;
 
-		self.el.find('.DashboardColumnPreset')
+		self.btnColumnSizingPresets
 		.on('click', function(){
 
 			let that = jQuery(this);
 			let value = that.attr('data-value');
 
-			self.el.find('#DashboardConfigColumnSizing')
+			self.inputColumnSizing
 			.val(value);
 
 			return;
@@ -286,6 +301,51 @@ extends Dialog {
 
 		return;
 	};
+
+	bindAcceptButton() {
+
+		let self = this;
+
+		(this.btnAccept)
+		.on('click',function() {
+
+			let config = {
+				title: self.inputTitle.tval(),
+				columnSizing: self.inputColumnSizing.tval()
+			};
+
+			self.api.send(new Message('configset', config));
+
+			self.hide();
+
+			return false;
+		});
+
+		return;
+	};
+
+	bindCancelButton() {
+
+		(this.btnCancel)
+		.on('click', this.hide.bind(this));
+
+		return;
+	};
+
+	fillConfigValues() {
+
+		this.inputTitle.val(this.api.title);
+		this.inputColumnSizing.val(this.api.columnSizing);
+
+		return;
+	};
+
+	show() {
+		this.fillConfigValues();
+		super.show();
+		return;
+	};
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -333,6 +393,16 @@ class Project {
 			return false;
 		});
 
+		// use the configured column sizing. main trick here is bootstrap's
+		// column clases are tehdumb and must be the first in the list as
+		// they use some of those pattern matching selectors. so strip out
+		// all the old size classes, then put the new ones on the front of
+		// whatever was leftover.
+
+		self.el
+		.removeClassEx(/^col/)
+		.addClass(`${this.api.columnSizing} ${self.el.attr('class')}`);
+
 		return;
 	};
 };
@@ -342,21 +412,23 @@ class Project {
 
 class Dashboard {
 
-	debug = false;
-
-	////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////
-
 	elMain = null;
 	elMessageDebug = null;
 	elToolbar = null;
 	elProjectBox = null;
 	body = null;
 	template = null;
+	dialog = {};
+
+	// official config values.
 
 	database = null;
 	title = 'Dashboard';
-	dialog = {};
+	debug = false;
+	database = [];
+	columnSizing = 'col-12';
+	tabMode = true;
+	showPath = true;
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
@@ -412,12 +484,30 @@ class Dashboard {
 		.find('.DashboardTitle')
 		.text(this.title);
 
-		////////
+		this.renderProjectEntries();
+
+		return;
+	};
+
+	renderProjectEntries() {
 
 		this.elProjectBox.empty();
 
 		for(const item of this.database)
 		this.elProjectBox.append((new Project(this, item)).el);
+
+		// update their sizing
+
+		/*
+		this.elProjectBox
+		.children()
+		.each(function(){
+			jQuery(this)
+			.removeClassEx(/^col/)
+			.addClass(self.columnSizing);
+			return;
+		});
+		*/
 
 		return;
 	};
@@ -471,6 +561,9 @@ class Dashboard {
 		jQuery('.CmdProjectNew')
 		.on('click', this.dialog.projectNew.show.bind(this.dialog.projectNew));
 
+		jQuery('.CmdDashboardConfig')
+		.on('click', this.dialog.config.show.bind(this.dialog.config));
+
 		return;
 	};
 
@@ -498,15 +591,24 @@ class Dashboard {
 
 	onHeySup(msg) {
 
-		this.database = msg.data.database;
-		this.title = msg.data.title;
+		// copy in config info.
+
+		for(const key in msg.data)
+		if(typeof this[key] !== 'undefined') {
+			//console.log(`${key} = ${msg.data[key]}`);
+			this[key] = msg.data[key];
+		}
+
+		// set debug.
+
 		this.setDebug(msg.data.debug);
 
 		if(this.debug)
 		this.debugMessage(msg);
 
+		// proceed.
+
 		this.render();
-		this.dialog.config.show();
 		return;
 	};
 

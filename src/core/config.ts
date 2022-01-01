@@ -46,6 +46,13 @@ class Config {
 	public fillFromEditorConfig():
 	void {
 
+		let self = this;
+
+		// in this instance this self is quite specific because vsocde would
+		// claim everything was fine, but manually running the compiler
+		// bombed saying cannot find name this. even though for a while it
+		// was working. but then this alias hack... whatever my dudes.
+
 		for(const key of this.keepers) {
 			if(key === 'database')
 			continue;
@@ -53,11 +60,53 @@ class Config {
 			if(!this.api.has(key))
 			continue;
 
-			this[key as keyof this] = this.api.get(key) as typeof this[keyof this];
+			this[key as keyof this] = this.api.get(key) as (typeof self[(keyof this)]);
 		}
 
 		for(const item of this.api.database)
 		this.database.push(ProjectEntry.FromObject(item));
+
+		return;
+	};
+
+	getMap():
+	Map<string, any> {
+
+		let output = new Map<string, any>();
+
+		for(const key of this.keepers) {
+			if(key === 'database')
+			output.set(key, this.database.map((v)=> v));
+			else
+			output.set(key, this[key as keyof this]);
+		}
+
+		return output;
+	};
+
+	getObject():
+	object {
+
+		let output: any = {};
+
+		for(const key of this.keepers) {
+			if(key === 'database')
+			output[key] = this.database.map((v)=> v);
+			else
+			output[key] = this[key as keyof this];
+		}
+
+		return output;
+	};
+
+	setObject(input: any):
+	void {
+
+		for(const key in input)
+		if(this.keepers.indexOf(key) >= 0)
+		this[key as keyof this] = input[key];
+
+		this.save();
 
 		return;
 	};
