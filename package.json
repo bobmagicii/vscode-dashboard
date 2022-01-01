@@ -44,6 +44,26 @@
 					"description": "List of projects stored in your user config so that it can be synced."
 				}
 			}
+		},
+		"views": {
+			"projectsyeah-dashboard-sidebar": [
+				{
+					"id": "projectsyeah-dashboard-sidebar",
+					"type": "webview",
+					"name": "Projects",
+					"icon": "local/gfx/icon.svg",
+					"visibility": "visible"
+				}
+			]
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "projectsyeah-dashboard-sidebar",
+					"title": "Projects",
+					"icon": "local/gfx/icon.svg"
+				}
+			]
 		}
 	},
 	"scripts": {

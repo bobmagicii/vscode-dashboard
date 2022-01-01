@@ -13,10 +13,13 @@ class Config {
 	debug: boolean;
 	database: Array<ProjectEntry>;
 	columnSizing: string;
+	tabMode: boolean;
+	showPath: boolean;
 
 	private keepers:
 	Array<string> = [
-		'title', 'debug', 'database', 'columnSizing'
+		'title', 'debug', 'database', 'columnSizing', 'tabMode',
+		'showPath'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -30,6 +33,8 @@ class Config {
 		this.debug = false;
 		this.database = [];
 		this.columnSizing = 'col-12 col-sm-6 col-md-4 col-lg-3';
+		this.tabMode = true;
+		this.showPath = true;
 
 		this.fillFromEditorConfig();
 		return;
@@ -41,9 +46,15 @@ class Config {
 	public fillFromEditorConfig():
 	void {
 
-		this.title = this.api.title;
-		this.debug = this.api.debug;
-		this.columnSizing = this.api.columnSizing;
+		for(const key of this.keepers) {
+			if(key === 'database')
+			continue;
+
+			if(!this.api.has(key))
+			continue;
+
+			this[key as keyof this] = this.api.get(key) as typeof this[keyof this];
+		}
 
 		for(const item of this.api.database)
 		this.database.push(ProjectEntry.FromObject(item));
@@ -54,7 +65,12 @@ class Config {
 	public save():
 	void {
 
+		// only write the keys that have been configured in the
+		// extension settings as not all configuration options are
+		// exposed via the ui yet.
+
 		for(const key of this.keepers)
+		if(this.api.has(key))
 		this.api.update(key, this[key as keyof this], true);
 
 		return;

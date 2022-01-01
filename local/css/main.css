@@ -185,6 +185,12 @@ body.vscode-dark {
 
 	border-radius: 6px;
 	width: 50vw;
+
+	overflow: scroll;
+	overflow-x: hidden;
+
+	max-height: 92vh;
+	max-width: 92vw;
 }
 
 .Dialog > header {
@@ -294,6 +300,25 @@ body.vscode-dark {
 	background-color: var(--DashboardButtonBg) !important;
 	border-color: var(--DashboardButtonBorder) !important;
 	color: var(--DashboardButtonFg) !important;
+}
+
+.font-size-normal { font-size: 1.0rem !important; }
+.font-size-small { font-size: 0.9rem !important; }
+.font-size-smaller { font-size: 0.8rem !important; }
+.font-size-smallerer { font-size: 0.7rem !important; }
+.font-size-smallerest { font-size: 0.6rem !important; }
+.font-size-most-small { font-size: 0.5rem !important; }
+.font-size-mostest-small { font-size: 0.4rem !important; }
+
+.font-size-large { font-size: 1.10rem !important; }
+.font-size-larger { font-size: 1.20rem !important; }
+.font-size-largerer { font-size: 1.30rem !important; }
+.font-size-largerest { font-size: 1.50rem !important; }
+.font-size-most-large { font-size: 2.00rem !important; }
+.font-size-mostest-large { font-size: 3.00rem !important; }
+
+.text-nobreak {
+	white-space: nowrap;
 }
 
 .clickable {

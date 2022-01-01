@@ -9,13 +9,13 @@ import ProjectEntry from './project-entry';
 
 class Dashboard {
 
-	private panel:
+	public panel:
 	vscode.WebviewPanel|undefined;
 
-	private ext:
+	public ext:
 	vscode.ExtensionContext;
 
-	private conf:
+	public conf:
 	Config;
 
 	////////////////////////////////////////////////////////////////
@@ -25,6 +25,8 @@ class Dashboard {
 
 		this.ext = ext;
 		this.conf = new Config;
+
+		this.open();
 
 		return;
 	};
@@ -36,12 +38,12 @@ class Dashboard {
 	void {
 
 		if(this.panel) {
-			Util.println('TODO: switch to existing dashboard tab.');
+			this.panel.reveal();
 			return;
 		}
 
 		this.panel = vscode.window.createWebviewPanel(
-			'projectdash',
+			'projectsyeah-dashboard-main',
 			'Projects',
 			vscode.ViewColumn.One,
 			{
@@ -51,6 +53,10 @@ class Dashboard {
 				]
 			}
 		);
+
+		this.panel.iconPath = vscode.Uri.file(path.join(
+			this.ext.extensionPath, 'local', 'gfx', 'icon.svg'
+		));
 
 		(this.panel)
 		.onDidDispose(this.onClosed.bind(this));
@@ -175,6 +181,9 @@ class Dashboard {
 		return;
 	};
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
 	public onMessage(input: {type: string, data: object}):
 	void {
 
@@ -287,6 +296,8 @@ class Dashboard {
 	void {
 
 		this.conf.removeProject(msg.data.id);
+
+		this.onHey(msg);
 
 		return;
 	};
