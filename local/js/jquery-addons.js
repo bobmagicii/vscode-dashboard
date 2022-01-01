@@ -13,3 +13,8 @@
 		})
 	);
 };
+
+(jQuery.fn)
+.tval = function() {
+	return jQuery.trim(jQuery(this).val());
+};
