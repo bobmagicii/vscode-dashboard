@@ -211,8 +211,17 @@ class Dashboard {
 			case 'projectdel':
 				this.onProjectDel(msg);
 			break;
+			case 'projectset':
+				this.onProjectSet(msg);
+			break;
 			case 'configset':
 				this.onConfigSet(msg);
+			break;
+			case 'folderopen':
+				this.onFolderOpen(msg);
+			break;
+			case 'folderclose':
+				this.onFolderClose(msg);
 			break;
 		}
 
@@ -222,7 +231,9 @@ class Dashboard {
 	public onHey(msg: Message):
 	void {
 
-		this.sendv('sup', this.conf.getObject());
+		let config = this.conf.getObject();
+
+		this.sendv('sup', config);
 
 		return;
 	};
@@ -231,6 +242,7 @@ class Dashboard {
 	void {
 
 		for(const project of this.conf.database)
+		if(project instanceof ProjectEntry)
 		if(project.id === msg.data.id) {
 			Util.println(
 				`open ${msg.data.id}`,
@@ -301,6 +313,16 @@ class Dashboard {
 		return;
 	};
 
+	public onProjectSet(msg: Message):
+	void {
+
+		this.conf.updateProject(msg.data.id, msg.data);
+
+		this.onHey(msg);
+
+		return;
+	};
+
 	public onConfigSet(msg: Message):
 	void {
 
@@ -310,6 +332,26 @@ class Dashboard {
 
 		return;
 	};
+
+	public onFolderOpen(msg: Message):
+	void {
+
+		this.conf.updateProject(msg.data.id, { open: true });
+
+		this.onHey(msg);
+
+		return;
+	};
+
+	public onFolderClose(msg: Message):
+	void {
+
+		this.conf.updateProject(msg.data.id, { open: false });
+
+		this.onHey(msg);
+
+		return;
+	}
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////

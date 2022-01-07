@@ -1,3 +1,5 @@
+import colours from './ext/colours.js';
+import icons from './ext/icons.js';
 
 class Message {
 
@@ -54,14 +56,114 @@ class Dialog {
 	};
 }
 
+class DialogDashboardConfig
+extends Dialog {
+	constructor(api, selector='#DialogDashboardConfig') {
+		super(api, selector);
+		this.bindElements();
+		this.bindPresetButtons();
+		this.bindAcceptButton();
+		this.bindCancelButton();
+		return;
+	};
+
+	bindElements() {
+
+		this.inputTitle = this.el.find('#DashboardConfigTitle');
+		this.inputColumnSizing = this.el.find('#DashboardConfigColumnSizing');
+
+		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
+		this.btnAccept = this.el.find('#DashboardConfigSave');
+		this.btnCancel = this.el.find('#DashboardConfigCancel');
+
+		return;
+	};
+
+	bindPresetButtons() {
+
+		let self = this;
+
+		self.btnColumnSizingPresets
+		.on('click', function(){
+
+			let that = jQuery(this);
+			let value = that.attr('data-value');
+
+			self.inputColumnSizing
+			.val(value);
+
+			return;
+		});
+
+		return;
+	};
+
+	bindAcceptButton() {
+
+		let self = this;
+
+		(this.btnAccept)
+		.on('click',function() {
+
+			let config = {
+				title: self.inputTitle.tval(),
+				columnSizing: self.inputColumnSizing.tval()
+			};
+
+			self.api.send(new Message('configset', config));
+
+			self.hide();
+
+			return false;
+		});
+
+		return;
+	};
+
+	bindCancelButton() {
+
+		(this.btnCancel)
+		.on('click', this.hide.bind(this));
+
+		return;
+	};
+
+	fillConfigValues() {
+
+		this.inputTitle.val(this.api.title);
+		this.inputColumnSizing.val(this.api.columnSizing);
+
+		return;
+	};
+
+	show() {
+		this.fillConfigValues();
+		super.show();
+		return;
+	};
+
+};
+
 class DialogProjectNew
 extends Dialog {
 	constructor(api, selector='#DialogProjectNew') {
 		super(api, selector);
-		this.chooser = this.el.find('#ProjectFolderChoose');
+		this.bindElements();
 		this.bindTypeSelector();
 		this.bindSaveButton();
 		this.bindFolderChooser();
+		return;
+	};
+
+	bindElements() {
+
+		this.chooser = this.el.find('#ProjectFolderChoose');
+		this.inputName = this.el.find('#ProjectNewName');
+		this.inputSshUser = this.el.find('#ProjectNewSshUser');
+		this.inputSshHost = this.el.find('#ProjectNewSshHost');
+		this.inputSshPath = this.el.find('#ProjectNewSshPath');
+		this.inputPromode = this.el.find('#ProjectNewPromodeEntry');
+
 		return;
 	};
 
@@ -189,6 +291,19 @@ extends Dialog {
 
 		return;
 	};
+
+	show() {
+
+		this.setDirectory(null);
+		this.inputName.val('');
+		this.inputSshHost.val('');
+		this.inputSshUser.val('');
+		this.inputSshPath.val('');
+		this.inputPromode.val('');
+
+		super.show();
+		return;
+	};
 };
 
 class DialogProjectDelete
@@ -252,52 +367,32 @@ extends Dialog {
 	};
 };
 
-class DialogProjectEdit
+class DialogProjectConfig
 extends Dialog {
-	constructor(api, selector='#DialogProjectEdit') {
-		super(api, selector);
-		return;
-	};
-};
-
-class DialogDashboardConfig
-extends Dialog {
-	constructor(api, selector='#DialogDashboardConfig') {
+	constructor(api, selector='#DialogProjectConfig') {
 		super(api, selector);
 		this.bindElements();
-		this.bindPresetButtons();
 		this.bindAcceptButton();
 		this.bindCancelButton();
+		this.bindPresetAccent();
+		this.bindPresetIcon();
 		return;
 	};
 
 	bindElements() {
 
-		this.inputTitle = this.el.find('#DashboardConfigTitle');
-		this.inputColumnSizing = this.el.find('#DashboardConfigColumnSizing');
+		this.inputName = this.el.find('#ProjectConfigName');
+		this.inputPath = this.el.find('#ProjectConfigPath');
+		this.inputAccent = this.el.find('#ProjectConfigAccent');
+		this.inputIcon = this.el.find('#ProjectConfigIcon');
 
-		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
-		this.btnAccept = this.el.find('#DashboardConfigSave');
-		this.btnCancel = this.el.find('#DashboardConfigCancel');
+		this.binAccent = this.el.find('.Colours > optgroup');
+		this.binIcon = this.el.find('.Icons > optgroup');
+		this.previewColour = this.el.find('#ProjectConfigPreviewColour');
+		this.previewIcon = this.el.find('#ProjectConfigPreviewIcon');
 
-		return;
-	};
-
-	bindPresetButtons() {
-
-		let self = this;
-
-		self.btnColumnSizingPresets
-		.on('click', function(){
-
-			let that = jQuery(this);
-			let value = that.attr('data-value');
-
-			self.inputColumnSizing
-			.val(value);
-
-			return;
-		});
+		this.btnAccept = this.el.find('#ProjectConfigSave');
+		this.btnCancel = this.el.find('#ProjectConfigCancel');
 
 		return;
 	};
@@ -306,15 +401,22 @@ extends Dialog {
 
 		let self = this;
 
-		(this.btnAccept)
-		.on('click',function() {
+		self.btnAccept
+		.on('click',function(){
+			let id = jQuery.trim(self.el.attr('data-id'));
 
-			let config = {
-				title: self.inputTitle.tval(),
-				columnSizing: self.inputColumnSizing.tval()
-			};
+			let name = self.inputName.tval();
+			let path = self.inputPath.tval();
+			let accent = self.inputAccent.tval();
+			let icon = self.inputIcon.tval();
 
-			self.api.send(new Message('configset', config));
+			if(!id)
+			return;
+
+			self.api.send(new Message(
+				'projectset',
+				{ id, name, path, accent, icon }
+			));
 
 			self.hide();
 
@@ -326,36 +428,271 @@ extends Dialog {
 
 	bindCancelButton() {
 
-		(this.btnCancel)
+		this.btnCancel
 		.on('click', this.hide.bind(this));
+
+		return;
+	};
+
+	bindPresetAccent() {
+
+		let self = this;
+
+		(self.binAccent.parent())
+		.on('change', function(){
+			let colour = jQuery(this).val();
+
+			self.inputAccent.val(colour);
+			self.previewColour.css('color', colour);
+
+			return;
+		});
+
+		(self.inputAccent)
+		.on('keyup', function(){
+			let colour = self.inputAccent.val();
+			self.binAccent.parent().val('');
+			self.previewColour.css('color', colour);
+			return;
+		});
+
+		return;
+	};
+
+	bindPresetIcon() {
+
+		let self = this;
+
+		this.binIcon.parent()
+		.on('change', function(){
+			let icon = jQuery(this).val();
+
+			self.inputIcon.val(icon);
+			self.previewIcon.find('i').removeClassEx(/^codicon-/);
+			self.previewIcon.find('i').addClass(icon);
+
+			return;
+		});
+
+		this.inputIcon
+		.on('keyup', function(){
+			let icon = self.inputIcon.val();
+			self.binIcon.parent().val('');
+			self.previewIcon.find('i').removeClassEx(/^codicon-/);
+			self.previewIcon.find('i').addClass(icon);
+			return;
+		});
 
 		return;
 	};
 
 	fillConfigValues() {
 
-		this.inputTitle.val(this.api.title);
-		this.inputColumnSizing.val(this.api.columnSizing);
+		let id = this.el.attr('data-id');
+		let config = Dashboard.arrayFindById(this.api.database, id);
+
+		if(typeof config.id === 'undefined')
+		return;
+
+		this.inputName.val(config.name);
+		this.inputPath.val(config.path);
+		this.inputAccent.val(config.accent);
+		this.inputIcon.val(config.icon);
+
+		this.binAccent.empty();
+		this.binIcon.empty();
+
+		for(const colour in colours)
+		this.binAccent.append(
+			jQuery('<option />')
+			.text(colour)
+			.val(colours[colour])
+			.css('color', colours[colour])
+		);
+
+		for(const icon in icons)
+		this.binIcon.append(
+			jQuery('<option />')
+			.text(icon)
+			.val(icons[icon])
+		);
 
 		return;
 	};
 
-	show() {
+	show(id) {
+
+		this.el.attr('data-id', id);
+
+		jQuery('*[data-toggle=dropdown')
+		.dropdown('hide');
+
 		this.fillConfigValues();
 		super.show();
+
+		this.inputAccent.trigger('keyup');
+		this.inputIcon.trigger('keyup');
 		return;
 	};
-
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+class Folder {
+	constructor(api, item) {
+		this.api = api;
+		this.item = item;
+		this.el = this.api.template.folder.clone();
+		this.bindElements();
+		this.prepareElements();
+		this.fillWithProjects();
+		return;
+	};
+
+	bindElements() {
+
+		this.container = this.el.find('.ProjectEntry');
+		this.icon = this.el.find('.Icon i');
+		this.name = this.el.find('.Name');
+		this.btnDelete = this.el.find('.Delete');
+		this.btnEdit = this.el.find('.Edit');
+		this.btnReorder = this.el.find('.Reorder');
+		this.btnConfig = this.el.find('.Config');
+		this.projects = this.el.find('.Projects');
+
+		return;
+	};
+
+	prepareElements() {
+
+		let self = this;
+
+		self.container
+		.css('border-color', self.item.accent);
+
+		self.icon
+		.addClass(`${self.item.icon}`);
+
+		self.name
+		.text(self.item.name);
+
+		self.btnDelete
+		.on('click', function(){
+			self.api.dialog.projectDelete.show(self.item.id)
+			return false;
+		});
+
+		self.btnEdit
+		.on('click', function(){
+			self.api.dialog.projectConfig.show(self.item.id)
+			return false;
+		});
+
+		self.btnReorder
+		.on('mousedown.reorder', function(ev){
+			self.handleReordering(ev);
+			return false;
+		});
+
+		self.btnConfig
+		.dropdown();
+
+		self.el
+		.attr('data-id', self.item.id)
+		.on('click', function(){
+			self.el.toggleClass('Open');
+
+			if(self.el.hasClass('Open'))
+			self.api.send(new Message('folderopen', { id: self.item.id }));
+			else
+			self.api.send(new Message('folderclose', { id: self.item.id }));
+
+			return false;
+		});
+
+		if(self.item.open)
+		self.el.addClass('Open');
+
+		return;
+	};
+
+	fillWithProjects() {
+
+		let self = this;
+
+		self.projects.empty();
+
+		for(const item of self.item.projects) {
+			if(typeof item.path !== 'undefined')
+			self.projects.append((new Project(this.api, item)).el);
+		}
+
+		return;
+	};
+
+	getIcon() {
+
+		return 'codicon-root-folder';
+	};
+
+	handleReordering(ev) {
+
+		const evHover = 'mouseover.reorder';
+		const evMouseUp = 'mouseup.reorder';
+
+		let self = this;
+		let target = null;
+		let dropzones = jQuery('#ProjectBox > div');
+
+		dropzones
+		.on(evHover, function(){
+			target = jQuery(this);
+			console.log(`targeting ${target.attr('data-id')}}`);
+			return false;
+		});
+
+		jQuery(document)
+		.on(evMouseUp, function(){
+
+			jQuery(document)
+			.off(evMouseUp);
+
+			dropzones
+			.off(evHover);
+
+			////////
+
+			if(!target) {
+				// destroy ghost probably
+				return;
+			}
+
+			if(target.hasClass('Folder')) {
+				console.log(`drop on folder ${target.attr('data-id')}`);
+
+				target
+				.find('.Projects')
+				.append(self.el);
+
+				return;
+			}
+
+			console.log(`drop on project ${target.attr('data-id')}`);
+			target.before(self.el);
+			return;
+		});
+
+		return;
+	};
+
+};
+
 class Project {
 	constructor(api, item) {
 		this.api = api;
 		this.item = item;
-		this.el = this.api.template.clone();
+		this.el = this.api.template.project.clone();
 		this.bindElements();
 		return;
 	};
@@ -364,8 +701,11 @@ class Project {
 
 		let self = this;
 
+		self.el.find('.ProjectEntry')
+		.css('border-color', self.item.accent);
+
 		self.el.find('.Icon i')
-		.addClass(`codicon-${self.item.icon}`);
+		.addClass(`${self.item.icon}`);
 
 		self.el.find('.Name')
 		.text(self.item.name);
@@ -378,6 +718,18 @@ class Project {
 		self.el.find('.Delete')
 		.on('click', function(){
 			self.api.dialog.projectDelete.show(self.item.id)
+			return false;
+		});
+
+		self.el.find('.Edit')
+		.on('click', function(){
+			self.api.dialog.projectConfig.show(self.item.id)
+			return false;
+		});
+
+		self.el.find('.Reorder')
+		.on('mousedown.reorder', function(ev){
+			self.handleReordering(ev);
 			return false;
 		});
 
@@ -405,6 +757,79 @@ class Project {
 
 		return;
 	};
+
+	getIcon() {
+
+		if(self.item.path.match(/^file:/))
+		return 'codicon-folder';
+
+		return 'codicon-remote-explorer';
+	};
+
+	handleReordering(ev) {
+
+		const evHover = 'mouseover.reorder';
+		const evLeave = 'mouseleave.reorder';
+		const evMouseUp = 'mouseup.reorder';
+
+		let self = this;
+		let target = null;
+		let dropzones = jQuery('#ProjectBox').find('.Folder, .Project');
+
+		dropzones
+		.on(evLeave, function(){
+			target = jQuery('#ProjectBox');
+			return false;
+		})
+		.on(evHover, function(){
+			target = jQuery(this);
+			return false;
+		});
+
+		jQuery(document)
+		.on(evMouseUp, function(){
+
+			jQuery(document)
+			.off(evMouseUp);
+
+			jQuery(self.api.elMain)
+			.off(evHover);
+
+			dropzones
+			.off(evLeave)
+			.off(evHover);
+
+			////////
+
+			if(!target) {
+				// destroy ghost probably
+				return false;
+			}
+
+			if(target.hasClass('Folder')) {
+				console.log(`drop on folder ${target.attr('data-id')}`);
+
+				target
+				.find('.Projects')
+				.append(self.el);
+
+				return false;
+			}
+
+			if(target.hasClass('Project')) {
+				console.log(`drop on project ${target.attr('data-id')}`);
+				target.before(self.el);
+				return false;
+			}
+
+			console.log(`drop on idk`);
+			target.append(self.el);
+			return false;
+		});
+
+		return;
+	};
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -417,7 +842,7 @@ class Dashboard {
 	elToolbar = null;
 	elProjectBox = null;
 	body = null;
-	template = null;
+	template = {};
 	dialog = {};
 
 	// official config values.
@@ -451,13 +876,22 @@ class Dashboard {
 		this.elMessageDebug = jQuery('#Debug');
 		this.setDebug(this.debug);
 
-		this.template = (
+		this.template.folder = (
 			(this.elProjectBox)
-			.find('.Template')
+			.find('.FolderTemplate')
 			.remove()
 			.clone()
 			.removeClass('d-none')
-			.removeClass('Template')
+			.removeClass('FolderTemplate')
+		);
+
+		this.template.project = (
+			(this.elProjectBox)
+			.find('.ProjectTemplate')
+			.remove()
+			.clone()
+			.removeClass('d-none')
+			.removeClass('ProjectTemplate')
 		);
 
 		jQuery(window)
@@ -493,21 +927,12 @@ class Dashboard {
 
 		this.elProjectBox.empty();
 
-		for(const item of this.database)
-		this.elProjectBox.append((new Project(this, item)).el);
-
-		// update their sizing
-
-		/*
-		this.elProjectBox
-		.children()
-		.each(function(){
-			jQuery(this)
-			.removeClassEx(/^col/)
-			.addClass(self.columnSizing);
-			return;
-		});
-		*/
+		for(const item of this.database) {
+			if(typeof item.path === 'undefined')
+			this.elProjectBox.append((new Folder(this, item)).el);
+			else
+			this.elProjectBox.append((new Project(this, item)).el);
+		}
 
 		return;
 	};
@@ -557,6 +982,7 @@ class Dashboard {
 		this.dialog.config = new DialogDashboardConfig(this);
 		this.dialog.projectNew = new DialogProjectNew(this);
 		this.dialog.projectDelete = new DialogProjectDelete(this);
+		this.dialog.projectConfig = new DialogProjectConfig(this);
 
 		jQuery('.CmdProjectNew')
 		.on('click', this.dialog.projectNew.show.bind(this.dialog.projectNew));
@@ -623,7 +1049,7 @@ class Dashboard {
 
 	onProjectClick(item) {
 
-		let id = item.attr('data-id');
+		let id = item.id;
 
 		this.send(new Message('open', { id }));
 		return;
@@ -640,14 +1066,30 @@ class Dashboard {
 
 	static readableURI(input) {
 
-		if(input.match(/^file:/))
-		return decodeURIComponent(input.replace(/^file:\/\/\/?/,''));
+		if(input.match(/^file:/)) {
+			let output = decodeURIComponent(input.replace(/^file:\/\/\/?/,''));
+
+			if(navigator.platform.match(/^Win/))
+			output = output.replace(/\//g,'\\');
+
+			return output;
+		}
 
 		if(input.match(/^vscode-remote:/))
 		return input.replace(/vscode-remote:\/\/(?:[a-z0-9\-]*\+)?/,'');
 
 		return input;
 	};
+
+	static arrayFindById(input, whatYouSeek) {
+
+		for(const item of input)
+		if(typeof item.id !== 'undefined')
+		if(item.id === whatYouSeek)
+		return item;
+
+		return null;
+	}
 
 };
 

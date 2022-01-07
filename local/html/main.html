@@ -3,14 +3,14 @@
 <head>
 	<title>Dashboard</title>
 	<meta charset="utf-8" />
-	<meta http-equiv="content-security-policy" content="default-src 'none'; style-src %CSPSOURCE%; img-src %CSPSOURCE%; script-src %CSPSOURCE%; font-src %CSPSOURCE%;" />
+	<meta http-equiv="content-security-policy" content="default-src 'none'; style-src %CSPSOURCE% 'unsafe-inline'; img-src %CSPSOURCE%; script-src %CSPSOURCE%; font-src %CSPSOURCE%;" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="%NMROOT%/@vscode/codicons/dist/codicon.css" />
 	<link rel="stylesheet" type="text/css" href="%CSSROOT%/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="%CSSROOT%/main.css" />
-	<script type="module" src="%JSROOT%/jquery.min.js"></script>
-	<script type="module" src="%JSROOT%/jquery-addons.js"></script>
-	<script type="module" src="%JSROOT%/bootstrap.bundle.min.js"></script>
+	<script type="module" src="%JSROOT%/lib/jquery.min.js"></script>
+	<script type="module" src="%JSROOT%/lib/jquery-addons.js"></script>
+	<script type="module" src="%JSROOT%/lib/bootstrap.bundle.min.js"></script>
 	<script type="module" src="%JSROOT%/main.js"></script>
 </head>
 <body>
@@ -33,28 +33,79 @@
 				</div>
 			</div>
 		</div>
-		<div id="ProjectBox" class="row">
-			<div class="%COLUMNSIZING% mb-4 d-none Template">
+
+		<div id="ProjectBox" class="row align-items-center">
+
+			<div class="col-12 mb-4 d-none Folder FolderTemplate">
 				<div class="ProjectEntry">
-					<div class="Icon">
-						<i class="codicon"></i>
-					</div>
-					<div class="Info">
-						<div class="Name">Project Name</div>
-						<div class="Path">Project Path</div>
-					</div>
-					<div class="IdkYet1" style="align-self:center;">
-						<div class="dropdown">
-							<button type="button" class="IconButton Config" data-toggle="dropdown">
-								<i class="codicon codicon-settings-gear"></i>
-							</button>
-							<div class="dropdown-menu dropdown-menu-right p-2">
-								<button class="btn btn-block btn-dark Delete">Remove</button>
+					<div class="ProjectRow">
+						<div class="Icon"><i class="codicon"></i></div>
+						<div class="Info align-self-center">
+							<div class="Name mb-0">Project Name</div>
+						</div>
+						<div class="IdkYet1" style="align-self:center;">
+							<div class="dropdown">
+								<button type="button" class="IconButton Config" data-toggle="dropdown">
+									<i class="codicon codicon-settings-gear"></i>
+								</button>
+								<div class="dropdown-menu dropdown-menu-right p-2">
+									<div class="row tight">
+										<div class="col">
+											<button class="btn btn-block btn-dark Edit"><i class="codicon codicon-edit"></i></button>
+										</div>
+										<div class="col-auto">
+											<button class="btn btn-block btn-danger Delete"><i class="codicon codicon-close"></i></button>
+										</div>
+									</div>
+								</div>
 							</div>
+						</div>
+						<div class="IdkYet1" style="align-self:center;">
+							<button type="button" class="IconButton Reorder">
+								<i class="codicon codicon-three-bars"></i>
+							</button>
+						</div>
+					</div>
+					<div class="Projects" style="width:100%;">
+						Projects Listing...
+					</div>
+				</div>
+			</div>
+
+			<div class="%COLUMNSIZING% mb-4 d-none Project ProjectTemplate">
+				<div class="ProjectEntry">
+					<div class="ProjectRow">
+						<div class="Icon"><i class="codicon"></i></div>
+						<div class="Info">
+							<div class="Name">Project Name</div>
+							<div class="Path">Project Path</div>
+						</div>
+						<div class="IdkYet1" style="align-self:center;">
+							<div class="dropdown">
+								<button type="button" class="IconButton Config" data-toggle="dropdown">
+									<i class="codicon codicon-settings-gear"></i>
+								</button>
+								<div class="dropdown-menu dropdown-menu-right p-2">
+									<div class="row tight">
+										<div class="col">
+											<button class="btn btn-block btn-dark Edit"><i class="codicon codicon-edit"></i></button>
+										</div>
+										<div class="col-auto">
+											<button class="btn btn-block btn-danger Delete"><i class="codicon codicon-close"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="IdkYet1" style="align-self:center;">
+							<button type="button" class="IconButton Reorder">
+								<i class="codicon codicon-three-bars"></i>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 		<div id="Debug" class="d-none">
 			<h4>Debug:</h4>
@@ -66,6 +117,53 @@
 		<div class="Wash"></div>
 
 		<div class="d-flex justify-content-center align-items-center h-100 w-100 Mount">
+
+			<div id="DialogDashboardConfig" class="Dialog d-none" data-id="">
+				<header>
+					<div class="Name">Settings</div>
+					<div class="Close"><i class="codicon codicon-close"></i></div>
+				</header>
+				<section>
+					<div class="row">
+						<div class="col-12 mb-4">
+							<div class="font-weight-bold mb-2">Dashboard Title</div>
+							<div class="text-muted mb-2">Displayed at the top of the Project Dashboard.</div>
+							<input id="DashboardConfigTitle" type="text" class="form-control" placeholder="Dashboard Title..." />
+						</div>
+						<div class="col-12 mb-4">
+							<div class="font-weight-bold mb-2">Column Class Stack</div>
+							<div class="text-muted mb-2">Stack of Bootstrap classes to modify the column behaviour. Use the preset buttons below or craft your own.</div>
+							<div class="row tight mb-2">
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12">1</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6">1-2</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-6">2</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-4">3</button>
+								</div>
+								<div class="col-12 col-sm-auto mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
+								</div>
+							</div>
+							<div class="mb-2">
+								<input id="DashboardConfigColumnSizing" type="text" class="form-control" placeholder="Column Config..." />
+							</div>
+						</div>
+					</div>
+				</section>
+				<footer>
+					<div><button id="DashboardConfigSave" class="btn btn-primary">Save</button></div>
+					<div><button id="DashboardConfigCancel" class="btn btn-dark">Cancel</button></div>
+				</footer>
+			</div>
 
 			<div id="DialogProjectNew" class="Dialog d-none">
 				<header>
@@ -155,50 +253,56 @@
 				</footer>
 			</div>
 
-			<div id="DialogDashboardConfig" class="Dialog d-none" data-id="">
+			<div id="DialogProjectConfig" class="Dialog d-none" data-id="">
 				<header>
-					<div class="Name">Settings</div>
+					<div class="Name">Project Settings</div>
 					<div class="Close"><i class="codicon codicon-close"></i></div>
 				</header>
 				<section>
-					<div class="row">
+					<div class="row tight align-items-center">
 						<div class="col-12 mb-4">
-							<div class="font-weight-bold mb-2">Dashboard Title</div>
-							<div class="text-muted mb-2">Displayed at the top of the Project Dashboard.</div>
-							<input id="DashboardConfigTitle" type="text" class="form-control" placeholder="Dashboard Title..." />
+							<input id="ProjectConfigName" type="text" class="form-control" placeholder="Name..." />
 						</div>
 						<div class="col-12 mb-4">
-							<div class="font-weight-bold mb-2">Column Class Stack</div>
-							<div class="text-muted mb-2">Stack of Bootstrap classes to modify the column behaviour. Use the preset buttons below or craft your own.</div>
-							<div class="row tight mb-2">
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12">1</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6">1-2</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-6">2</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-4">3</button>
-								</div>
-								<div class="col-12 col-sm-auto mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
-								</div>
+							<input id="ProjectConfigPath" type="text" class="form-control" placeholder="URI..." />
+						</div>
+						<div class="col-12"></div>
+						<div class="col-auto mb-4">
+							<div id="ProjectConfigPreviewColour" class="font-size-most-large">
+								<i class="codicon codicon-circle-large-filled"></i>
 							</div>
-							<div class="mb-2">
-								<input id="DashboardConfigColumnSizing" type="text" class="form-control" placeholder="Column Config..." />
+						</div>
+						<div class="col-8 mb-4">
+							<input id="ProjectConfigAccent" type="text" class="form-control" placeholder="Accent Colour..." />
+						</div>
+						<div class="col mb-4">
+							<select class="form-control Colours">
+								<option value="">Colours...</option>
+								<optgroup label="Presets...">
+								</optgroup>
+							</select>
+						</div>
+						<div class="col-12"></div>
+						<div class="col-auto mb-4">
+							<div id="ProjectConfigPreviewIcon" class="font-size-most-large">
+								<i class="codicon codicon-settings-gear"></i>
 							</div>
+						</div>
+						<div class="col-8 mb-4">
+							<input id="ProjectConfigIcon" type="text" class="form-control" placeholder="Icon..." />
+						</div>
+						<div class="col mb-4">
+							<select class="form-control Icons">
+								<option value="">Icons...</option>
+								<optgroup label="Codicons">
+								</optgroup>
+							</select>
 						</div>
 					</div>
 				</section>
 				<footer>
-					<div><button id="DashboardConfigSave" class="btn btn-primary">Save</button></div>
-					<div><button id="DashboardConfigCancel" class="btn btn-dark">Cancel</button></div>
+					<div><button id="ProjectConfigSave" class="btn btn-primary">Save</button></div>
+					<div><button id="ProjectConfigCancel" class="btn btn-dark">Cancel</button></div>
 				</footer>
 			</div>
 

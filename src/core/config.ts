@@ -1,6 +1,9 @@
 import * as vscode from 'vscode';
+import * as uuid from 'uuid';
+
 import ProjectEntry from "./project-entry";
 import Util from './util';
+import ProjectFolder from './project-folder';
 
 class Config {
 
@@ -11,7 +14,7 @@ class Config {
 
 	title: string;
 	debug: boolean;
-	database: Array<ProjectEntry>;
+	database: Array<ProjectEntry|ProjectFolder>;
 	columnSizing: string;
 	tabMode: boolean;
 	showPath: boolean;
@@ -32,7 +35,7 @@ class Config {
 		this.title = 'Projects';
 		this.debug = false;
 		this.database = [];
-		this.columnSizing = 'col-12 col-sm-6 col-md-4 col-lg-3';
+		this.columnSizing = 'col-12 col-md-6';
 		this.tabMode = true;
 		this.showPath = true;
 
@@ -64,7 +67,10 @@ class Config {
 		}
 
 		for(const item of this.api.database)
-		this.database.push(ProjectEntry.FromObject(item));
+		if(typeof item.path === 'undefined')
+		this.database.push(new ProjectFolder(item));
+		else
+		this.database.push(new ProjectEntry(item));
 
 		return;
 	};
@@ -128,14 +134,17 @@ class Config {
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
-	public addProject(name: string, uri: string):
+	public addProject(name: string, path: string):
 	void {
 
 		(this.database)
-		.push(new ProjectEntry(
-			name,
-			uri
-		));
+		.push(new ProjectEntry({
+			id: uuid.v4(),
+			name: name,
+			path: path,
+			accent: null,
+			icon: null
+		}));
 
 		this.save();
 
@@ -149,6 +158,20 @@ class Config {
 			this.database,
 			id
 		);
+
+		this.save();
+
+		return;
+	};
+
+	public updateProject(id: string, data: any):
+	void {
+
+		for(const item of this.database)
+		if(item.id === id) {
+			item.update(data);
+			break;
+		}
 
 		this.save();
 

@@ -5,7 +5,7 @@ class Util {
 	public static println(message: string, source: string='DEBUG'):
 	void {
 
-		console.log(`[DASH ${source}] ${message}`);
+		console.log(`[DASH ${source}] ${message}\n`);
 		return;
 	}
 

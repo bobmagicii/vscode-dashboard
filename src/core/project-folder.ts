@@ -1,29 +1,34 @@
 import * as vscode from 'vscode';
+
+import ProjectEntry from './project-entry';
 import Util from './util';
 
-type ProjectEntryArgv = {
+type ProjectFolderArgv = {
 	id: string,
-	name: string
-	path: string,
+	name: string,
 	accent: string|null,
-	icon: string|null
+	icon: string|null,
+	open: boolean,
+	projects: Array<ProjectEntry>
 };
 
-class ProjectEntry {
+class ProjectFolder {
 
 	public id: string;
-	public icon: string;
 	public name: string;
-	public path: string;
 	public accent: string;
+	public icon: string;
+	public open: boolean;
+	public projects: Array<ProjectEntry>;
 
-	constructor(input: ProjectEntryArgv) {
+	constructor(input: ProjectFolderArgv) {
 
 		this.id = input.id;
 		this.name = input.name;
-		this.path = input.path;
 		this.icon = input.icon ?? this.getIcon();
 		this.accent = input.accent ?? 'var(--DashboardProjectAccent)';
+		this.open = input.open ?? false;
+		this.projects = input.projects.length ? input.projects.map(((v)=>v)) : [];
 
 		return;
 	};
@@ -31,26 +36,11 @@ class ProjectEntry {
 	public getIcon():
 	string {
 
-		if(this.path.match(/@/))
-		return 'codicon-remote-explorer';
-
 		return 'codicon-folder';
 	};
 
-	public getUriObject():
-	vscode.Uri {
-
-		// local filepaths can just be their path.
-		// ssh tho, vscode-remote://ssh-remote+USER@HOST/PATH
-
-		if(this.path.match(/:\/\//))
-		return vscode.Uri.parse(this.path, true);
-
-		return vscode.Uri.file(this.path);
-	};
-
 	public update(input: any):
-	this {
+	typeof this {
 
 		if(typeof input.id !== 'undefined')
 		this.id = input.id;
@@ -58,18 +48,18 @@ class ProjectEntry {
 		if(typeof input.name !== 'undefined')
 		this.name = input.name;
 
-		if(typeof input.path !== 'undefined')
-		this.path = input.path;
-
 		if(typeof input.accent !== 'undefined')
 		this.accent = input.accent;
 
 		if(typeof input.icon !== 'undefined')
 		this.icon = input.icon;
 
+		if(typeof input.open !== 'undefined')
+		this.open = input.open;
+
 		return this;
 	};
 
 };
 
-export default ProjectEntry;
+export default ProjectFolder;

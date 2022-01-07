@@ -35,7 +35,7 @@
 				},
 				"projectsyeah.columnSizing": {
 					"type": "string",
-					"default": "col-12 col-sm-6 col-md-4 col-lg-3",
+					"default": "col-12 col-md-6",
 					"description": "The Bootstrap CSS classes used to adjust how the columns scale to your window size."
 				},
 				"projectsyeah.database": {

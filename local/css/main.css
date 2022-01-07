@@ -11,6 +11,11 @@ body {
 	padding-bottom: 1.5rem;
 }
 
+.form-control:focus {
+	box-shadow: none;
+	outline: none;
+}
+
 /*******************************************************************************
 *******************************************************************************/
 
@@ -106,9 +111,9 @@ body.vscode-dark {
 
 	border-radius: 6px;
 	cursor: pointer;
-	display: flex;
 	padding: 16px;
 	transition: background-color 250ms;
+	user-select: none;
 }
 
 .ProjectEntry:hover {
@@ -116,8 +121,12 @@ body.vscode-dark {
 	transition: background-color 250ms;
 }
 
+.ProjectEntry .ProjectRow {
+	display: flex;
+	align-items: center;
+}
+
 .ProjectEntry .Icon {
-	font-size: 3em;
 	margin-right: 16px;
 }
 
@@ -128,7 +137,6 @@ body.vscode-dark {
 
 .ProjectEntry .Name {
 	font-weight: normal;
-	font-size: 1.25em;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -152,7 +160,24 @@ body.vscode-dark {
 	padding: 4px;
 }
 
+/*******************************************************************************
+*******************************************************************************/
 
+.Folder .Icon {
+
+}
+
+.Folder .Projects {
+	display: none;
+}
+
+.Folder.Open .Projects {
+	display: flex;
+	margin-top: 1.5rem;
+}
+
+/*******************************************************************************
+*******************************************************************************/
 
 #Overlay {
 	position: fixed;
@@ -182,11 +207,12 @@ body.vscode-dark {
 .Dialog {
 	background-color: var(--DashboardDialogBg);
 	color: var(--DashboardDialogFg);
+	font-size: 0.80em;
 
 	border-radius: 6px;
 	width: 50vw;
 
-	overflow: scroll;
+	overflow: auto;
 	overflow-x: hidden;
 
 	max-height: 92vh;
@@ -339,8 +365,11 @@ em {
 	font-weight: bold;
 }
 
-input {
+input,
+select,
+textarea {
 	background-color: var(--DashboardInputBg) !important;
 	border-color: var(--DashboardInputBorder) !important;
 	color: var(--DashboardInputFg) !important;
 }
+
