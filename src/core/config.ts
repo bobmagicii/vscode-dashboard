@@ -15,14 +15,15 @@ class Config {
 	title: string;
 	debug: boolean;
 	database: Array<ProjectEntry|ProjectFolder>;
+	folderSizing: string;
 	columnSizing: string;
 	tabMode: boolean;
 	showPath: boolean;
 
 	private keepers:
 	Array<string> = [
-		'title', 'debug', 'database', 'columnSizing', 'tabMode',
-		'showPath'
+		'title', 'debug', 'database', 'folderSizing', 'columnSizing',
+		'tabMode', 'showPath'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -32,9 +33,10 @@ class Config {
 
 		this.api = vscode.workspace.getConfiguration('projectsyeah');
 
-		this.title = 'Projects';
+		this.title = 'Dashboard';
 		this.debug = false;
 		this.database = [];
+		this.folderSizing = 'col-12';
 		this.columnSizing = 'col-12 col-md-6';
 		this.tabMode = true;
 		this.showPath = true;
@@ -134,6 +136,20 @@ class Config {
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
+	public addFolder(name: string):
+	void {
+
+		(this.database)
+		.push(new ProjectFolder({
+			id: uuid.v4(),
+			name: name
+		}));
+
+		this.save();
+
+		return;
+	};
+
 	public addProject(name: string, path: string):
 	void {
 
@@ -154,11 +170,7 @@ class Config {
 	public removeProject(id: string):
 	void {
 
-		this.database = Util.filterArrayStripById(
-			this.database,
-			id
-		);
-
+		this.findProject(id, true);
 		this.save();
 
 		return;
@@ -167,13 +179,12 @@ class Config {
 	public updateProject(id: string, data: any):
 	void {
 
-		for(const item of this.database)
-		if(item.id === id) {
-			item.update(data);
-			break;
-		}
+		const item = this.findProject(id);
 
-		this.save();
+		if(item !== null) {
+			item.update(data);
+			this.save();
+		}
 
 		return;
 	};
@@ -181,76 +192,108 @@ class Config {
 	public moveProject(id: string, into: string|null, before: string|null):
 	void {
 
-		let found: ProjectFolder|ProjectEntry|null = null;
 		let database: Array<any>|null = null;
+		let found = this.findProject(id, true);
 
-		// first we need to find this and remove it from its current
-		// place of residence.
+		if(found === null)
+		return Util.println(
+			`project ${id} not found`,
+			'Config::moveProject'
+		);
 
-		for(const item of this.database) {
-			if(item instanceof ProjectFolder)
-			if(found = Util.findInArrayById(item.projects, id)) {
-				item.projects = Util.filterArrayStripById(item.projects, id);
-				break;
-			}
-
-			if(item instanceof ProjectEntry)
-			if(item.id === id) {
-				found = item;
-				this.database = Util.filterArrayStripById(this.database, id);
-				break;
-			}
-		}
-
-		if(found === null) {
-			Util.println(
-				`project ${id} not found`,
-				'Config::moveProject'
-			);
-
-			return;
-		}
-
-		// now put it in its new home.
+		// then insert it back into the dataset in its final resting place.
+		// first decide if its going into a folder or not.
 
 		database = this.database;
 
 		if(into !== null) {
 			let folder = Util.findInArrayById(this.database, into);
 
-			if(!(folder instanceof ProjectFolder)) {
-				Util.println(
-					`folder ${into} not found`,
-					'Config::moveProject'
-				);
-				return;
-			}
-
-			Util.println(`putting project into folder ${folder.id}`, 'Config::moveProject');
+			if(folder instanceof ProjectFolder)
 			database = folder.projects;
+
+			else
+			return Util.println(
+				`folder ${into} not found`,
+				'Config::moveProject'
+			);
 		}
 
-		if(database instanceof Array) {
-			let key: any = 0;
+		if(!Array.isArray(database))
+		return Util.println(
+			'nothing happened',
+			'Config::moveProject'
+		);
 
-			if(before !== null) {
-				for(key in database) {
-					if(database[key].id === before) {
-						Util.println(`putting project before ${before}`, 'Config::moveProject');
-						break;
-					}
+		// then determine if it needs to go into a specific spot into the
+		// the final dataset.
+
+		let key: any = 0;
+		let inset: boolean = false;
+
+		if(before !== null) {
+			for(key in database) {
+				if(database[key].id === before) {
+					inset = true;
+					break;
 				}
 			}
-
-			Util.println(`seating project in slot ${key}`, 'Config::moveProject');
-			database.splice(key, 0, found);
-
-			this.save();
-			return;
 		}
 
-		Util.println('nothing happened', 'Config::moveProject');
+		if(inset)
+		Util.println(
+			`insert before ${before}`,
+			'Config::moveProject'
+		);
+
+		Util.println(
+			`seating project in slot ${key}`,
+			'Config::moveProject'
+		);
+
+		// and do it mang.
+
+		database.splice(key, 0, found);
+		this.save();
+
 		return;
+	};
+
+	public findProject(id: string, removeAsWell: boolean = false):
+	ProjectFolder|ProjectEntry|null {
+
+		let found: ProjectFolder|ProjectEntry|null = null;
+
+		// note: the remove operation does not commit a save, this is
+		// intentional.
+
+		for(const item of this.database) {
+			if(item.id === id) {
+				found = item;
+
+				if(removeAsWell)
+				this.database = Util.filterArrayStripById(
+					this.database,
+					id
+				);
+
+				break;
+			}
+
+			if(item instanceof ProjectFolder)
+			if(found = Util.findInArrayById(item.projects, id)) {
+
+				if(removeAsWell)
+				item.projects = Util.filterArrayStripById(
+					item.projects,
+					id
+				);
+
+				break;
+			}
+		}
+
+		return found;
 	};
 
 };

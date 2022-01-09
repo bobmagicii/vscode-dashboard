@@ -205,6 +205,9 @@ class Dashboard {
 			case 'pickdir':
 				this.onPickDir(msg);
 			break;
+			case 'foldernew':
+				this.onFolderNew(msg);
+			break;
 			case 'projectnew':
 				this.onProjectNew(msg);
 			break;
@@ -289,6 +292,15 @@ class Dashboard {
 
 			return;
 		});
+
+		return;
+	};
+
+	public onFolderNew(msg: Message):
+	void {
+
+		this.conf.addFolder(msg.data.name);
+		this.onHey(msg);
 
 		return;
 	};

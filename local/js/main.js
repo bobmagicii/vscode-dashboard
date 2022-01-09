@@ -70,8 +70,10 @@ extends Dialog {
 	bindElements() {
 
 		this.inputTitle = this.el.find('#DashboardConfigTitle');
+		this.inputFolderSizing = this.el.find('#DashboardConfigFolderSizing');
 		this.inputColumnSizing = this.el.find('#DashboardConfigColumnSizing');
 
+		this.btnFolderSizingPresets = this.el.find('.DashboardFolderPreset');
 		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
 		this.btnAccept = this.el.find('#DashboardConfigSave');
 		this.btnCancel = this.el.find('#DashboardConfigCancel');
@@ -82,6 +84,19 @@ extends Dialog {
 	bindPresetButtons() {
 
 		let self = this;
+
+
+		self.btnFolderSizingPresets
+		.on('click', function(){
+
+			let that = jQuery(this);
+			let value = that.attr('data-value');
+
+			self.inputFolderSizing
+			.val(value);
+
+			return;
+		});
 
 		self.btnColumnSizingPresets
 		.on('click', function(){
@@ -107,6 +122,7 @@ extends Dialog {
 
 			let config = {
 				title: self.inputTitle.tval(),
+				folderSizing: self.inputFolderSizing.tval(),
 				columnSizing: self.inputColumnSizing.tval()
 			};
 
@@ -131,6 +147,7 @@ extends Dialog {
 	fillConfigValues() {
 
 		this.inputTitle.val(this.api.title);
+		this.inputFolderSizing.val(this.api.folderSizing);
 		this.inputColumnSizing.val(this.api.columnSizing);
 
 		return;
@@ -142,6 +159,53 @@ extends Dialog {
 		return;
 	};
 
+};
+
+class DialogFolderNew
+extends Dialog {
+	constructor(api, selector='#DialogFolderNew') {
+		super(api, selector);
+		this.bindElements();
+		this.bindSaveButton();
+		return;
+	};
+
+	bindElements() {
+
+		this.inputName = this.el.find('#FolderNewName');
+
+		return;
+	};
+
+	bindSaveButton() {
+
+		let self = this;
+
+		self.el.find('#FolderNewSave')
+		.on('click',function(){
+
+			let name = jQuery.trim(self.el.find('#FolderNewName').val());
+
+			if(name === null || name === '')
+			return;
+
+			(self.el.find('.Close'))
+			.trigger('click');
+
+			self.api.send(new Message('foldernew', { name }));
+			return;
+		});
+
+		return;
+	};
+
+	show() {
+
+		this.inputName.val('');
+
+		super.show();
+		return;
+	};
 };
 
 class DialogProjectNew
@@ -600,7 +664,9 @@ class Folder {
 		.dropdown();
 
 		self.el
-		.attr('data-id', self.item.id)
+		.attr('data-id', self.item.id);
+
+		self.el.find('.Fold')
 		.on('click', function(){
 			self.el.toggleClass('Open');
 
@@ -614,6 +680,16 @@ class Folder {
 
 		if(self.item.open)
 		self.el.addClass('Open');
+
+		// use the configured column sizing. main trick here is bootstrap's
+		// column clases are tehdumb and must be the first in the list as
+		// they use some of those pattern matching selectors. so strip out
+		// all the old size classes, then put the new ones on the front of
+		// whatever was leftover.
+
+		self.el
+		.removeClassEx(/^col/)
+		.addClass(`${this.api.folderSizing} ${self.el.attr('class')}`);
 
 		return;
 	};
@@ -649,18 +725,25 @@ class Folder {
 	handleReordering(ev) {
 
 		const evHover = 'mouseover.reorder';
+		const evLeave = 'mouseleave.reorder';
 		const evMouseUp = 'mouseup.reorder';
 
 		let self = this;
 		let target = null;
-		let dropzones = jQuery('#ProjectBox > div');
+		let dropzones = jQuery('#ProjectBox').find('.Folder, .Project');
 
 		dropzones
+		.on(evLeave, function(){
+			target = jQuery('#ProjectBox');
+			return false;
+		})
 		.on(evHover, function(){
 			target = jQuery(this);
-			console.log(`targeting ${target.attr('data-id')}}`);
 			return false;
 		});
+
+		jQuery('body')
+		.addClass('ReorderFolder');
 
 		jQuery(document)
 		.on(evMouseUp, function(){
@@ -668,29 +751,52 @@ class Folder {
 			jQuery(document)
 			.off(evMouseUp);
 
-			dropzones
+			jQuery(self.api.elMain)
 			.off(evHover);
+
+			dropzones
+			.off(evLeave)
+			.off(evHover);
+
+			jQuery('body')
+			.removeClass('ReorderFolder');
+
+			let tid = target.attr('data-id');
+			let pid = target.attr('data-parent') ?? null;
 
 			////////
 
 			if(!target) {
 				// destroy ghost probably
-				return;
+				return false;
 			}
 
 			if(target.hasClass('Folder')) {
-				console.log(`drop on folder ${target.attr('data-id')}`);
+				//target
+				//.find('.Projects')
+				//.append(self.el);
 
-				target
-				.find('.Projects')
-				.append(self.el);
+				self.api.send(new Message('projectmove', { id: self.id, before: tid }));
 
-				return;
+				return false;
 			}
 
-			console.log(`drop on project ${target.attr('data-id')}`);
-			target.before(self.el);
-			return;
+			if(target.hasClass('Project')) {
+				//target.before(self.el);
+
+				if(pid !== null)
+				self.api.send(new Message('projectmove', { id: self.id, before: pid }));
+
+				else
+				self.api.send(new Message('projectmove', { id: self.id, before: tid }));
+
+				return false;
+			}
+
+			//target.append(self.el);
+			self.api.send(new Message('projectmove', { id: self.id, before: null, into: null }));
+
+			return false;
 		});
 
 		return;
@@ -799,10 +905,14 @@ class Project {
 			return false;
 		});
 
+		jQuery('body')
+		.addClass('ReorderProject');
+
 		jQuery(document)
 		.on(evMouseUp, function(){
 
 			jQuery(document)
+			.removeClass('ReorderProject')
 			.off(evMouseUp);
 
 			jQuery(self.api.elMain)
@@ -811,6 +921,9 @@ class Project {
 			dropzones
 			.off(evLeave)
 			.off(evHover);
+
+			jQuery('body')
+			.removeClass('ReorderProject');
 
 			let tid = target.attr('data-id');
 			let pid = target.attr('data-parent') ?? null;
@@ -870,6 +983,7 @@ class Dashboard {
 	title = 'Dashboard';
 	debug = false;
 	database = [];
+	folderSizing = 'col-12';
 	columnSizing = 'col-12';
 	tabMode = true;
 	showPath = true;
@@ -999,12 +1113,16 @@ class Dashboard {
 	prepareUI() {
 
 		this.dialog.config = new DialogDashboardConfig(this);
+		this.dialog.folderNew = new DialogFolderNew(this);
 		this.dialog.projectNew = new DialogProjectNew(this);
 		this.dialog.projectDelete = new DialogProjectDelete(this);
 		this.dialog.projectConfig = new DialogProjectConfig(this);
 
 		jQuery('.CmdProjectNew')
 		.on('click', this.dialog.projectNew.show.bind(this.dialog.projectNew));
+
+		jQuery('.CmdFolderNew')
+		.on('click', this.dialog.folderNew.show.bind(this.dialog.folderNew));
 
 		jQuery('.CmdDashboardConfig')
 		.on('click', this.dialog.config.show.bind(this.dialog.config));

@@ -17,7 +17,7 @@
 <div class="container-fluid">
 
 	<div id="Dashboard">
-		<div id="Toolbar">
+		<div id="Toolbar" class="Toolbar">
 			<div class="row tight align-items-center">
 				<div class="col-auto">
 					<i class="codicon codicon-home"></i>
@@ -26,26 +26,34 @@
 					<span class="DashboardTitle">Dashboard</span>
 				</div>
 				<div class="col-auto">
-					<button class="btn btn-sm btn-dark CmdProjectNew"><i class="codicon codicon-add"></i></button>
+					<button class="btn btn-sm btn-dark CmdProjectNew" title="New Project..."><i class="codicon codicon-add"></i></button>
 				</div>
 				<div class="col-auto">
-					<button class="btn btn-sm btn-dark CmdDashboardConfig"><i class="codicon codicon-settings-gear"></i></button>
+					<button class="btn btn-sm btn-dark CmdFolderNew" title="New Folder..."><i class="codicon codicon-new-folder"></i></button>
+				</div>
+				<div class="col-auto">
+					<button class="btn btn-sm btn-dark CmdDashboardConfig" title="Dashboard Settings..."><i class="codicon codicon-settings-gear"></i></button>
 				</div>
 			</div>
 		</div>
-
 		<div id="ProjectBox" class="row align-items-center">
 
-			<div class="col-12 mb-4 d-none Folder FolderTemplate">
+			<div class="%COLUMNSIZING% mb-4 d-none Folder FolderTemplate">
 				<div class="ProjectEntry">
-					<div class="ProjectInfo">
-						<div class="Icon"><i class="codicon"></i></div>
-						<div class="Info align-self-center">
-							<div class="Name mb-0">Project Name</div>
+					<div class="ProjectInfo row tight align-items-center">
+						<div class="col-auto Fold">
+							<button class="btn btn-sm btn-dark" title="Open/Close Folder"><i class="codicon codicon-chevron-right"></i></button>
+							<button class="btn btn-sm btn-dark" title="Open/Close Folder"><i class="codicon codicon-fold-down"></i></button>
 						</div>
-						<div class="IdkYet1" style="align-self:center;">
+						<div class="col-auto Icon pl-2 pr-2">
+							<i class="codicon"></i>
+						</div>
+						<div class="col Info">
+							<div class="Name">Project Name</div>
+						</div>
+						<div class="col-auto IdkYet1">
 							<div class="dropdown">
-								<button type="button" class="IconButton Config" data-toggle="dropdown">
+								<button type="button" class="btn btn-sm btn-dark Config" data-toggle="dropdown">
 									<i class="codicon codicon-settings-gear"></i>
 								</button>
 								<div class="dropdown-menu dropdown-menu-right p-2">
@@ -60,8 +68,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="IdkYet1" style="align-self:center;">
-							<button type="button" class="IconButton Reorder">
+						<div class="col-auto IdkYet1">
+							<button type="button" class="btn btn-sm btn-dark Reorder">
 								<i class="codicon codicon-three-bars"></i>
 							</button>
 						</div>
@@ -74,13 +82,13 @@
 
 			<div class="%COLUMNSIZING% mb-4 d-none Project ProjectTemplate">
 				<div class="ProjectEntry">
-					<div class="ProjectInfo">
-						<div class="Icon"><i class="codicon"></i></div>
-						<div class="Info">
+					<div class="ProjectInfo row tight align-items-center">
+						<div class="col-auto Icon"><i class="codicon font-size-most-large"></i></div>
+						<div class="col Info">
 							<div class="Name">Project Name</div>
 							<div class="Path">Project Path</div>
 						</div>
-						<div class="IdkYet1" style="align-self:center;">
+						<div class="col-auto IdkYet1" style="align-self:center;">
 							<div class="dropdown">
 								<button type="button" class="IconButton Config" data-toggle="dropdown">
 									<i class="codicon codicon-settings-gear"></i>
@@ -97,7 +105,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="IdkYet1" style="align-self:center;">
+						<div class="col-auto IdkYet1" style="align-self:center;">
 							<button type="button" class="IconButton Reorder">
 								<i class="codicon codicon-three-bars"></i>
 							</button>
@@ -131,8 +139,35 @@
 							<input id="DashboardConfigTitle" type="text" class="form-control" placeholder="Dashboard Title..." />
 						</div>
 						<div class="col-12 mb-4">
-							<div class="font-weight-bold mb-2">Column Class Stack</div>
-							<div class="text-muted mb-2">Stack of Bootstrap classes to modify the column behaviour. Use the preset buttons below or craft your own.</div>
+							<div class="font-weight-bold mb-2">Folder Column Sizing</div>
+							<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
+							<div class="row tight mb-2">
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12">1</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-md-6">1-2</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-6">2</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
+								</div>
+								<div class="col col-sm mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-4">3</button>
+								</div>
+								<div class="col-12 col-sm-auto mb-2">
+									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
+								</div>
+							</div>
+							<div class="mb-2">
+								<input id="DashboardConfigFolderSizing" type="text" class="form-control" placeholder="Folder Sizing..." />
+							</div>
+						</div>
+						<div class="col-12 mb-4">
+							<div class="font-weight-bold mb-2">Project Column Sizing</div>
+							<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
 							<div class="row tight mb-2">
 								<div class="col col-sm mb-2">
 									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12">1</button>
@@ -154,7 +189,7 @@
 								</div>
 							</div>
 							<div class="mb-2">
-								<input id="DashboardConfigColumnSizing" type="text" class="form-control" placeholder="Column Config..." />
+								<input id="DashboardConfigColumnSizing" type="text" class="form-control" placeholder="Project Sizing..." />
 							</div>
 						</div>
 					</div>
@@ -162,6 +197,24 @@
 				<footer>
 					<div><button id="DashboardConfigSave" class="btn btn-primary">Save</button></div>
 					<div><button id="DashboardConfigCancel" class="btn btn-dark">Cancel</button></div>
+				</footer>
+			</div>
+
+
+			<div id="DialogFolderNew" class="Dialog d-none">
+				<header>
+					<div>New Folder...</div>
+					<div class="Close"><i class="codicon codicon-close"></i></div>
+				</header>
+				<section>
+					<div class="row">
+						<div class="col-12 mb-2">
+							<input id="FolderNewName" type="text" class="form-control" placeholder="Folder Name..." />
+						</div>
+					</div>
+				</section>
+				<footer>
+					<div><button id="FolderNewSave" class="btn btn-primary">Save</button></div>
 				</footer>
 			</div>
 

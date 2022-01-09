@@ -6,10 +6,10 @@ import Util from './util';
 type ProjectFolderArgv = {
 	id: string,
 	name: string,
-	accent: string|null,
-	icon: string|null,
-	open: boolean,
-	projects: Array<ProjectEntry>
+	accent?: string|null,
+	icon?: string|null,
+	open?: boolean,
+	projects?: Array<ProjectEntry>
 };
 
 class ProjectFolder {
@@ -28,7 +28,11 @@ class ProjectFolder {
 		this.icon = input.icon ?? this.getIcon();
 		this.accent = input.accent ?? 'var(--DashboardProjectAccent)';
 		this.open = input.open ?? false;
-		this.projects = input.projects.length ? input.projects.map(((v)=> new ProjectEntry(v))) : [];
+		this.projects = (
+			Array.isArray(input.projects)?
+			input.projects.map(((v)=> new ProjectEntry(v))):
+			[]
+		);
 
 		return;
 	};

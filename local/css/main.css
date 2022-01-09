@@ -96,7 +96,7 @@ body.vscode-dark {
 /*******************************************************************************
 *******************************************************************************/
 
-#Toolbar {
+.Toolbar {
 	background: var(--DashboardToolbarBg);
 	color: var(--DashboardToolbarText);
 
@@ -122,12 +122,8 @@ body.vscode-dark {
 }
 
 .ProjectEntry .ProjectInfo {
-	display: flex;
-	align-items: center;
-}
-
-.ProjectEntry .Icon {
-	margin-right: 16px;
+	-display: flex;
+	-align-items: center;
 }
 
 .ProjectEntry .Info {
@@ -163,6 +159,11 @@ body.vscode-dark {
 /*******************************************************************************
 *******************************************************************************/
 
+.Folder > .ProjectEntry {
+	border-left: 0px;
+	border-top: 4px solid var(--DashboardProjectAccent);
+}
+
 .Folder .Icon {
 
 }
@@ -174,6 +175,40 @@ body.vscode-dark {
 .Folder.Open .Projects {
 	display: flex;
 	margin-top: 1.5rem;
+}
+
+.Folder .Fold button:nth-of-type(2) {
+	display: none;
+}
+
+.Folder .Fold button:nth-of-type(1) {
+	display: inline;
+}
+
+.Folder.Open .Fold button:nth-of-type(2) {
+	display: inline;
+}
+
+.Folder.Open .Fold button:nth-of-type(1) {
+	display: none;
+}
+
+.Folder.Open {
+	min-width: 100% !important;
+	width: 100% !important;
+	flex-grow: 1 !important;
+}
+
+.ReorderFolder .Folder:hover {
+	filter: invert(25%);
+}
+
+.ReorderProject .Folder:not(:hover) {
+	filter: opacity(50%);
+}
+
+.ReorderProject .Project:hover {
+	filter: invert(25%);
 }
 
 /*******************************************************************************

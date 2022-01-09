@@ -33,6 +33,11 @@
 					"default": "Projects",
 					"description": "Dashboard Title"
 				},
+				"projectsyeah.folderSizing": {
+					"type": "string",
+					"default": "col-12",
+					"description": "The Bootstrap CSS classes used to adjust how the folders scale to your window size."
+				},
 				"projectsyeah.columnSizing": {
 					"type": "string",
 					"default": "col-12 col-md-6",
