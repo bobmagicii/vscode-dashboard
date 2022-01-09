@@ -28,7 +28,7 @@ class ProjectFolder {
 		this.icon = input.icon ?? this.getIcon();
 		this.accent = input.accent ?? 'var(--DashboardProjectAccent)';
 		this.open = input.open ?? false;
-		this.projects = input.projects.length ? input.projects.map(((v)=>v)) : [];
+		this.projects = input.projects.length ? input.projects.map(((v)=> new ProjectEntry(v))) : [];
 
 		return;
 	};

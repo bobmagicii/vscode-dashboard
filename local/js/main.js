@@ -541,6 +541,7 @@ extends Dialog {
 
 class Folder {
 	constructor(api, item) {
+		this.id = item.id;
 		this.api = api;
 		this.item = item;
 		this.el = this.api.template.folder.clone();
@@ -624,8 +625,17 @@ class Folder {
 		self.projects.empty();
 
 		for(const item of self.item.projects) {
-			if(typeof item.path !== 'undefined')
-			self.projects.append((new Project(this.api, item)).el);
+			if(typeof item.path === 'undefined')
+			continue;
+
+			let project = new Project(
+				self.api,
+				item,
+				self.id
+			);
+
+			self.projects
+			.append(project.el);
 		}
 
 		return;
@@ -689,9 +699,11 @@ class Folder {
 };
 
 class Project {
-	constructor(api, item) {
+	constructor(api, item, parent=null) {
+		this.id = item.id;
 		this.api = api;
 		this.item = item;
+		this.parent = parent;
 		this.el = this.api.template.project.clone();
 		this.bindElements();
 		return;
@@ -739,7 +751,8 @@ class Project {
 		// clicking the main button will open the project.
 
 		self.el
-		.attr('data-id', self.item.id)
+		.attr('data-id', self.id)
+		.attr('data-parent', self.parent)
 		.on('click', function(){
 			self.api.onProjectClick(self.item);
 			return false;
@@ -799,6 +812,9 @@ class Project {
 			.off(evLeave)
 			.off(evHover);
 
+			let tid = target.attr('data-id');
+			let pid = target.attr('data-parent') ?? null;
+
 			////////
 
 			if(!target) {
@@ -807,23 +823,26 @@ class Project {
 			}
 
 			if(target.hasClass('Folder')) {
-				console.log(`drop on folder ${target.attr('data-id')}`);
+				//target
+				//.find('.Projects')
+				//.append(self.el);
 
-				target
-				.find('.Projects')
-				.append(self.el);
+				self.api.send(new Message('projectmove', { id: self.id, into: tid }));
 
 				return false;
 			}
 
 			if(target.hasClass('Project')) {
-				console.log(`drop on project ${target.attr('data-id')}`);
-				target.before(self.el);
+				//target.before(self.el);
+
+				self.api.send(new Message('projectmove', { id: self.id, before: tid, into: pid }));
+
 				return false;
 			}
 
-			console.log(`drop on idk`);
-			target.append(self.el);
+			//target.append(self.el);
+			self.api.send(new Message('projectmove', { id: self.id, before: null, into: null }));
+
 			return false;
 		});
 

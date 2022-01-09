@@ -178,6 +178,81 @@ class Config {
 		return;
 	};
 
+	public moveProject(id: string, into: string|null, before: string|null):
+	void {
+
+		let found: ProjectFolder|ProjectEntry|null = null;
+		let database: Array<any>|null = null;
+
+		// first we need to find this and remove it from its current
+		// place of residence.
+
+		for(const item of this.database) {
+			if(item instanceof ProjectFolder)
+			if(found = Util.findInArrayById(item.projects, id)) {
+				item.projects = Util.filterArrayStripById(item.projects, id);
+				break;
+			}
+
+			if(item instanceof ProjectEntry)
+			if(item.id === id) {
+				found = item;
+				this.database = Util.filterArrayStripById(this.database, id);
+				break;
+			}
+		}
+
+		if(found === null) {
+			Util.println(
+				`project ${id} not found`,
+				'Config::moveProject'
+			);
+
+			return;
+		}
+
+		// now put it in its new home.
+
+		database = this.database;
+
+		if(into !== null) {
+			let folder = Util.findInArrayById(this.database, into);
+
+			if(!(folder instanceof ProjectFolder)) {
+				Util.println(
+					`folder ${into} not found`,
+					'Config::moveProject'
+				);
+				return;
+			}
+
+			Util.println(`putting project into folder ${folder.id}`, 'Config::moveProject');
+			database = folder.projects;
+		}
+
+		if(database instanceof Array) {
+			let key: any = 0;
+
+			if(before !== null) {
+				for(key in database) {
+					if(database[key].id === before) {
+						Util.println(`putting project before ${before}`, 'Config::moveProject');
+						break;
+					}
+				}
+			}
+
+			Util.println(`seating project in slot ${key}`, 'Config::moveProject');
+			database.splice(key, 0, found);
+
+			this.save();
+			return;
+		}
+
+		Util.println('nothing happened', 'Config::moveProject');
+		return;
+	};
+
 };
 
 export default Config;

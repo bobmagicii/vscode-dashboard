@@ -214,6 +214,9 @@ class Dashboard {
 			case 'projectset':
 				this.onProjectSet(msg);
 			break;
+			case 'projectmove':
+				this.onProjectMove(msg);
+			break;
 			case 'configset':
 				this.onConfigSet(msg);
 			break;
@@ -309,6 +312,44 @@ class Dashboard {
 		this.conf.removeProject(msg.data.id);
 
 		this.onHey(msg);
+
+		return;
+	};
+
+	public onProjectMove(msg: Message):
+	void {
+
+		if(typeof msg.data.into !== 'undefined')
+		this.onProjectMove_Into(msg);
+
+		else if(typeof msg.data.before !== 'undefined')
+		this.onProjectMove_Before(msg);
+
+		this.onHey(msg);
+
+		return;
+	};
+
+	protected onProjectMove_Into(msg: Message):
+	void {
+
+		this.conf.moveProject(
+			msg.data.id,
+			msg.data.into ?? null,
+			msg.data.before ?? null
+		);
+
+		return;
+	};
+
+	protected onProjectMove_Before(msg: Message):
+	void {
+
+		this.conf.moveProject(
+			msg.data.id,
+			msg.data.into ?? null,
+			msg.data.before ?? null
+		);
 
 		return;
 	};

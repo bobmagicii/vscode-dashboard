@@ -26,6 +26,17 @@ class Util {
 		});
 	};
 
+	public static findInArrayById(input: Array<any>, whatYouSeek: any):
+	any {
+
+		for(const item of input)
+		if(typeof item.id !== 'undefined')
+		if(item.id === whatYouSeek)
+		return item;
+
+		return null;
+	};
+
 };
 
 export default Util;
