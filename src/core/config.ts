@@ -156,20 +156,25 @@ class Config {
 	void {
 
 		let database = this.database;
+		let folder = null;
+		let accent = null;
+		let icon = null;
 
 		if(parent !== null) {
-			let folder = this.findProject(parent);
+			folder = this.findProject(parent);
 
-			if(folder instanceof ProjectFolder)
-			database = folder.projects;
+			if(folder instanceof ProjectFolder) {
+				database = folder.projects;
+				accent = folder.accent;
+			}
 		}
 
 		database.push(new ProjectEntry({
 			id: uuid.v4(),
 			name: name,
 			path: path,
-			accent: null,
-			icon: null
+			accent: accent,
+			icon: icon
 		}));
 
 		this.save();
