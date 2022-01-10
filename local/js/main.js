@@ -1291,6 +1291,9 @@ class Dashboard {
 
 jQuery(document)
 .ready(function(){
+	jQuery('body .container-fluid')
+	.removeClass('d-none');
+
 	new Dashboard;
 	return;
 });

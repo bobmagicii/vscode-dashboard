@@ -24,29 +24,30 @@ allows us to style our contents with the current theme colours. this is mostly
 because i am not personally convinced yet that their naming is solid. if they
 break somethign on me later i want them all crossreferenced here. */
 
-body.vscode-dark {
+body.vscode-dark,
+body.vscode-light {
 
 	/* themes the top toolbar */
 	--DashboardToolbarBg: #00000066;
-	--DashboardToolbarText: #ffffff;
+	--DashboardToolbarText: var(--vscode-foreground);
 
 	/* themes each project box */
 	--DashboardProjectBg: #00000044;
 	--DashboardProjectBgHover: #00000066;
-	--DashboardProjectText: #ffffff;
-	--DashboardProjectAccent: #aa5050;
+	--DashboardProjectText: var(--vscode-editor-foreground);
+	--DashboardProjectAccent: var(--vscode-editorInfo-foreground);
 
 	/* themes the overlay block */
-	--DashboardOverlayBg: #000000;
+	--DashboardOverlayBg: var(--vscode-editor-background);
 	--DashboardOverlayOpacity: 0.90;
 
 	/* themes the debug widget */
-	--DashboardDebugBg: #00000044;
-	--DashboardDebugText: #ffffff;
+	--DashboardDebugBg: var(--vscode-editor-background);
+	--DashboardDebugText: var(--vscode-editor-foreground);
 
 	/* themes the dialogs inside overlays */
 	--DashboardDialogBg: var(--vscode-editor-background);
-	--DashboardDialogFg: var(--vscode-foreground);
+	--DashboardDialogFg: var(--vscode-editor-foreground);
 
 	/* themes buttons */
 	--DashboardButtonBg: var(--vscode-button-background);
@@ -58,6 +59,18 @@ body.vscode-dark {
 	--DashboardInputBorder: var(--vscode-editorWidget-border);
 	--DashboardInputFg: var(--vscode-editorWidget-foreground);
 
+}
+
+body.vscode-light {
+	--DashboardToolbarBg: #0000000f;
+	--DashboardProjectBg: #0000000f;
+	--DashboardProjectBgHover: #0000000f;
+}
+
+body.vscode-light .btn-dark {
+	background-color: #d0d0d0;
+	border-color: #d0d0d0;
+	color: #222222;
 }
 
 /*******************************************************************************
@@ -261,6 +274,7 @@ body.vscode-dark {
 
 	border-radius: 6px;
 	width: 50vw;
+	box-shadow: 0px 0px 32px #00000077;
 
 	overflow: auto;
 	overflow-x: hidden;
