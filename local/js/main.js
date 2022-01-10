@@ -933,6 +933,7 @@ extends TemplatedDialog {
 		this.inputFolderSizing = this.el.find('.FolderSizing');
 		this.inputColumnSizing = this.el.find('.ColumnSizing');
 		this.inputShowPaths = this.el.find('.ShowPaths');
+		this.inputOpenOnNewWindow = this.el.find('.OpenOnNewWindow');
 
 		this.btnFolderSizingPresets = this.el.find('.DashboardFolderPreset');
 		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
@@ -984,7 +985,8 @@ extends TemplatedDialog {
 				title: self.inputTitle.tval(),
 				folderSizing: self.inputFolderSizing.tval(),
 				columnSizing: self.inputColumnSizing.tval(),
-				showPaths: !!parseInt(self.inputShowPaths.tval())
+				showPaths: !!parseInt(self.inputShowPaths.tval()),
+				openOnNewWindow: !!parseInt(self.inputOpenOnNewWindow.tval())
 			};
 
 			self.api.send(new Message('configset', config));
@@ -1011,6 +1013,7 @@ extends TemplatedDialog {
 		this.inputFolderSizing.val(this.api.folderSizing);
 		this.inputColumnSizing.val(this.api.columnSizing);
 		this.inputShowPaths.val(this.api.showPaths ? '1' : '0');
+		this.inputOpenOnNewWindow.val(this.api.openOnNewWindow ? '1' : '0');
 
 		return;
 	};
@@ -1045,6 +1048,7 @@ class Dashboard {
 	columnSizing = 'col-12';
 	tabMode = true;
 	showPaths = true;
+	openOnNewWindow = true;
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////

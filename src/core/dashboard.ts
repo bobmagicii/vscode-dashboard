@@ -26,6 +26,7 @@ class Dashboard {
 		this.ext = ext;
 		this.conf = new Config;
 
+		if(this.conf.openOnNewWindow)
 		this.open();
 
 		return;

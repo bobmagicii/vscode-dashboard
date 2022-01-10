@@ -2,6 +2,7 @@
 	"name": "projectsyeah",
 	"displayName": "Projects",
 	"description": "Add a project dashboard to VSCode",
+	"repository": "https://github.com/bobmagicii/vscode-dashboard",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.62.0"
@@ -32,6 +33,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Show paths on the project entries."
+				},
+				"projectsyeah.openOnNewWindow": {
+					"type": "boolean",
+					"default": true,
+					"description": "Auto open the dashboard when spawning new windows."
 				},
 				"projectsyeah.title": {
 					"type": "string",

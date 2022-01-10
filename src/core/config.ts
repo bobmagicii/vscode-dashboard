@@ -19,11 +19,12 @@ class Config {
 	columnSizing: string;
 	tabMode: boolean;
 	showPaths: boolean;
+	openOnNewWindow: boolean;
 
 	private keepers:
 	Array<string> = [
 		'title', 'debug', 'database', 'folderSizing', 'columnSizing',
-		'tabMode', 'showPaths'
+		'tabMode', 'showPaths', 'openOnNewWindow'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -40,6 +41,7 @@ class Config {
 		this.columnSizing = 'col-12 col-md-6';
 		this.tabMode = true;
 		this.showPaths = true;
+		this.openOnNewWindow = true;
 
 		this.fillFromEditorConfig();
 		return;
