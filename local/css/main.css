@@ -38,7 +38,7 @@ body.vscode-light {
 	--DashboardProjectAccent: var(--vscode-editorInfo-foreground);
 
 	/* themes the overlay block */
-	--DashboardOverlayBg: var(--vscode-editor-background);
+	--DashboardOverlayBg: #000000;
 	--DashboardOverlayOpacity: 0.90;
 
 	/* themes the debug widget */
@@ -62,6 +62,8 @@ body.vscode-light {
 }
 
 body.vscode-light {
+	--DashboardOverlayBg: #d4d4d4;
+	--DashboardOverlayOpacity: 0.90;
 	--DashboardToolbarBg: #0000000f;
 	--DashboardProjectBg: #0000000f;
 	--DashboardProjectBgHover: #0000000f;
