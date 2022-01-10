@@ -40,9 +40,13 @@ body.vscode-dark {
 	--DashboardOverlayBg: #000000;
 	--DashboardOverlayOpacity: 0.90;
 
+	/* themes the debug widget */
+	--DashboardDebugBg: #00000044;
+	--DashboardDebugText: #ffffff;
+
 	/* themes the dialogs inside overlays */
 	--DashboardDialogBg: var(--vscode-editor-background);
-	--DashboardDialogFg: var(--vscode-editor-foreground);
+	--DashboardDialogFg: var(--vscode-foreground);
 
 	/* themes buttons */
 	--DashboardButtonBg: var(--vscode-button-background);
@@ -54,9 +58,6 @@ body.vscode-dark {
 	--DashboardInputBorder: var(--vscode-editorWidget-border);
 	--DashboardInputFg: var(--vscode-editorWidget-foreground);
 
-	/* themes the debug widget */
-	--DashboardDebugBg: #00000044;
-	--DashboardDebugText: #ffffff;
 }
 
 /*******************************************************************************
@@ -147,6 +148,19 @@ body.vscode-dark {
 	white-space: nowrap;
 }
 
+.WhenFolderHovered,
+.WhenProjectHovered {
+	display: none;
+}
+
+.Folder:hover .WhenFolderHovered {
+	display: block;
+}
+
+.Project:hover .WhenProjectHovered {
+	display: block;
+}
+
 .IconButton {
 	color: var(--DashboardProjectText);
 
@@ -170,6 +184,7 @@ body.vscode-dark {
 
 .Folder .Projects {
 	display: none;
+	margin-bottom: -1.25rem;
 }
 
 .Folder.Open .Projects {

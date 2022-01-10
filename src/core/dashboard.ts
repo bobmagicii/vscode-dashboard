@@ -90,7 +90,7 @@ class Dashboard {
 
 		let msg = new Message(type, data);
 		Util.println(
-			JSON.stringify(msg),
+			type,
 			'Dashboard::sendv'
 		);
 
@@ -199,14 +199,14 @@ class Dashboard {
 			case 'hey':
 				this.onHey(msg);
 			break;
-			case 'open':
-				this.onOpen(msg);
-			break;
 			case 'pickdir':
 				this.onPickDir(msg);
 			break;
 			case 'foldernew':
 				this.onFolderNew(msg);
+			break;
+			case 'projectopen':
+				this.onProjectOpen(msg);
 			break;
 			case 'projectnew':
 				this.onProjectNew(msg);
@@ -240,28 +240,6 @@ class Dashboard {
 		let config = this.conf.getObject();
 
 		this.sendv('sup', config);
-
-		return;
-	};
-
-	public onOpen(msg: Message):
-	void {
-
-		for(const project of this.conf.database)
-		if(project instanceof ProjectEntry)
-		if(project.id === msg.data.id) {
-			Util.println(
-				`open ${msg.data.id}`,
-				'Dashboard::onOpen'
-			);
-
-			vscode.commands.executeCommand(
-				'vscode.openFolder',
-				project.getUriObject()
-			);
-
-			return;
-		}
 
 		return;
 	};
@@ -305,12 +283,35 @@ class Dashboard {
 		return;
 	};
 
+	public onProjectOpen(msg: Message):
+	void {
+
+		let project = this.conf.findProject(msg.data.id);
+
+		if(project instanceof ProjectEntry) {
+			Util.println(
+				`open ${msg.data.id}`,
+				'Dashboard::onOpen'
+			);
+
+			vscode.commands.executeCommand(
+				'vscode.openFolder',
+				project.getUriObject()
+			);
+
+			return;
+		}
+
+		return;
+	};
+
 	public onProjectNew(msg: Message):
 	void {
 
 		this.conf.addProject(
 			msg.data.name,
-			msg.data.uri
+			msg.data.uri,
+			msg.data.parent
 		);
 
 		this.onHey(msg);

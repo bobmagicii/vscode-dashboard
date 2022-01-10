@@ -150,11 +150,19 @@ class Config {
 		return;
 	};
 
-	public addProject(name: string, path: string):
+	public addProject(name: string, path: string, parent: string|null):
 	void {
 
-		(this.database)
-		.push(new ProjectEntry({
+		let database = this.database;
+
+		if(parent !== null) {
+			let folder = this.findProject(parent);
+
+			if(folder instanceof ProjectFolder)
+			database = folder.projects;
+		}
+
+		database.push(new ProjectEntry({
 			id: uuid.v4(),
 			name: name,
 			path: path,

@@ -16,6 +16,245 @@
 <body>
 <div class="container-fluid">
 
+	<div id="Templates" class="d-none">
+		<div id="TemplateProjectConfig" class="Dialog d-none">
+			<header>
+				<div class="Titlebar">Project Settings</div>
+				<div class="Close"><i class="codicon codicon-close"></i></div>
+			</header>
+			<section>
+				<div class="row tight align-items-center">
+					<div class="col-12 mb-4">
+						<input type="text" class="form-control Name" placeholder="Name..." />
+					</div>
+					<div class="col-12 mb-4">
+						<input type="text" class="form-control Path" placeholder="URI..." />
+					</div>
+					<div class="col-12"></div>
+					<div class="col-auto mb-4">
+						<div class="font-size-most-large AccentPreview">
+							<i class="codicon codicon-circle-large-filled"></i>
+						</div>
+					</div>
+					<div class="col-8 mb-4">
+						<input type="text" class="form-control Accent" placeholder="Accent Colour..." />
+					</div>
+					<div class="col mb-4">
+						<select class="form-control AccentPresets">
+							<option value="">Colours...</option>
+							<optgroup label="Presets...">
+							</optgroup>
+						</select>
+					</div>
+					<div class="col-12"></div>
+					<div class="col-auto mb-4">
+						<div class="font-size-most-large IconPreview">
+							<i class="codicon codicon-settings-gear"></i>
+						</div>
+					</div>
+					<div class="col-8 mb-4">
+						<input type="text" class="form-control Icon" placeholder="Icon..." />
+					</div>
+					<div class="col mb-4">
+						<select class="form-control IconPresets">
+							<option value="">Icons...</option>
+							<optgroup label="Codicons">
+							</optgroup>
+						</select>
+					</div>
+				</div>
+			</section>
+			<footer>
+				<div><button class="btn btn-primary Save">Save</button></div>
+				<div><button class="btn btn-dark Cancel">Cancel</button></div>
+			</footer>
+		</div>
+		<div id="TemplateProjectDelete" class="Dialog d-none">
+			<header>
+				<div class="Titlebar">Remove Project?</div>
+				<div class="Close"><i class="codicon codicon-close"></i></div>
+			</header>
+			<section>
+				<div class="row">
+					<div class="col-12 mb-2">
+						Are you sure you want to remove this project?
+					</div>
+					<div class="col-12">
+						<div class="row align-items-center ProjectEntry">
+							<div class="col-auto">
+								<i class="codicon font-size-most-large IconPreview"></i>
+							</div>
+							<div class="col font-weight-bold font-size-larger NamePreview">
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<footer>
+				<div><button class="btn btn-primary Accept">Delete</button></div>
+				<div><button class="btn btn-dark Cancel">Cancel</button></div>
+			</footer>
+		</div>
+		<div id="TemplateProjectNew" class="Dialog d-none">
+			<header>
+				<div class="Titlebar">New Project...</div>
+				<div class="Close"><i class="codicon codicon-close"></i></div>
+			</header>
+			<section>
+				<div class="row">
+					<div class="col-12 mb-2 TypeSelector">
+						<div class="row tight">
+							<div class="col-12 mb-2">
+								<input type="text" class="form-control Name" placeholder="Project Name..." />
+							</div>
+							<div class="col-12 mb-2">
+								<div class="btn-group w-100">
+									<button class="btn btn-dark flex-grow-1" data-show=".TypeNewLocal" data-type="local">Folder</button>
+									<button class="btn btn-dark flex-grow-1" data-show=".TypeNewSSH" data-type="ssh">SSH</button>
+									<button class="btn btn-dark flex-grow-1" data-show=".TypeNewPromode" data-type="promode">Promode</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 mb-2 d-none TypeNewLocal TypeNewForm">
+						<div class="row">
+							<div class="col">
+								<button class="btn btn-dark btn-block Chooser" data-default="Choose Folder..."></button>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 mb-2 d-none TypeNewSSH TypeNewForm">
+						<div class="mb-2">
+							<div class="ProjectEntry">
+								Connecting to remote projects requires the Remote Development Extension Pack by Microsoft.
+								Automatic authentication currently depends setting up your .ssh/config file.
+							</div>
+						</div>
+						<div class="mb-2">
+							<input type="text" class="form-control ShellUser" placeholder="Username..." />
+						</div>
+						<div class="mb-2">
+							<input type="text" class="form-control ShellHost" placeholder="Hostname..." />
+						</div>
+						<div class="mb-2">
+							<input type="text" class="form-control ShellPath" placeholder="Directory..." />
+						</div>
+					</div>
+					<div class="col-12 mb-2 d-none TypeNewPromode TypeNewForm">
+						<div class="mb-2">
+							<div class="ProjectEntry">
+								<div>
+									<div>Enter the fully qualified URI string that connects to the project. You can use this to connect to anything Code can connect to but I don't know about.</div>
+								</div>
+							</div>
+						</div>
+						<div class="mb-2">
+							<input type="text" class="form-control Promode" placeholder="Fully Qualified Connection String..." />
+						</div>
+						<div>
+							<div class="font-weight-bold">Example (SSH):</div>
+							<div><tt>
+								vscode-remote://remote-ssh+<em>user</em>@<em>host</em>/<em>path</em>
+							</tt></div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<footer class="d-none">
+				<div><button class="btn btn-primary Save">Save</button></div>
+			</footer>
+		</div>
+		<div id="TemplateFolderNew" class="Dialog d-none">
+			<header>
+				<div class="Titlebar">New Folder...</div>
+				<div class="Close"><i class="codicon codicon-close"></i></div>
+			</header>
+			<section>
+				<div class="row">
+					<div class="col-12 mb-2">
+						<input type="text" class="form-control Name" placeholder="Folder Name..." />
+					</div>
+				</div>
+			</section>
+			<footer>
+				<div><button class="btn btn-primary Save">Save</button></div>
+			</footer>
+		</div>
+		<div id="TemplateDashboardConfig" class="Dialog d-none">
+			<header>
+				<div class="Titlebar">Dashboard Settings</div>
+				<div class="Close"><i class="codicon codicon-close"></i></div>
+			</header>
+			<section>
+				<div class="row">
+					<div class="col-12 mb-4">
+						<div class="font-weight-bold mb-2">Dashboard Title</div>
+						<div class="text-muted mb-2">Displayed at the top of the Project Dashboard.</div>
+						<input type="text" class="form-control Title" placeholder="Dashboard Title..." />
+					</div>
+					<div class="col-12 mb-4">
+						<div class="font-weight-bold mb-2">Folder Column Sizing</div>
+						<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
+						<div class="row tight mb-2">
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12">1</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-md-6">1-2</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-6">2</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-4">3</button>
+							</div>
+							<div class="col-12 col-sm-auto mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
+							</div>
+						</div>
+						<div class="mb-2">
+							<input type="text" class="form-control FolderSizing" placeholder="Folder Sizing..." />
+						</div>
+					</div>
+					<div class="col-12 mb-4">
+						<div class="font-weight-bold mb-2">Project Column Sizing</div>
+						<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
+						<div class="row tight mb-2">
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12">1</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6">1-2</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-6">2</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
+							</div>
+							<div class="col col-sm mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-4">3</button>
+							</div>
+							<div class="col-12 col-sm-auto mb-2">
+								<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
+							</div>
+						</div>
+						<div class="mb-2">
+							<input type="text" class="form-control ColumnSizing" placeholder="Project Sizing..." />
+						</div>
+					</div>
+				</div>
+			</section>
+			<footer>
+				<div><button class="btn btn-primary Save">Save</button></div>
+				<div><button class="btn btn-dark Cancel">Cancel</button></div>
+			</footer>
+		</div>
+	</div>
+
 	<div id="Dashboard">
 		<div id="Toolbar" class="Toolbar">
 			<div class="row tight align-items-center">
@@ -51,7 +290,49 @@
 						<div class="col Info">
 							<div class="Name">Project Name</div>
 						</div>
-						<div class="col-auto IdkYet1">
+						<div class="col-auto WhenFolderHovered">
+							<button type="button" class="btn btn-sm btn-dark NewProject" title="New Project...">
+								<i class="codicon codicon-plus"></i>
+							</button>
+						</div>
+						<div class="col-auto WhenFolderHovered">
+							<div class="dropdown">
+								<button type="button" class="btn btn-sm btn-dark Config" data-toggle="dropdown" title="Project Settings...">
+									<i class="codicon codicon-settings-gear"></i>
+								</button>
+								<div class="dropdown-menu dropdown-menu-right p-2">
+									<div class="row tight">
+										<div class="col">
+											<button class="btn btn-block btn-dark Edit"><i class="codicon codicon-edit"></i></button>
+										</div>
+										<div class="col-auto">
+											<button class="btn btn-block btn-danger Delete"><i class="codicon codicon-close"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-auto WhenFolderHovered">
+							<button type="button" class="btn btn-sm btn-dark Reorder" title="Drag To Reorder">
+								<i class="codicon codicon-three-bars"></i>
+							</button>
+						</div>
+					</div>
+					<div class="row Projects">
+						Projects Listing...
+					</div>
+				</div>
+			</div>
+
+			<div class="%COLUMNSIZING% mb-4 d-none Project ProjectTemplate">
+				<div class="ProjectEntry">
+					<div class="ProjectInfo row tight align-items-center">
+						<div class="col-auto Icon"><i class="codicon font-size-most-large"></i></div>
+						<div class="col Info">
+							<div class="Name">Project Name</div>
+							<div class="Path">Project Path</div>
+						</div>
+						<div class="col-auto WhenProjectHovered" style="align-self:center;">
 							<div class="dropdown">
 								<button type="button" class="btn btn-sm btn-dark Config" data-toggle="dropdown">
 									<i class="codicon codicon-settings-gear"></i>
@@ -68,45 +349,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-auto IdkYet1">
+						<div class="col-auto WhenProjectHovered" style="align-self:center;">
 							<button type="button" class="btn btn-sm btn-dark Reorder">
-								<i class="codicon codicon-three-bars"></i>
-							</button>
-						</div>
-					</div>
-					<div class="row Projects" style="width:100%;">
-						Projects Listing...
-					</div>
-				</div>
-			</div>
-
-			<div class="%COLUMNSIZING% mb-4 d-none Project ProjectTemplate">
-				<div class="ProjectEntry">
-					<div class="ProjectInfo row tight align-items-center">
-						<div class="col-auto Icon"><i class="codicon font-size-most-large"></i></div>
-						<div class="col Info">
-							<div class="Name">Project Name</div>
-							<div class="Path">Project Path</div>
-						</div>
-						<div class="col-auto IdkYet1" style="align-self:center;">
-							<div class="dropdown">
-								<button type="button" class="IconButton Config" data-toggle="dropdown">
-									<i class="codicon codicon-settings-gear"></i>
-								</button>
-								<div class="dropdown-menu dropdown-menu-right p-2">
-									<div class="row tight">
-										<div class="col">
-											<button class="btn btn-block btn-dark Edit"><i class="codicon codicon-edit"></i></button>
-										</div>
-										<div class="col-auto">
-											<button class="btn btn-block btn-danger Delete"><i class="codicon codicon-close"></i></button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-auto IdkYet1" style="align-self:center;">
-							<button type="button" class="IconButton Reorder">
 								<i class="codicon codicon-three-bars"></i>
 							</button>
 						</div>
@@ -125,239 +369,6 @@
 		<div class="Wash"></div>
 
 		<div class="d-flex justify-content-center align-items-center h-100 w-100 Mount">
-
-			<div id="DialogDashboardConfig" class="Dialog d-none" data-id="">
-				<header>
-					<div class="Name">Settings</div>
-					<div class="Close"><i class="codicon codicon-close"></i></div>
-				</header>
-				<section>
-					<div class="row">
-						<div class="col-12 mb-4">
-							<div class="font-weight-bold mb-2">Dashboard Title</div>
-							<div class="text-muted mb-2">Displayed at the top of the Project Dashboard.</div>
-							<input id="DashboardConfigTitle" type="text" class="form-control" placeholder="Dashboard Title..." />
-						</div>
-						<div class="col-12 mb-4">
-							<div class="font-weight-bold mb-2">Folder Column Sizing</div>
-							<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
-							<div class="row tight mb-2">
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12">1</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-md-6">1-2</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-6">2</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-4">3</button>
-								</div>
-								<div class="col-12 col-sm-auto mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardFolderPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
-								</div>
-							</div>
-							<div class="mb-2">
-								<input id="DashboardConfigFolderSizing" type="text" class="form-control" placeholder="Folder Sizing..." />
-							</div>
-						</div>
-						<div class="col-12 mb-4">
-							<div class="font-weight-bold mb-2">Project Column Sizing</div>
-							<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
-							<div class="row tight mb-2">
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12">1</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6">1-2</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-6">2</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-md-6 col-lg-4">1-3</button>
-								</div>
-								<div class="col col-sm mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-4">3</button>
-								</div>
-								<div class="col-12 col-sm-auto mb-2">
-									<button class="btn btn-dark btn-block text-nobreak DashboardColumnPreset" data-value="col-12 col-sm-6 col-md-4 col-lg-3">Responsive AF</button>
-								</div>
-							</div>
-							<div class="mb-2">
-								<input id="DashboardConfigColumnSizing" type="text" class="form-control" placeholder="Project Sizing..." />
-							</div>
-						</div>
-					</div>
-				</section>
-				<footer>
-					<div><button id="DashboardConfigSave" class="btn btn-primary">Save</button></div>
-					<div><button id="DashboardConfigCancel" class="btn btn-dark">Cancel</button></div>
-				</footer>
-			</div>
-
-
-			<div id="DialogFolderNew" class="Dialog d-none">
-				<header>
-					<div>New Folder...</div>
-					<div class="Close"><i class="codicon codicon-close"></i></div>
-				</header>
-				<section>
-					<div class="row">
-						<div class="col-12 mb-2">
-							<input id="FolderNewName" type="text" class="form-control" placeholder="Folder Name..." />
-						</div>
-					</div>
-				</section>
-				<footer>
-					<div><button id="FolderNewSave" class="btn btn-primary">Save</button></div>
-				</footer>
-			</div>
-
-			<div id="DialogProjectNew" class="Dialog d-none">
-				<header>
-					<div>New Project...</div>
-					<div class="Close"><i class="codicon codicon-close"></i></div>
-				</header>
-				<section>
-					<div class="row">
-						<div id="ProjectNewType" class="col-12 mb-2">
-							<div class="row tight">
-								<div class="col-12 mb-2">
-									<input id="ProjectNewName" type="text" class="form-control" placeholder="Project Name..." />
-								</div>
-								<div class="col-12 mb-2">
-									<div class="btn-group w-100">
-										<button class="btn btn-dark flex-grow-1" data-show="#ProjectNewFolder" data-type="local">Folder</button>
-										<button class="btn btn-dark flex-grow-1" data-show="#ProjectNewSSH" data-type="ssh">SSH</button>
-										<button class="btn btn-dark flex-grow-1" data-show="#ProjectNewPro" data-type="promode">Promode</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div id="ProjectNewFolder" class="col-12 mb-2 d-none ProjectNewForm">
-							<div class="row">
-								<div class="col">
-									<button id="ProjectFolderChoose" class="btn btn-dark btn-block" data-default="Choose Folder..."></button>
-								</div>
-							</div>
-						</div>
-						<div id="ProjectNewSSH" class="col-12 mb-2 d-none ProjectNewForm">
-							<div class="mb-2">
-								<div class="ProjectEntry">
-									Connecting to remote projects requires the Remote Development Extension Pack by Microsoft.
-									Automatic authentication currently depends setting up your .ssh/config file.
-								</div>
-							</div>
-							<div class="mb-2">
-								<input id="ProjectNewSshUser" type="text" class="form-control" placeholder="Username..." />
-							</div>
-							<div class="mb-2">
-								<input id="ProjectNewSshHost" type="text" class="form-control" placeholder="Hostname..." />
-							</div>
-							<div class="mb-2">
-								<input id="ProjectNewSshPath" type="text" class="form-control" placeholder="Directory..." />
-							</div>
-						</div>
-						<div id="ProjectNewPro" class="col-12 mb-2 d-none ProjectNewForm">
-							<div class="mb-2">
-								<div class="ProjectEntry">
-									<div>
-										<div>Enter the fully qualified URI string that connects to the project. You can use this to connect to anything Code can connect to but I don't know about.</div>
-									</div>
-								</div>
-							</div>
-							<div class="mb-2">
-								<input id="ProjectNewPromodeEntry" type="text" class="form-control" placeholder="Fully Qualified Connection String..." />
-							</div>
-							<div>
-								<div class="font-weight-bold">Example (SSH):</div>
-								<div><tt>
-									vscode-remote://remote-ssh+<em>user</em>@<em>host</em>/<em>path</em>
-								</tt></div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<footer class="d-none">
-					<div><button id="ProjectNewSave" class="btn btn-primary">Save</button></div>
-				</footer>
-			</div>
-
-			<div id="DialogProjectDelete" class="Dialog d-none" data-id="">
-				<header>
-					<div class="Name">Remove Project?</div>
-					<div class="Close"><i class="codicon codicon-close"></i></div>
-				</header>
-				<section>
-					<div class="row">
-						<div class="col-12">
-							Are you sure you want to remove this project?
-						</div>
-					</div>
-				</section>
-				<footer>
-					<div><button id="ProjectDeleteAccept" class="btn btn-primary">Delete</button></div>
-					<div><button id="ProjectDeleteCancel" class="btn btn-dark">Cancel</button></div>
-				</footer>
-			</div>
-
-			<div id="DialogProjectConfig" class="Dialog d-none" data-id="">
-				<header>
-					<div class="Name">Project Settings</div>
-					<div class="Close"><i class="codicon codicon-close"></i></div>
-				</header>
-				<section>
-					<div class="row tight align-items-center">
-						<div class="col-12 mb-4">
-							<input id="ProjectConfigName" type="text" class="form-control" placeholder="Name..." />
-						</div>
-						<div class="col-12 mb-4">
-							<input id="ProjectConfigPath" type="text" class="form-control" placeholder="URI..." />
-						</div>
-						<div class="col-12"></div>
-						<div class="col-auto mb-4">
-							<div id="ProjectConfigPreviewColour" class="font-size-most-large">
-								<i class="codicon codicon-circle-large-filled"></i>
-							</div>
-						</div>
-						<div class="col-8 mb-4">
-							<input id="ProjectConfigAccent" type="text" class="form-control" placeholder="Accent Colour..." />
-						</div>
-						<div class="col mb-4">
-							<select class="form-control Colours">
-								<option value="">Colours...</option>
-								<optgroup label="Presets...">
-								</optgroup>
-							</select>
-						</div>
-						<div class="col-12"></div>
-						<div class="col-auto mb-4">
-							<div id="ProjectConfigPreviewIcon" class="font-size-most-large">
-								<i class="codicon codicon-settings-gear"></i>
-							</div>
-						</div>
-						<div class="col-8 mb-4">
-							<input id="ProjectConfigIcon" type="text" class="form-control" placeholder="Icon..." />
-						</div>
-						<div class="col mb-4">
-							<select class="form-control Icons">
-								<option value="">Icons...</option>
-								<optgroup label="Codicons">
-								</optgroup>
-							</select>
-						</div>
-					</div>
-				</section>
-				<footer>
-					<div><button id="ProjectConfigSave" class="btn btn-primary">Save</button></div>
-					<div><button id="ProjectConfigCancel" class="btn btn-dark">Cancel</button></div>
-				</footer>
-			</div>
 
 		</div>
 
