@@ -6,7 +6,7 @@ import Util from './util';
 class Sidebar
 implements vscode.WebviewViewProvider {
 
-	public id: string = "projectsyeah-dashboard-sidebar";
+	public id: string = "dashboardyeah-dashboard-sidebar";
 
 	protected api: Dashboard;
 	protected view: vscode.WebviewView | undefined;

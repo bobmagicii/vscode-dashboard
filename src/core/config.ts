@@ -32,7 +32,7 @@ class Config {
 
 	constructor() {
 
-		this.api = vscode.workspace.getConfiguration('projectsyeah');
+		this.api = vscode.workspace.getConfiguration('dashboardyeah');
 
 		this.title = 'Dashboard';
 		this.debug = false;

@@ -48,7 +48,7 @@ class Dashboard {
 		}
 
 		this.panel = vscode.window.createWebviewPanel(
-			'projectsyeah-dashboard-main',
+			'dashboardyeah-dashboard-main',
 			'Dashboard',
 			{
 				viewColumn: vscode.ViewColumn.One,

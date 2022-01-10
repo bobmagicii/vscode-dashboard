@@ -1,6 +1,6 @@
 {
-	"name": "projectsyeah",
-	"displayName": "Projects",
+	"name": "dashboardyeah",
+	"displayName": "Dashboard",
 	"description": "Add a project dashboard to VSCode",
 	"repository": "https://github.com/bobmagicii/vscode-dashboard",
 	"version": "0.0.1",
@@ -17,44 +17,44 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "projectsyeah.helloWorld",
+				"command": "dashboardyeah.helloWorld",
 				"title": "Hello World"
 			}
 		],
 		"configuration": {
 			"title": "Dashboard",
 			"properties": {
-				"projectsyeah.debug": {
+				"dashboardyeah.debug": {
 					"type": "boolean",
 					"default": false,
 					"description": "Enable debugging output."
 				},
-				"projectsyeah.showPaths": {
+				"dashboardyeah.showPaths": {
 					"type": "boolean",
 					"default": true,
 					"description": "Show paths on the project entries."
 				},
-				"projectsyeah.openOnNewWindow": {
+				"dashboardyeah.openOnNewWindow": {
 					"type": "boolean",
 					"default": true,
 					"description": "Auto open the dashboard when spawning new windows."
 				},
-				"projectsyeah.title": {
+				"dashboardyeah.title": {
 					"type": "string",
 					"default": "Projects",
 					"description": "Dashboard Title"
 				},
-				"projectsyeah.folderSizing": {
+				"dashboardyeah.folderSizing": {
 					"type": "string",
 					"default": "col-12",
 					"description": "The Bootstrap CSS classes used to adjust how the folders scale to your window size."
 				},
-				"projectsyeah.columnSizing": {
+				"dashboardyeah.columnSizing": {
 					"type": "string",
 					"default": "col-12 col-md-6",
 					"description": "The Bootstrap CSS classes used to adjust how the columns scale to your window size."
 				},
-				"projectsyeah.database": {
+				"dashboardyeah.database": {
 					"type": "array",
 					"default": [],
 					"description": "List of projects stored in your user config so that it can be synced."
@@ -62,9 +62,9 @@
 			}
 		},
 		"views": {
-			"projectsyeah-dashboard-sidebar": [
+			"dashboardyeah-dashboard-sidebar": [
 				{
-					"id": "projectsyeah-dashboard-sidebar",
+					"id": "dashboardyeah-dashboard-sidebar",
 					"type": "webview",
 					"name": "Projects",
 					"icon": "local/gfx/icon.svg",
@@ -75,7 +75,7 @@
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "projectsyeah-dashboard-sidebar",
+					"id": "dashboardyeah-dashboard-sidebar",
 					"title": "Projects",
 					"icon": "local/gfx/icon.svg"
 				}
