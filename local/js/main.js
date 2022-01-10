@@ -358,6 +358,8 @@ class Project {
 		.dropdown();
 
 		self.el
+		.attr('data-id', self.item.id)
+		.attr('data-parent', self.parent)
 		.removeClassEx(/^col/)
 		.addClass(`${this.api.columnSizing} ${self.el.attr('class')}`)
 		.on('click', function() {
@@ -367,6 +369,9 @@ class Project {
 			));
 			return false;
 		});
+
+		if(!self.api.showPaths)
+		self.textPath.addClass('d-none');
 
 		return;
 	};
@@ -927,6 +932,7 @@ extends TemplatedDialog {
 		this.inputTitle = this.el.find('.Title');
 		this.inputFolderSizing = this.el.find('.FolderSizing');
 		this.inputColumnSizing = this.el.find('.ColumnSizing');
+		this.inputShowPaths = this.el.find('.ShowPaths');
 
 		this.btnFolderSizingPresets = this.el.find('.DashboardFolderPreset');
 		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
@@ -977,7 +983,8 @@ extends TemplatedDialog {
 			let config = {
 				title: self.inputTitle.tval(),
 				folderSizing: self.inputFolderSizing.tval(),
-				columnSizing: self.inputColumnSizing.tval()
+				columnSizing: self.inputColumnSizing.tval(),
+				showPaths: !!parseInt(self.inputShowPaths.tval())
 			};
 
 			self.api.send(new Message('configset', config));
@@ -1003,6 +1010,7 @@ extends TemplatedDialog {
 		this.inputTitle.val(this.api.title);
 		this.inputFolderSizing.val(this.api.folderSizing);
 		this.inputColumnSizing.val(this.api.columnSizing);
+		this.inputShowPaths.val(this.api.showPaths ? '1' : '0');
 
 		return;
 	};
@@ -1036,7 +1044,7 @@ class Dashboard {
 	folderSizing = 'col-12';
 	columnSizing = 'col-12';
 	tabMode = true;
-	showPath = true;
+	showPaths = true;
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////

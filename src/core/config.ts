@@ -18,12 +18,12 @@ class Config {
 	folderSizing: string;
 	columnSizing: string;
 	tabMode: boolean;
-	showPath: boolean;
+	showPaths: boolean;
 
 	private keepers:
 	Array<string> = [
 		'title', 'debug', 'database', 'folderSizing', 'columnSizing',
-		'tabMode', 'showPath'
+		'tabMode', 'showPaths'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ class Config {
 		this.folderSizing = 'col-12';
 		this.columnSizing = 'col-12 col-md-6';
 		this.tabMode = true;
-		this.showPath = true;
+		this.showPaths = true;
 
 		this.fillFromEditorConfig();
 		return;
@@ -261,7 +261,12 @@ class Config {
 
 		// and do it mang.
 
+		if(inset)
 		database.splice(key, 0, found);
+
+		else
+		database.push(found);
+
 		this.save();
 
 		return;

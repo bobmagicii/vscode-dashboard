@@ -429,6 +429,11 @@ em {
 	font-weight: bold;
 }
 
+hr {
+	border-color: var(--DashboardToolbarBg);
+	margin: 1.0rem 0rem;
+}
+
 input,
 select,
 textarea {

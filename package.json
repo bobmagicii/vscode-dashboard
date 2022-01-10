@@ -28,6 +28,11 @@
 					"default": false,
 					"description": "Enable debugging output."
 				},
+				"projectsyeah.showPaths": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show paths on the project entries."
+				},
 				"projectsyeah.title": {
 					"type": "string",
 					"default": "Projects",
