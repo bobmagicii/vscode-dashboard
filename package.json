@@ -1,26 +1,23 @@
 {
 	"name": "dashboardyeah",
 	"displayName": "Dashboard",
-	"description": "Add a project dashboard to VSCode",
-	"repository": "https://github.com/bobmagicii/vscode-dashboard",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.62.0"
+	"description": "Add a project dashboard to VSCode for 1 click launching of workspaces. Supports remote development projects.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bobmagicii/vscode-dashboard"
 	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onStartupFinished"
-	],
+	"version": "0.0.1",
+	"engines": { "vscode": "^1.62.0" },
+	"categories": [ "Other" ],
+	"galleryBanner": {
+		"color": "#262335",
+		"theme": "dark"
+	},
+	"keywords": [ "project", "dashboard", "switchboard", "project management" ],
+	"activationEvents": [ "onStartupFinished" ],
 	"main": "./out/main.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "dashboardyeah.helloWorld",
-				"title": "Hello World"
-			}
-		],
+		"commands": [ ],
 		"configuration": {
 			"title": "Dashboard",
 			"properties": {
