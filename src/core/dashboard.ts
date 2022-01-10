@@ -26,7 +26,11 @@ class Dashboard {
 		this.ext = ext;
 		this.conf = new Config;
 
+		// if a new window opens and it is a blank workspace then
+		// allow the dashboard to open itself if enabled.
+
 		if(this.conf.openOnNewWindow)
+		if(typeof vscode.workspace.name === 'undefined')
 		this.open();
 
 		return;
@@ -45,9 +49,13 @@ class Dashboard {
 
 		this.panel = vscode.window.createWebviewPanel(
 			'projectsyeah-dashboard-main',
-			'Projects',
-			vscode.ViewColumn.One,
+			'Dashboard',
 			{
+				viewColumn: vscode.ViewColumn.One,
+				preserveFocus: true
+			},
+			{
+				retainContextWhenHidden: true,
 				enableScripts: true,
 				localResourceRoots: [
 					vscode.Uri.file(this.ext.extensionPath)
