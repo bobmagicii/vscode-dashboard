@@ -59,14 +59,18 @@ body.vscode-light {
 	--DashboardInputBorder: var(--vscode-editorWidget-border);
 	--DashboardInputFg: var(--vscode-editorWidget-foreground);
 
+	/* theme menus */
+	--DashboardMenuBg: #00000099;
+
 }
 
 body.vscode-light {
 	--DashboardOverlayBg: #d4d4d4;
-	--DashboardOverlayOpacity: 0.90;
+	--DashboardOverlayOpacity: 0.80;
 	--DashboardToolbarBg: #0000000f;
 	--DashboardProjectBg: #0000000f;
 	--DashboardProjectBgHover: #0000000f;
+	--DashboardMenuBg: #ffffff44;
 }
 
 body.vscode-light .btn-dark {
@@ -126,9 +130,8 @@ body.vscode-light .btn-dark {
 	border-left: 4px solid var(--DashboardProjectAccent);
 
 	border-radius: 6px;
-	cursor: pointer;
 	padding: 16px;
-	transition: background-color 250ms;
+	transition: background-color 250ms, border-color 250ms;
 	user-select: none;
 }
 
@@ -276,7 +279,8 @@ body.vscode-light .btn-dark {
 
 	border-radius: 6px;
 	width: 50vw;
-	box-shadow: 0px 0px 32px #00000077;
+	backdrop-filter: blur(4px);
+	box-shadow: 0px 0px 10px #000000;
 
 	overflow: auto;
 	overflow-x: hidden;
@@ -419,6 +423,14 @@ body.vscode-light .btn-dark {
 
 .cased {
 	text-transform: none !important;
+}
+
+.dropdown-menu {
+	background: var(--DashboardMenuBg) !important;
+	border-color: var(--DashboardMenuBg);
+	color: var(--DashboardDialogFg) !important;
+	backdrop-filter: blur(4px);
+	box-shadow: 0px 0px 10px #000000;
 }
 
 /*******************************************************************************

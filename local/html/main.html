@@ -24,38 +24,39 @@
 			</header>
 			<section>
 				<div class="row tight align-items-center">
-					<div class="col-12 mb-4">
+					<div class="col-12">
 						<input type="text" class="form-control Name" placeholder="Name..." />
+						<hr />
 					</div>
-					<div class="col-12 mb-4">
+					<div class="col-12 ProjectOptions">
 						<input type="text" class="form-control Path" placeholder="URI..." />
+						<hr />
 					</div>
-					<div class="col-12"></div>
-					<div class="col-auto mb-4">
+					<div class="col-auto">
 						<div class="font-size-most-large AccentPreview">
 							<i class="codicon codicon-circle-large-filled"></i>
 						</div>
 					</div>
-					<div class="col-8 mb-4">
+					<div class="col-8">
 						<input type="text" class="form-control Accent" placeholder="Accent Colour..." />
 					</div>
-					<div class="col mb-4">
+					<div class="col">
 						<select class="form-control AccentPresets">
 							<option value="">Colours...</option>
 							<optgroup label="Presets...">
 							</optgroup>
 						</select>
 					</div>
-					<div class="col-12"></div>
-					<div class="col-auto mb-4">
+					<div class="col-12"><hr /></div>
+					<div class="col-auto">
 						<div class="font-size-most-large IconPreview">
 							<i class="codicon codicon-settings-gear"></i>
 						</div>
 					</div>
-					<div class="col-8 mb-4">
+					<div class="col-8">
 						<input type="text" class="form-control Icon" placeholder="Icon..." />
 					</div>
-					<div class="col mb-4">
+					<div class="col">
 						<select class="form-control IconPresets">
 							<option value="">Icons...</option>
 							<optgroup label="Codicons">
@@ -63,24 +64,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="row tight align-items-center mt-2 FolderOptions">
-					<div class="col-12 font-weight-bold">
-						Advanced:
-					</div>
-					<div class="col-12">
-						<div class="row tight align-items-center">
-							<div class="col-auto">
-								Project Colours:
-							</div>
-							<div class="col-auto">
-								<button class="btn btn-dark btn-block FolderColourSet" title="Match projects to folder colour."><i class="codicon codicon-file-symlink-directory"></i></button>
-							</div>
-							<div class="col-auto">
-								<button class="btn btn-dark btn-block FolderColourRng" title="Randomize projects from folder colour."><i class="codicon codicon-folder-library"></i></button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<hr />
 			</section>
 			<footer>
 				<div><button class="btn btn-primary Save">Save</button></div>
@@ -213,7 +197,7 @@
 					<div class="col-12">
 						<div class="row align-items-center">
 							<div class="col">
-								<div class="font-weight-bold">Open dashboard on new window</div>
+								<div class="font-weight-bold">Open dashboard when opening a new window with a blank workspace.</div>
 							</div>
 							<div class="col-auto">
 								<select class="form-control OpenOnNewWindow">
@@ -347,13 +331,40 @@
 								<button type="button" class="btn btn-sm btn-dark Config" data-toggle="dropdown" title="Project Settings...">
 									<i class="codicon codicon-settings-gear"></i>
 								</button>
-								<div class="dropdown-menu dropdown-menu-right p-2">
+								<div class="dropdown-menu dropdown-menu-right p-2 text-nowrap">
 									<div class="row tight">
 										<div class="col">
-											<button class="btn btn-block btn-dark Edit"><i class="codicon codicon-edit"></i></button>
+											<button class="btn btn-block btn-dark Edit" title="Edit project settings."><i class="codicon codicon-edit"></i></button>
 										</div>
 										<div class="col-auto">
-											<button class="btn btn-block btn-danger Delete"><i class="codicon codicon-close"></i></button>
+											<button class="btn btn-block btn-danger Delete" title="Delete project."><i class="codicon codicon-close"></i></button>
+										</div>
+										<div class="col-12"><hr /></div>
+										<div class="col-12 font-size-smallerer">
+											<div class="font-weight-bold text-uppercase mb-2">Project Colours...</div>
+											<div class="row tight justify-content-center">
+												<div class="col">
+													<button class="btn btn-block btn-dark FolderColourSet" title="Set all projects in this folder to the folder colour."><i class="codicon codicon-check"></i></button>
+												</div>
+												<div class="col">
+													<button class="btn btn-block btn-dark FolderColourRow" title="Set all the project colours to a sequence starting with the folder colour."><i class="codicon codicon-check-all"></i></button>
+												</div>
+												<div class="col">
+													<button class="btn btn-block btn-dark FolderColourRNG" title="Set all the projects to random colours based on the folder colour."><i class="codicon codicon-wand"></i></button>
+												</div>
+											</div>
+										</div>
+										<div class="col-12"><hr /></div>
+										<div class="col-12 font-size-smallerer">
+											<div class="font-weight-bold text-uppercase mb-2">Project Sorting...</div>
+											<div class="row tight justify-content-center">
+												<div class="col">
+													<button class="btn btn-block btn-dark FolderSortDesc" title="Sort projects by name A-Z."><i class="codicon codicon-arrow-down"></i></button>
+												</div>
+												<div class="col">
+													<button class="btn btn-block btn-dark FolderSortAsc" title="Sort projects by name Z-A."><i class="codicon codicon-arrow-up"></i></button>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

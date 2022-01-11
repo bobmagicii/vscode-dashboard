@@ -13,7 +13,6 @@ extends TemplatedDialog {
 		this.bindElements();
 		this.bindAccentPreset();
 		this.bindIconPreset();
-		this.bindProjectColourButtons();
 		this.bindAcceptButton();
 		this.bindCancelButton();
 		this.fillConfigValues();
@@ -28,41 +27,16 @@ extends TemplatedDialog {
 		this.inputAccent = this.el.find('.Accent');
 		this.inputIcon = this.el.find('.Icon');
 
+		this.textTitlebar = this.el.find('.Titlebar');
 		this.binAccent = this.el.find('.AccentPresets > optgroup');
 		this.binIcon = this.el.find('.IconPresets > optgroup');
 		this.binFolderOptions = this.el.find('.FolderOptions');
+		this.binProjectOptions = this.el.find('.ProjectOptions');
 		this.previewAccent = this.el.find('.AccentPreview');
 		this.previewIcon = this.el.find('.IconPreview');
 
 		this.btnAccept = this.el.find('.Save');
 		this.btnCancel = this.el.find('.Cancel');
-		this.btnFolderColourSet = this.el.find('.FolderColourSet');
-		this.btnFolderColourRng = this.el.find('.FolderColourRng');
-
-		return;
-	};
-
-	bindProjectColourButtons() {
-
-		let self = this;
-
-		this.btnFolderColourSet
-		.on('click', function(){
-			self.api.send(new Message(
-				'foldercolourset',
-				{ id: self.item.id }
-			));
-			return;
-		});
-
-		this.btnFolderColourRng
-		.on('click', function(){
-			self.api.send(new Message(
-				'foldercolourrng',
-				{ id: self.item.id }
-			));
-			return;
-		});
 
 		return;
 	};
@@ -202,7 +176,8 @@ extends TemplatedDialog {
 		////////
 
 		if(typeof this.item.path === 'undefined') {
-			this.inputPath.parent().hide();
+			this.binProjectOptions.hide();
+			this.textTitlebar.text('Folder Settings');
 		}
 
 		else {

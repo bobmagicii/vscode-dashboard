@@ -28,7 +28,11 @@ class Folder {
 		this.btnConfig = this.el.find('.Config');
 		this.btnProject = this.el.find('.NewProject');
 		this.projects = this.el.find('.Projects');
-
+		this.btnFolderColourSet = this.el.find('.FolderColourSet');
+		this.btnFolderColourRow = this.el.find('.FolderColourRow');
+		this.btnFolderColourRng = this.el.find('.FolderColourRNG');
+		this.btnFolderSortAsc = this.el.find('.FolderSortAsc');
+		this.btnFolderSortDesc = this.el.find('.FolderSortDesc');
 		return;
 	};
 
@@ -70,6 +74,51 @@ class Folder {
 			return;
 		});
 
+		self.btnFolderColourSet
+		.on('click', function(){
+			self.api.send(new Message(
+				'foldercolourset',
+				{ id: self.item.id }
+			));
+			return;
+		});
+
+		self.btnFolderColourRng
+		.on('click', function(){
+			self.api.send(new Message(
+				'foldercolourrng',
+				{ id: self.item.id, random: true }
+			));
+			return;
+		});
+
+		self.btnFolderColourRow
+		.on('click', function(){
+			self.api.send(new Message(
+				'foldercolourrng',
+				{ id: self.item.id, random: false }
+			));
+			return;
+		});
+
+		self.btnFolderSortDesc
+		.on('click', function(){
+			self.api.send(new Message(
+				'foldersort',
+				{ id: self.item.id, dir: 'desc' }
+			));
+			return;
+		});
+
+		self.btnFolderSortAsc
+		.on('click', function(){
+			self.api.send(new Message(
+				'foldersort',
+				{ id: self.item.id, dir: 'asc' }
+			));
+			return;
+		});
+
 		self.btnConfig
 		.dropdown();
 
@@ -98,6 +147,11 @@ class Folder {
 		// whatever was leftover.
 
 		self.el
+		.on('mouseleave',function(){
+			//jQuery('*[data-toggle=dropdown')
+			//.dropdown('hide');
+			return;
+		})
 		.removeClassEx(/^col/)
 		.addClass(`${this.api.folderSizing} ${self.el.attr('class')}`);
 

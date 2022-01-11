@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as ColourParser from 'color';
 
 class Util {
 
@@ -9,6 +10,10 @@ class Util {
 		return;
 	}
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	// FILTERS
 
 	public static filterArrayStrip(input: Array<any>, whatYouSeek: any) {
 		return input.filter(function(val: any, key: any){
@@ -26,6 +31,11 @@ class Util {
 		});
 	};
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	// SEEKERS
+
 	public static findInArrayById(input: Array<any>, whatYouSeek: any):
 	any {
 
@@ -37,44 +47,85 @@ class Util {
 		return null;
 	};
 
-	public static randomColourLike(input: string):
-	string {
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
-		let output = input;
-		let bytes: Array<string>|null = input.match(/\#([a-z0-9]{2})([a-z0-9]{2})([a-z0-9]{2})/);
-		let burts: Array<number> = new Array;
-
-		if(!bytes)
-		return output;
-
-		////////
-
-		output = '#';
-		bytes.shift();
-
-		for(const byte of bytes)
-		burts.push(
-			Util.clamp(
-				(parseInt(byte, 16) + (Util.randomInt(50) * (Util.randomInt(1) * -1))),
-				0, 255
-			)
-		);
-
-		for(const burt of burts)
-		output += burt.toString(16).padStart(2, '0');
-
-		////////
-
-		Util.println(`input: ${input}, output: ${output}`);
-
-		return output;
-	};
+	// RANDERS
 
 	public static randomInt(cap: number):
 	number {
 
 		return Math.round(Math.random() * cap);
 	};
+
+	public static randomIntPN(cap: number):
+	number {
+
+		return (Util.randomInt(cap) * Util.randomNegative());
+	};
+
+	public static randomNegative():
+	number {
+
+		return ((Util.randomInt(1) === 1) ? 1 : -1);
+	};
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	// COLOURS
+
+	public static arrayColoursFrom(input: string, num: number, severity: number = 4):
+	Array<string> {
+
+		let output = new Array;
+
+		for(num; num >= 0; --num) {
+			output.push(
+				ColourParser(input)
+				.rotate(num * severity)
+				.hex()
+			);
+		}
+
+		return output;
+	};
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	// SORTS
+
+	public static sortFuncByNameDesc(a: any, b: any):
+	number {
+
+		return (
+			(a.name ?? 0)
+			.toString()
+			.localeCompare(
+				(b.name ?? 0)
+				.toString()
+			)
+		);
+	};
+
+	public static sortFuncByNameAsc(a: any, b: any):
+	number {
+
+		return (
+			(b.name ?? 0)
+			.toString()
+			.localeCompare(
+				(a.name ?? 0)
+				.toString()
+			)
+		);
+	};
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	// MATHS
 
 	public static clamp(input: number, min: number, max: number):
 	number {

@@ -69,6 +69,11 @@ class Project {
 		self.el
 		.attr('data-id', self.item.id)
 		.attr('data-parent', self.parent)
+		.on('mouseleave',function(){
+			jQuery('*[data-toggle=dropdown')
+			.dropdown('hide');
+			return;
+		})
 		.removeClassEx(/^col/)
 		.addClass(`${this.api.columnSizing} ${self.el.attr('class')}`)
 		.on('click', function() {

@@ -8,6 +8,8 @@ import Message from './message';
 import ProjectEntry from './project-entry';
 import ProjectFolder from './project-folder';
 
+type ProjectLike = ProjectEntry|ProjectFolder|null;
+
 class Dashboard {
 
 	public panel:
@@ -250,6 +252,9 @@ class Dashboard {
 			case 'foldercolourrng':
 				this.onFolderColourRng(msg);
 			break;
+			case 'foldersort':
+				this.onFolderSort(msg);
+			break;
 		}
 
 		return;
@@ -446,15 +451,73 @@ class Dashboard {
 	public onFolderColourRng(msg: Message):
 	void {
 
-		let folder = this.conf.findProject(msg.data.id);
+		let folder: ProjectLike = this.conf.findProject(msg.data.id);
+		let from: string|null = null;
+		let severity: number = 8;
 
-		if(folder instanceof ProjectFolder)
+		if(!(folder instanceof ProjectFolder))
+		return;
+
+		// if the message contained a starting point then use that as the
+		// base as thats what was in the text input but not commited to
+		// the save yet.
+
+		if(typeof msg.data.from === 'string')
+		from = msg.data.from;
+
+		if(folder.projects.length <= 3)
+		severity *= 3.0;
+
+		else if(folder.projects.length <= 2)
+		severity *= 5.0;
+
+		// produce a spread of colours.
+
+		let colours = Util.arrayColoursFrom(
+			(from ?? folder.accent),
+			folder.projects.length,
+			severity
+		);
+
+		// randomize the colours if asked.
+
+		if(typeof msg.data.random === 'boolean')
+		if(msg.data.random)
+		colours.sort((a, b)=> Util.randomNegative());
+
+		// distribute the colours across the projects.
+
 		for(const project of folder.projects)
-		project.accent = Util.randomColourLike(folder.accent);
+		project.accent = colours.pop() ?? folder.accent;
 
 		this.conf.save();
 		this.onHey(msg);
+		return;
+	};
 
+	public onFolderSort(msg: Message):
+	void {
+
+		let folder = this.conf.findProject(msg.data.id);
+		let mode: string = 'desc';
+
+		if(!(folder instanceof ProjectFolder))
+		return;
+
+		if(typeof msg.data.dir === 'string')
+		mode = msg.data.dir;
+
+		////////
+
+		if(mode === 'asc')
+		folder.projects.sort(Util.sortFuncByNameAsc);
+		else
+		folder.projects.sort(Util.sortFuncByNameDesc);
+
+		console.log(folder.projects);
+
+		this.conf.save();
+		this.onHey(msg);
 		return;
 	};
 

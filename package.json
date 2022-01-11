@@ -7,17 +7,28 @@
 		"url": "https://github.com/bobmagicii/vscode-dashboard"
 	},
 	"version": "0.0.1",
-	"engines": { "vscode": "^1.62.0" },
-	"categories": [ "Other" ],
+	"engines": {
+		"vscode": "^1.62.0"
+	},
+	"categories": [
+		"Other"
+	],
 	"galleryBanner": {
 		"color": "#262335",
 		"theme": "dark"
 	},
-	"keywords": [ "project", "dashboard", "switchboard", "project management" ],
-	"activationEvents": [ "onStartupFinished" ],
+	"keywords": [
+		"project",
+		"dashboard",
+		"switchboard",
+		"project management"
+	],
+	"activationEvents": [
+		"onStartupFinished"
+	],
 	"main": "./out/main.js",
 	"contributes": {
-		"commands": [ ],
+		"commands": [],
 		"configuration": {
 			"title": "Dashboard",
 			"properties": {
@@ -87,9 +98,11 @@
 		"lint": "eslint src --ext ts"
 	},
 	"devDependencies": {
+		"@types/color": "^3.0.2",
 		"@types/glob": "^7.1.4",
 		"@types/mocha": "^9.0.0",
 		"@types/node": "14.x",
+		"@types/uuid": "^8.3.4",
 		"@types/vscode": "^1.62.0",
 		"@typescript-eslint/eslint-plugin": "^5.1.0",
 		"@typescript-eslint/parser": "^5.1.0",
@@ -100,8 +113,8 @@
 		"typescript": "^4.4.4"
 	},
 	"dependencies": {
-		"@types/uuid": "^8.3.3",
 		"@vscode/codicons": "^0.0.26",
+		"color": "^4.2.0",
 		"uuid": "^8.3.2"
 	}
 }
