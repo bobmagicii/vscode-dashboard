@@ -6,6 +6,7 @@ import Util from './util';
 import Config from './config';
 import Message from './message';
 import ProjectEntry from './project-entry';
+import ProjectFolder from './project-folder';
 
 class Dashboard {
 
@@ -129,6 +130,11 @@ class Dashboard {
 			"%CSPSOURCE%":
 			this.panel.webview.cspSource,
 
+			"%ROOT%":
+			this.localToWebpath(path.join(
+				this.ext.extensionPath
+			)),
+
 			"%NMROOT%":
 			this.localToWebpath(path.join(
 				this.ext.extensionPath, 'node_modules'
@@ -237,6 +243,12 @@ class Dashboard {
 			break;
 			case 'folderclose':
 				this.onFolderClose(msg);
+			break;
+			case 'foldercolourset':
+				this.onFolderColourSet(msg);
+			break;
+			case 'foldercolourrng':
+				this.onFolderColourRng(msg);
 			break;
 		}
 
@@ -414,7 +426,37 @@ class Dashboard {
 		this.onHey(msg);
 
 		return;
-	}
+	};
+
+	public onFolderColourSet(msg: Message):
+	void {
+
+		let folder = this.conf.findProject(msg.data.id);
+
+		if(folder instanceof ProjectFolder)
+		for(const project of folder.projects)
+		project.accent = folder.accent;
+
+		this.conf.save();
+		this.onHey(msg);
+
+		return;
+	};
+
+	public onFolderColourRng(msg: Message):
+	void {
+
+		let folder = this.conf.findProject(msg.data.id);
+
+		if(folder instanceof ProjectFolder)
+		for(const project of folder.projects)
+		project.accent = Util.randomColourLike(folder.accent);
+
+		this.conf.save();
+		this.onHey(msg);
+
+		return;
+	};
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////

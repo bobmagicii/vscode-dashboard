@@ -1,13 +1,9 @@
-import {
-	Folder,
-	Project,
-	ProjectConfig,
-	ProjectDelete,
-	ProjectNew,
-	FolderNew,
-	DashboardConfig,
-	Message
-} from './classes.js';
+import Folder from './folder.js';
+import Project from './project.js';
+import Message from './message.js';
+import ProjectNew from './project-new.js';
+import FolderNew from './folder-new.js';
+import DashboardConfig from './dashboard-config.js';
 
 class Dashboard {
 
