@@ -2,6 +2,11 @@
 	"name": "dashboardyeah",
 	"displayName": "Dashboard",
 	"description": "Add a project dashboard to VSCode for 1 click launching of workspaces. Supports remote development projects.",
+	"publisher": "bobmagicii",
+	"author": {
+		"name": "Bob Majdak Jr",
+		"email": "bob@pegasusgate.net"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/bobmagicii/vscode-dashboard"
