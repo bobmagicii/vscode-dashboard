@@ -77,6 +77,12 @@ class Project {
 		.removeClassEx(/^col/)
 		.addClass(`${this.api.columnSizing} ${self.el.attr('class')}`)
 		.on('click', function() {
+
+			if(jQuery('body').hasClass('ReorderProject')) {
+				jQuery('body').removeClass('ReorderProject');
+				return false;
+			}
+
 			self.api.send(new Message(
 				'projectopen',
 				{ id: self.item.id }
@@ -125,7 +131,6 @@ class Project {
 		.on(evMouseUp, function(){
 
 			jQuery(document)
-			.removeClass('ReorderProject')
 			.off(evMouseUp);
 
 			jQuery(self.api.elMain)
@@ -135,8 +140,8 @@ class Project {
 			.off(evLeave)
 			.off(evHover);
 
-			jQuery('body')
-			.removeClass('ReorderProject');
+			//jQuery('body')
+			//.removeClass('ReorderProject');
 
 			if(!target) {
 				// destroy ghost probably

@@ -191,13 +191,13 @@ body.vscode-light .btn-dark {
 /*******************************************************************************
 *******************************************************************************/
 
+.Project .ProjectEntry {
+	cursor: pointer;
+}
+
 .Folder > .ProjectEntry {
 	border-left: 0px;
 	border-top: 4px solid var(--DashboardProjectAccent);
-}
-
-.Folder .Icon {
-
 }
 
 .Folder .Projects {
