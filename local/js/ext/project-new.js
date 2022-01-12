@@ -123,14 +123,14 @@ extends TemplatedDialog {
 
 		jQuery(document)
 		.on('dirpick', function(ev, data){
-			let base = data.uri.split(/[\/\\]/).pop();
+
+			if(typeof data.label !== 'string')
+			return;
+
+			if(typeof data.uri !== 'string')
+			return;
 
 			self.setDirectory(data);
-
-			if(self.inputName.tval() === '') {
-				self.inputName.val(base);
-			}
-
 			return;
 		});
 
@@ -153,6 +153,9 @@ extends TemplatedDialog {
 
 			return;
 		}
+
+		if(this.inputName.tval() === '')
+		this.inputName.val(input.uri.split(/[\/\\]/).pop());
 
 		this.btnChooser
 		.addClass('cased')
