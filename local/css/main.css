@@ -6,9 +6,9 @@ body.vscode-dark { color: var(--vscode-foreground); }
 
 body {
 	background: transparent;
-	-margin: 0px;
-	padding-top: 1.5rem;
-	padding-bottom: 1.5rem;
+	padding: 1.5rem 0.5rem;
+	--font-family: 'Fira Code', 'Consolas', sans-serif;
+	margin: 0px;
 }
 
 .form-control:focus {
@@ -96,7 +96,7 @@ body.vscode-light .btn-dark {
 	color: var(--DashboardDebugText);
 
 	font-size: 1em;
-	font-weight: bold;
+	font-weight: 300;
 	line-height: 1em;
 	margin: 0px;
 	padding: 0px 0px 4px 0px;
@@ -120,7 +120,7 @@ body.vscode-light .btn-dark {
 	background: var(--DashboardToolbarBg);
 	color: var(--DashboardToolbarText);
 
-	border-radius: 6px;
+	border-radius: 4px;
 	margin-bottom: 1.5rem;
 	padding: 12px 16px;
 }
@@ -129,7 +129,7 @@ body.vscode-light .btn-dark {
 	background-color: var(--DashboardProjectBg);
 	border-left: 4px solid var(--DashboardProjectAccent);
 
-	border-radius: 6px;
+	border-radius: 4px;
 	padding: 16px;
 	transition: background-color 250ms, border-color 250ms;
 	user-select: none;
@@ -151,7 +151,7 @@ body.vscode-light .btn-dark {
 }
 
 .ProjectEntry .Name {
-	font-weight: normal;
+	font-weight: bold;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

@@ -14,7 +14,7 @@
 	<script type="module" src="%JSROOT%/index.js"></script>
 </head>
 <body>
-<div class="container-fluid" style="display:none;">
+<div id="App" class="container-fluid App" style="display:none;">
 
 	<div id="Templates" class="d-none">
 		<div id="TemplateProjectConfig" class="Dialog d-none">
@@ -223,6 +223,31 @@
 					</div>
 					<div class="col-12"><hr /></div>
 					<div class="col-12">
+						<div class="row align-items-center">
+							<div class="col">
+								<div class="font-weight-bold">Dashboard Text Size</div>
+							</div>
+							<div class="col-auto">
+								<select class="form-control FontSize">
+									<option value="font-size-mostest-large">Mostest Large</option>
+									<option value="font-size-most-large">Most Large</option>
+									<option value="font-size-largerest">Largerest</option>
+									<option value="font-size-largerer">Largerer</option>
+									<option value="font-size-larger">Larger</option>
+									<option value="font-size-large">Large</option>
+									<option value="font-size-normal">Normal (Default)</option>
+									<option value="font-size-small">Small</option>
+									<option value="font-size-smaller">Smaller</option>
+									<option value="font-size-smallerer">Smallerer</option>
+									<option value="font-size-smallerest">Smallerest</option>
+									<option value="font-size-most-small">Most Small</option>
+									<option value="font-size-mostest-small">Mostest Small</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-12"><hr /></div>
+					<div class="col-12">
 						<div class="font-weight-bold mb-2">Folder Column Sizing</div>
 						<div class="text-muted mb-2">Use the preset number of columns buttons or craft your own using Bootstrap classes.</div>
 						<div class="row tight mb-2">
@@ -289,9 +314,6 @@
 	<div id="Dashboard">
 		<div id="Toolbar" class="Toolbar">
 			<div class="row tight align-items-center">
-				<div class="col-auto">
-					<i class="codicon codicon-home"></i>
-				</div>
 				<div class="col">
 					<span class="DashboardTitle">Dashboard</span>
 				</div>
@@ -312,8 +334,8 @@
 				<div class="ProjectEntry">
 					<div class="ProjectInfo row tight align-items-center">
 						<div class="col-auto Fold">
-							<button class="btn btn-sm btn-dark" title="Open/Close Folder"><i class="codicon codicon-chevron-right"></i></button>
-							<button class="btn btn-sm btn-dark" title="Open/Close Folder"><i class="codicon codicon-fold-down"></i></button>
+							<button class="btn btn-sm btn-dark" title="Open/Close Folder"><i class="codicon codicon-plus"></i></button>
+							<button class="btn btn-sm btn-dark" title="Open/Close Folder"><i class="codicon codicon-remove"></i></button>
 						</div>
 						<div class="col-auto Icon pl-2 pr-2">
 							<i class="codicon"></i>

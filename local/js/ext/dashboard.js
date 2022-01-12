@@ -21,10 +21,11 @@ class Dashboard {
 	debug = false;
 	database = [];
 	folderSizing = 'col-12';
-	columnSizing = 'col-12';
+	columnSizing = 'col-12 col-sm-6';
 	tabMode = true;
 	showPaths = true;
 	openOnNewWindow = true;
+	fontSize = 'font-size-normal';
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
@@ -45,6 +46,7 @@ class Dashboard {
 		this.elProjectBox = jQuery('#ProjectBox');
 		this.elToolbar = jQuery('#Toolbar');
 		this.elMessageDebug = jQuery('#Debug');
+		this.elApp = jQuery('#App');
 		this.setDebug(this.debug);
 
 		this.template.folder = (
@@ -88,6 +90,10 @@ class Dashboard {
 		(this.body)
 		.find('.DashboardTitle')
 		.text(this.title);
+
+		(this.elApp)
+		.removeClassEx(/^font-size-/)
+		.addClass(this.fontSize ?? 'font-size-normal');
 
 		this.renderProjectEntries();
 

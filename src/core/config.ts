@@ -20,11 +20,12 @@ class Config {
 	tabMode: boolean;
 	showPaths: boolean;
 	openOnNewWindow: boolean;
+	fontSize: string;
 
 	private keepers:
 	Array<string> = [
 		'title', 'debug', 'database', 'folderSizing', 'columnSizing',
-		'tabMode', 'showPaths', 'openOnNewWindow'
+		'tabMode', 'showPaths', 'openOnNewWindow', 'fontSize'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -42,6 +43,7 @@ class Config {
 		this.tabMode = true;
 		this.showPaths = true;
 		this.openOnNewWindow = true;
+		this.fontSize = 'font-size-normal';
 
 		this.fillFromEditorConfig();
 		return;
@@ -79,7 +81,7 @@ class Config {
 		return;
 	};
 
-	getMap():
+	public getMap():
 	Map<string, any> {
 
 		let output = new Map<string, any>();
@@ -94,7 +96,7 @@ class Config {
 		return output;
 	};
 
-	getObject():
+	public getObject():
 	object {
 
 		let output: any = {};
@@ -109,7 +111,7 @@ class Config {
 		return output;
 	};
 
-	setObject(input: any):
+	public setObject(input: any):
 	void {
 
 		for(const key in input)
@@ -141,14 +143,15 @@ class Config {
 	public addFolder(name: string):
 	void {
 
-		(this.database)
-		.push(new ProjectFolder({
+		let project = new ProjectFolder({
 			id: uuid.v4(),
 			name: name
-		}));
+		});
 
+		project.open = true;
+
+		this.database.push(project);
 		this.save();
-
 		return;
 	};
 

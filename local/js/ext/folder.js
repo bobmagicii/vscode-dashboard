@@ -148,8 +148,8 @@ class Folder {
 
 		self.el
 		.on('mouseleave',function(){
-			//jQuery('*[data-toggle=dropdown')
-			//.dropdown('hide');
+			jQuery('*[data-toggle=dropdown')
+			.dropdown('hide');
 			return;
 		})
 		.removeClassEx(/^col/)
