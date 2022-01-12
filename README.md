@@ -53,6 +53,8 @@ all match or look pretty.
 
 ![Alt text](/local/gfx/ex-project-settings.png "Project Settings")
 
+![Alt text](/local/gfx/ex-folder-menu.png "Folder Menu")
+
 
 
 # Syncing (or not if you prefer)
