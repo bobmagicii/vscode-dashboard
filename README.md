@@ -1,7 +1,9 @@
 # Dashboard for VS Code
 
-Adds the ability to create and organize projects into a dashboard for easy
-launching. Supports both local directories and Remote Development connections.
+Adds the ability to create and organize projects into a dashboard for quick
+launching. Supports both local directories and Remote Development connections
+and I am pretty confident thusfar that it does *not* need to be installed on
+remote hosts to function.
 
 * Download: [link to vscode marketplace after release]
 * Report Issues: https://github.com/bobmagicii/vscode-dashboard
@@ -44,6 +46,10 @@ different folders and reordered.
 The colours and icons of the projects can be changed in their individual
 settings. Folders can also manage the colours of projects within to make them
 all match or look pretty.
+
+> Note: for the magic pretty to work your folder colour
+> must be defined as a const value. So something normal like `#dc143c`. It will
+> not work on things like `var()` or `calc()`.
 
 
 

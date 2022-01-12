@@ -211,7 +211,12 @@ class Config {
 	void {
 
 		let database: Array<any>|null = null;
-		let found = this.findProject(id, true);
+		let found = this.findProject(id);
+		let folder = null;
+
+		let shouldInsertAfter: boolean = false;
+		let inset: boolean = false;
+		let key: any = 0;
 
 		if(found === null)
 		return Util.println(
@@ -219,13 +224,12 @@ class Config {
 			'Config::moveProject'
 		);
 
-		// then insert it back into the dataset in its final resting place.
-		// first decide if its going into a folder or not.
+		// determine the thing to contain this project exists.
 
 		database = this.database;
 
 		if(into !== null) {
-			let folder = Util.findInArrayById(this.database, into);
+			folder = Util.findInArrayById(this.database, into);
 
 			if(folder instanceof ProjectFolder)
 			database = folder.projects;
@@ -243,11 +247,44 @@ class Config {
 			'Config::moveProject'
 		);
 
-		// then determine if it needs to go into a specific spot into the
-		// the final dataset.
+		// determine if we dragged this to a project that came before or
+		// after the one to move. this makes drag drop feel better when
+		// dragging things farther down a list. but don't do anything
+		// if we dragged it upon ourselves.
 
-		let key: any = 0;
-		let inset: boolean = false;
+		if(before !== null) {
+			if(found.id === before)
+			return;
+
+			for(key in database) {
+				if(database[key].id === before) {
+					shouldInsertAfter = false;
+					break;
+				}
+
+				if(database[key].id === found.id) {
+					shouldInsertAfter = true;
+					break;
+				}
+			}
+		}
+
+		// pull the thing we are moving out and reset our database
+		// references for later manipulation since this find/remove method
+		// ends up returning new arrays i think.
+
+		this.findProject(found.id, true);
+
+		if(folder instanceof ProjectFolder)
+		database = folder.projects;
+		else
+		database = this.database;
+
+		// then determine if it needs to go into a specific spot into the
+		// the final dataset finding the array offset now that the original
+		// item has been removed.
+
+		key = 0;
 
 		if(before !== null) {
 			for(key in database) {
@@ -257,6 +294,13 @@ class Config {
 				}
 			}
 		}
+
+		key = parseInt(key);
+
+		if(shouldInsertAfter)
+		key += 1;
+
+		// summarize what we've determined.
 
 		if(inset)
 		Util.println(
@@ -273,12 +317,10 @@ class Config {
 
 		if(inset)
 		database.splice(key, 0, found);
-
 		else
 		database.push(found);
 
 		this.save();
-
 		return;
 	};
 

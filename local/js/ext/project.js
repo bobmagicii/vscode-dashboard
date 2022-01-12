@@ -46,16 +46,24 @@ class Project {
 		.text(Dashboard.readableURI(self.item.path));
 
 		self.btnDelete
-		.on('click', function(){
+		.on('mouseup.delete', function(){
 			new ProjectDelete(self.api, self.item);
 			return false;
 		});
 
 		self.btnEdit
-		.on('click', function(){
+		.on('mouseup.config', function(){
 			new ProjectConfig(self.api, self.item);
 			return false;
 		});
+
+		self.btnMenu
+		.on('mouseup.menu', function(ev){
+			// prevent mouseup bubble to entry.
+			self.btnReorder.trigger('mouseup.reorder');
+			return false;
+		})
+		.dropdown();
 
 		self.btnReorder
 		.on('mousedown.reorder', function(ev){
@@ -63,32 +71,40 @@ class Project {
 			return false;
 		});
 
-		self.btnMenu
-		.dropdown();
-
-		self.el
+		(self.el)
 		.attr('data-id', self.item.id)
 		.attr('data-parent', self.parent)
+		.removeClassEx(/^col/)
+		.addClass(`${this.api.columnSizing} ${self.el.attr('class')}`)
 		.on('mouseleave',function(){
+			// force close drop downs any time we leave an object.
 			jQuery('*[data-toggle=dropdown')
 			.dropdown('hide');
 			return;
-		})
-		.removeClassEx(/^col/)
-		.addClass(`${this.api.columnSizing} ${self.el.attr('class')}`)
-		.on('click', function() {
+		});
 
-			if(jQuery('body').hasClass('ReorderProject')) {
-				jQuery('body').removeClass('ReorderProject');
+		// this stupid thing instead of just using click
+		// was invented as a way to negotiate allowing the buttons on
+		// the project to do things. the reorder handle for example needs
+		// to allow click drag and conf menu needs a click. we can
+		// reconsile both of those via mousedown and mouseup events intead
+		// having them eat their events before the base button gets
+		// button gets triggered for opening the projects.
+
+		(self.el)
+		.on('mousedown.open', function() {
+			jQuery(this)
+			.on('mouseup.open', function(){
+				self.api.send(new Message(
+					'projectopen',
+					{ id: self.item.id }
+				));
 				return false;
-			}
-
-			self.api.send(new Message(
-				'projectopen',
-				{ id: self.item.id }
-			));
+			});
 			return false;
 		});
+
+		////////
 
 		if(!self.api.showPaths)
 		self.textPath.addClass('d-none');
@@ -140,8 +156,8 @@ class Project {
 			.off(evLeave)
 			.off(evHover);
 
-			//jQuery('body')
-			//.removeClass('ReorderProject');
+			jQuery('body')
+			.removeClass('ReorderProject');
 
 			if(!target) {
 				// destroy ghost probably

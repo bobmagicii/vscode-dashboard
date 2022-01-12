@@ -23,7 +23,7 @@ class ProjectEntry {
 		this.name = input.name;
 		this.path = input.path;
 		this.icon = input.icon ?? this.getIcon();
-		this.accent = input.accent ?? 'var(--DashboardProjectAccent)';
+		this.accent = input.accent ?? '#dc143c';
 
 		return;
 	};
