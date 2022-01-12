@@ -123,7 +123,14 @@ extends TemplatedDialog {
 
 		jQuery(document)
 		.on('dirpick', function(ev, data){
+			let base = data.uri.split(/[\/\\]/).pop();
+
 			self.setDirectory(data);
+
+			if(self.inputName.tval() === '') {
+				self.inputName.val(base);
+			}
+
 			return;
 		});
 
