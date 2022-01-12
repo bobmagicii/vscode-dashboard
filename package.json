@@ -1,34 +1,34 @@
 {
-	"name": "dashboardyeah",
+	"name": "dashyeah",
+	"version": "1.0.0-beta3",
 	"displayName": "Dashboard",
-	"description": "Add a project dashboard to VSCode for 1 click launching of workspaces. Supports remote development projects.",
+	"description": "Add a project dashboard to VSCode for quick launching of workspaces. Supports remote development projects.",
 	"publisher": "bobmagicii",
 	"author": {
 		"name": "Bob Majdak Jr",
 		"email": "bob@pegasusgate.net"
 	},
+	"keywords": [
+		"project",
+		"dashboard",
+		"speed dial",
+		"project management"
+	],
+	"categories": [
+		"Other"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/bobmagicii/vscode-dashboard"
 	},
-	"version": "1.0.0-beta3",
 	"icon": "local/gfx/icon-lg.png",
 	"engines": {
 		"vscode": "^1.62.0"
 	},
-	"categories": [
-		"Other"
-	],
 	"galleryBanner": {
 		"color": "#262335",
 		"theme": "dark"
 	},
-	"keywords": [
-		"project",
-		"dashboard",
-		"switchboard",
-		"project management"
-	],
 	"activationEvents": [
 		"onStartupFinished"
 	],
@@ -38,42 +38,42 @@
 		"configuration": {
 			"title": "Dashboard",
 			"properties": {
-				"dashboardyeah.debug": {
+				"dashyeah.debug": {
 					"type": "boolean",
 					"default": false,
 					"description": "Enable debugging output."
 				},
-				"dashboardyeah.showPaths": {
+				"dashyeah.showPaths": {
 					"type": "boolean",
 					"default": true,
 					"description": "Show paths on the project entries."
 				},
-				"dashboardyeah.openOnNewWindow": {
+				"dashyeah.openOnNewWindow": {
 					"type": "boolean",
 					"default": true,
 					"description": "Auto open the dashboard when spawning new windows."
 				},
-				"dashboardyeah.title": {
+				"dashyeah.title": {
 					"type": "string",
 					"default": "Projects",
 					"description": "Dashboard Title"
 				},
-				"dashboardyeah.fontSize": {
+				"dashyeah.fontSize": {
 					"type": "string",
 					"default": "font-size-normal",
 					"description": "Text Size"
 				},
-				"dashboardyeah.folderSizing": {
+				"dashyeah.folderSizing": {
 					"type": "string",
 					"default": "col-12",
 					"description": "The Bootstrap CSS classes used to adjust how the folders scale to your window size."
 				},
-				"dashboardyeah.columnSizing": {
+				"dashyeah.columnSizing": {
 					"type": "string",
 					"default": "col-12 col-md-6",
 					"description": "The Bootstrap CSS classes used to adjust how the columns scale to your window size."
 				},
-				"dashboardyeah.database": {
+				"dashyeah.database": {
 					"type": "array",
 					"default": [],
 					"description": "List of projects stored in your user config so that it can be synced."
@@ -81,9 +81,9 @@
 			}
 		},
 		"views": {
-			"dashboardyeah-dashboard-sidebar": [
+			"dashyeah-dashboard-sidebar": [
 				{
-					"id": "dashboardyeah-dashboard-sidebar",
+					"id": "dashyeah-dashboard-sidebar",
 					"type": "webview",
 					"name": "Projects",
 					"icon": "local/gfx/icon.svg",
@@ -94,7 +94,7 @@
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "dashboardyeah-dashboard-sidebar",
+					"id": "dashyeah-dashboard-sidebar",
 					"title": "Projects",
 					"icon": "local/gfx/icon.svg"
 				}
