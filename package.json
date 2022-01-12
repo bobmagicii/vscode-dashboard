@@ -1,6 +1,6 @@
 {
 	"name": "dashyeah",
-	"version": "1.0.0-beta3",
+	"version": "1.0.0-beta4",
 	"displayName": "Dashboard",
 	"description": "Add a project dashboard to VSCode for quick launching of workspaces. Supports remote development projects.",
 	"publisher": "bobmagicii",
