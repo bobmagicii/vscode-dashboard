@@ -45,6 +45,11 @@ class Dashboard {
 	public open():
 	void {
 
+		// settings changed via the settings ui do not take effect unless
+		// we reload them. im sure its not that big of a deal but most
+		// users are not going to need this happening every time.
+		// this.conf = new Config;
+
 		if(this.panel) {
 			this.panel.reveal();
 			return;
