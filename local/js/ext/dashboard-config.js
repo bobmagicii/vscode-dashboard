@@ -22,6 +22,7 @@ extends TemplatedDialog {
 		this.inputShowPaths = this.el.find('.ShowPaths');
 		this.inputOpenOnNewWindow = this.el.find('.OpenOnNewWindow');
 		this.inputFontSize = this.el.find('.FontSize');
+		this.inputRounded = this.el.find('.RoundedCorners');
 
 		this.btnFolderSizingPresets = this.el.find('.DashboardFolderPreset');
 		this.btnColumnSizingPresets = this.el.find('.DashboardColumnPreset');
@@ -75,7 +76,8 @@ extends TemplatedDialog {
 				columnSizing: self.inputColumnSizing.tval(),
 				showPaths: !!parseInt(self.inputShowPaths.tval()),
 				openOnNewWindow: !!parseInt(self.inputOpenOnNewWindow.tval()),
-				fontSize: self.inputFontSize.tval()
+				fontSize: self.inputFontSize.tval(),
+				rounded: !!parseInt(self.inputRounded.tval())
 			};
 
 			self.api.send(new Message('configset', config));
@@ -104,6 +106,7 @@ extends TemplatedDialog {
 		this.inputShowPaths.val(this.api.showPaths ? '1' : '0');
 		this.inputOpenOnNewWindow.val(this.api.openOnNewWindow ? '1' : '0');
 		this.inputFontSize.val(this.api.fontSize);
+		this.inputRounded.val(this.api.rounded ? '1' : '0');
 
 		return;
 	};

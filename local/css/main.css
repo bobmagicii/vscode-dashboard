@@ -79,6 +79,30 @@ body.vscode-light .btn-dark {
 	color: #222222;
 }
 
+
+/*******************************************************************************
+** misc hacks *****************************************************************/
+
+em {
+	border-bottom: 1px dotted var(--DashboardToolbarText);
+
+	font-style: normal;
+	font-weight: bold;
+}
+
+hr {
+	border-color: var(--DashboardToolbarBg);
+	margin: 1.0rem 0rem;
+}
+
+input,
+select,
+textarea {
+	background-color: var(--DashboardInputBg) !important;
+	border-color: var(--DashboardInputBorder) !important;
+	color: var(--DashboardInputFg) !important;
+}
+
 /*******************************************************************************
 *******************************************************************************/
 
@@ -120,7 +144,6 @@ body.vscode-light .btn-dark {
 	background: var(--DashboardToolbarBg);
 	color: var(--DashboardToolbarText);
 
-	border-radius: 4px;
 	margin-bottom: 1.5rem;
 	padding: 12px 16px;
 }
@@ -129,7 +152,6 @@ body.vscode-light .btn-dark {
 	background-color: var(--DashboardProjectBg);
 	border-left: 4px solid var(--DashboardProjectAccent);
 
-	border-radius: 4px;
 	padding: 16px;
 	transition: background-color 250ms, border-color 250ms;
 	user-select: none;
@@ -277,7 +299,6 @@ body.vscode-light .btn-dark {
 	color: var(--DashboardDialogFg);
 	font-size: 0.80em;
 
-	border-radius: 6px;
 	width: 50vw;
 	backdrop-filter: blur(4px);
 	box-shadow: 0px 0px 10px #000000;
@@ -387,6 +408,10 @@ body.vscode-light .btn-dark {
 	padding-right: 0.25rem;
 }
 
+.btn {
+	border-radius: 0px;
+}
+
 .btn:focus {
 	box-shadow: none !important;
 	outline: none !important;
@@ -434,25 +459,11 @@ body.vscode-light .btn-dark {
 }
 
 /*******************************************************************************
-** misc hacks *****************************************************************/
+*******************************************************************************/
 
-em {
-	border-bottom: 1px dotted var(--DashboardToolbarText);
-
-	font-style: normal;
-	font-weight: bold;
+.App.Rounded .ProjectEntry,
+.App.Rounded .Toolbar,
+.App.Rounded .Dialog,
+.App.Rounded .btn {
+	border-radius: 4px;
 }
-
-hr {
-	border-color: var(--DashboardToolbarBg);
-	margin: 1.0rem 0rem;
-}
-
-input,
-select,
-textarea {
-	background-color: var(--DashboardInputBg) !important;
-	border-color: var(--DashboardInputBorder) !important;
-	color: var(--DashboardInputFg) !important;
-}
-

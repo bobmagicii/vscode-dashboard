@@ -26,6 +26,7 @@ class Dashboard {
 	showPaths = true;
 	openOnNewWindow = true;
 	fontSize = 'font-size-normal';
+	rounded = true;
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
@@ -93,7 +94,10 @@ class Dashboard {
 
 		(this.elApp)
 		.removeClassEx(/^font-size-/)
-		.addClass(this.fontSize ?? 'font-size-normal');
+		.removeClass('Rounded Squared')
+		.addClass(this.fontSize ?? 'font-size-normal')
+		.addClass(this.rounded ? 'Rounded' : 'Squared');
+
 
 		this.renderProjectEntries();
 

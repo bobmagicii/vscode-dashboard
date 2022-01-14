@@ -56,6 +56,11 @@
 					"default": true,
 					"description": "Auto open the dashboard when spawning new windows."
 				},
+				"dashyeah.rounded": {
+					"type": "boolean",
+					"default": true,
+					"description": "I mean if like the corners should be rounded or not."
+				},
 				"dashyeah.title": {
 					"type": "string",
 					"default": "Projects",

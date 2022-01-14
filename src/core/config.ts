@@ -21,11 +21,12 @@ class Config {
 	showPaths: boolean;
 	openOnNewWindow: boolean;
 	fontSize: string;
+	rounded: boolean;
 
 	private keepers:
 	Array<string> = [
 		'title', 'debug', 'database', 'folderSizing', 'columnSizing',
-		'tabMode', 'showPaths', 'openOnNewWindow', 'fontSize'
+		'tabMode', 'showPaths', 'openOnNewWindow', 'fontSize', 'rounded'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -44,6 +45,7 @@ class Config {
 		this.showPaths = true;
 		this.openOnNewWindow = true;
 		this.fontSize = 'font-size-normal';
+		this.rounded = true;
 
 		this.fillFromEditorConfig();
 		return;
