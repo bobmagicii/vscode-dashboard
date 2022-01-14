@@ -164,19 +164,35 @@ class Dashboard {
 		jQuery('.CmdProjectNew')
 		.on('click', function(){
 			new ProjectNew(self);
-			return;
+			return false;
 		});
 
 		jQuery('.CmdFolderNew')
 		.on('click', function(){
 			new FolderNew(self);
-			return;
+			return false;
 		});
 
 		jQuery('.CmdDashboardConfig')
 		.on('click', function(){
 			new DashboardConfig(self);
-			return;
+			return false;
+		});
+
+		jQuery('.CmdCloseAll')
+		.on('click', function(){
+			//jQuery('.Folder')
+			//.removeClass('Open');
+			self.send(new Message('foldercloseall',{}));
+			return false;
+		});
+
+		jQuery('.CmdOpenAll')
+		.on('click', function(){
+			//jQuery('.Folder')
+			//.addClass('Open');
+			self.send(new Message('folderopenall',{}));
+			return false;
 		});
 
 		return;

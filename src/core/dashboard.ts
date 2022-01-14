@@ -248,8 +248,14 @@ class Dashboard {
 			case 'folderopen':
 				this.onFolderOpen(msg);
 			break;
+			case 'folderopenall':
+				this.onFolderOpenAll(msg);
+			break;
 			case 'folderclose':
 				this.onFolderClose(msg);
+			break;
+			case 'foldercloseall':
+				this.onFolderCloseAll(msg);
 			break;
 			case 'foldercolourset':
 				this.onFolderColourSet(msg);
@@ -428,11 +434,37 @@ class Dashboard {
 		return;
 	};
 
+	public onFolderOpenAll(msg: Message):
+	void {
+
+		for(const item of this.conf.database)
+		if(item instanceof ProjectFolder)
+		item.open = true;
+
+		this.conf.save();
+		this.onHey(msg);
+
+		return;
+	};
+
 	public onFolderClose(msg: Message):
 	void {
 
 		this.conf.updateProject(msg.data.id, { open: false });
 
+		this.onHey(msg);
+
+		return;
+	};
+
+	public onFolderCloseAll(msg: Message):
+	void {
+
+		for(const item of this.conf.database)
+		if(item instanceof ProjectFolder)
+		item.open = false;
+
+		this.conf.save();
 		this.onHey(msg);
 
 		return;
