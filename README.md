@@ -5,7 +5,7 @@ launching. Supports both local directories and Remote Development connections
 and I am pretty confident thusfar that it does *not* need to be installed on
 remote hosts to function.
 
-* Download: [link to vscode marketplace after release]
+* Download: https://marketplace.visualstudio.com/items?itemName=bobmagicii.dashyeah
 * Report Issues: https://github.com/bobmagicii/vscode-dashboard
 
 ![Alt text](/local/gfx/ex-dashboard.png "A Busy Dashboard")
