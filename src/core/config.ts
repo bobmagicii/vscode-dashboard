@@ -20,13 +20,15 @@ class Config {
 	tabMode: boolean;
 	showPaths: boolean;
 	openOnNewWindow: boolean;
+	openInNewWindow: boolean;
 	fontSize: string;
 	rounded: boolean;
 
 	private keepers:
 	Array<string> = [
 		'title', 'debug', 'database', 'folderSizing', 'columnSizing',
-		'tabMode', 'showPaths', 'openOnNewWindow', 'fontSize', 'rounded'
+		'tabMode', 'showPaths', 'fontSize', 'rounded',
+		'openOnNewWindow', 'openInNewWindow'
 	];
 
 	////////////////////////////////////////////////////////////////
@@ -44,6 +46,7 @@ class Config {
 		this.tabMode = true;
 		this.showPaths = true;
 		this.openOnNewWindow = true;
+		this.openInNewWindow = false;
 		this.fontSize = 'font-size-normal';
 		this.rounded = true;
 

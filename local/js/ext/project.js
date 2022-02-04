@@ -129,6 +129,9 @@ class Project {
 
 		////////
 
+		if(this.api.openInNewWindow)
+		self.el.attr('data-open-new-window', '1');
+
 		if(!self.api.showPaths)
 		self.textPath.addClass('d-none');
 

@@ -21,6 +21,7 @@ extends TemplatedDialog {
 		this.inputColumnSizing = this.el.find('.ColumnSizing');
 		this.inputShowPaths = this.el.find('.ShowPaths');
 		this.inputOpenOnNewWindow = this.el.find('.OpenOnNewWindow');
+		this.inputOpenInNewWindow = this.el.find('.OpenInNewWindow')
 		this.inputFontSize = this.el.find('.FontSize');
 		this.inputRounded = this.el.find('.RoundedCorners');
 
@@ -76,6 +77,7 @@ extends TemplatedDialog {
 				columnSizing: self.inputColumnSizing.tval(),
 				showPaths: !!parseInt(self.inputShowPaths.tval()),
 				openOnNewWindow: !!parseInt(self.inputOpenOnNewWindow.tval()),
+				openInNewWindow: !!parseInt(self.inputOpenInNewWindow.tval()),
 				fontSize: self.inputFontSize.tval(),
 				rounded: !!parseInt(self.inputRounded.tval())
 			};
@@ -105,6 +107,7 @@ extends TemplatedDialog {
 		this.inputColumnSizing.val(this.api.columnSizing);
 		this.inputShowPaths.val(this.api.showPaths ? '1' : '0');
 		this.inputOpenOnNewWindow.val(this.api.openOnNewWindow ? '1' : '0');
+		this.inputOpenInNewWindow.val(this.api.openInNewWindow ? '1' : '0');
 		this.inputFontSize.val(this.api.fontSize);
 		this.inputRounded.val(this.api.rounded ? '1' : '0');
 

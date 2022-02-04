@@ -56,6 +56,11 @@
 					"default": true,
 					"description": "Auto open the dashboard when spawning new windows."
 				},
+				"dashyeah.openInNewWindow": {
+					"type": "boolean",
+					"default": false,
+					"description": "Open the dashboard in a new window."
+				},
 				"dashyeah.rounded": {
 					"type": "boolean",
 					"default": true,

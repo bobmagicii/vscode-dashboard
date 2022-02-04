@@ -25,6 +25,7 @@ class Dashboard {
 	tabMode = true;
 	showPaths = true;
 	openOnNewWindow = true;
+	openInNewWindow = false;
 	fontSize = 'font-size-normal';
 	rounded = true;
 
