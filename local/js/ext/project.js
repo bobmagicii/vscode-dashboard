@@ -25,6 +25,7 @@ class Project {
 		this.btnEdit = this.el.find('.Edit');
 		this.btnReorder = this.el.find('.Reorder');
 		this.btnMenu = this.el.find('.Config');
+		this.btnOpen = this.el.find('.OpenProject');
 
 		return;
 	};
@@ -83,6 +84,22 @@ class Project {
 			return;
 		});
 
+		this.btnOpen
+		.on('mouseup.open', function(){
+
+			let openNewWindow = !!parseInt(
+				jQuery(this)
+				.attr('data-open-new-window')
+			);
+
+			self.api.send(new Message(
+				'projectopen',
+				{ id: self.item.id, openNewWindow: openNewWindow }
+			));
+
+			return false;
+		});
+
 		// this stupid thing instead of just using click
 		// was invented as a way to negotiate allowing the buttons on
 		// the project to do things. the reorder handle for example needs
@@ -95,10 +112,16 @@ class Project {
 		.on('mousedown.open', function() {
 			jQuery(this)
 			.on('mouseup.open', function(){
+				let openNewWindow = !!parseInt(
+					jQuery(this)
+					.attr('data-open-new-window')
+				);
+
 				self.api.send(new Message(
 					'projectopen',
-					{ id: self.item.id }
+					{ id: self.item.id, openNewWindow: openNewWindow }
 				));
+
 				return false;
 			});
 			return false;

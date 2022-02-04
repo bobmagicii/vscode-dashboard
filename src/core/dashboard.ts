@@ -324,16 +324,18 @@ class Dashboard {
 	void {
 
 		let project = this.conf.findProject(msg.data.id);
+		let openNewWindow = msg.data.openNewWindow ?? false;
 
 		if(project instanceof ProjectEntry) {
 			Util.println(
-				`open ${msg.data.id}`,
+				`open ${msg.data.id} ${msg.data.openNewWindow}`,
 				'Dashboard::onOpen'
 			);
 
 			vscode.commands.executeCommand(
 				'vscode.openFolder',
-				project.getUriObject()
+				project.getUriObject(),
+				{ forceNewWindow: openNewWindow }
 			);
 
 			return;
