@@ -481,3 +481,17 @@ textarea {
 .App.Rounded .btn {
 	border-radius: 4px;
 }
+
+/**
+
+revisit making the projects reflow based on their container size once vscode
+updates to chrome 105+. as of 2023-01-18 even vscode-insiders is still on 102.
+
+.ProjectInfo { container-type: inline-size; }
+
+@container (width > 1px) {
+	.col-auto { width: 100%; }
+}
+
+**/
+
