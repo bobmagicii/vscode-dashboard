@@ -73,3 +73,21 @@ If you do not want them to sync, open the VS Code settings, click the
 little gear next to the setting, and uncheck "Sync This Setting".
 
 ![Alt text](/local/gfx/ex-setting-sync.png "Don't sync that setting.")
+
+
+
+# Dev Notes
+
+Any time <version> is mentioned you do not want to prefix it with a `v` like
+you do for git tags and Composer releases because Microsoft's stuff is stupid.
+Also you should be sweating before pushing a release because its 2023 and they
+still have no way to delete screwed up releases like if you double-v it again.
+You gotta ping their support and beg them to edit their database. And I'm not
+even joking they litearlly send someone in with an SQL query apparently.
+
+* Make a .vsix installer:
+  `vsce package <version>`
+
+* Publish the release:
+  `vsce publish <version>`
+
