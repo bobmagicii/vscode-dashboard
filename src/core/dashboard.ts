@@ -34,6 +34,7 @@ class Dashboard {
 
 		if(this.conf.openOnNewWindow)
 		if(typeof vscode.workspace.name === 'undefined')
+		if(vscode.workspace.textDocuments.length === 0)
 		this.open();
 
 		return;
