@@ -78,7 +78,7 @@ little gear next to the setting, and uncheck "Sync This Setting".
 
 # Dev Notes
 
-Any time <version> is mentioned you do not want to prefix it with a `v` like
+Any time `<version>` is mentioned you do not want to prefix it with a `v` like
 you do for git tags and Composer releases because Microsoft's stuff is stupid.
 Also you should be sweating before pushing a release because its 2023 and they
 still have no way to delete screwed up releases like if you double-v it again.
