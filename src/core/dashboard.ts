@@ -301,9 +301,12 @@ class Dashboard {
 			if(typeof Selected[0] === 'undefined')
 			return;
 
+			let fsp = Util.fixDriveLetters(Selected[0].fsPath);
+			let uri = Util.fixDriveLetters(Selected[0].toString());
+
 			self.sendv('dirpick',{
-				label: Selected[0].fsPath,
-				uri: Selected[0].toString()
+				label: fsp,
+				uri: uri
 			});
 
 			return;

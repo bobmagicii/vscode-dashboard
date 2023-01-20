@@ -133,6 +133,43 @@ class Util {
 		return Math.min(Math.max(input, min), max);
 	};
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public static fixDriveLetters(input: string):
+	string {
+
+		let found: Array<string>|null;
+
+		// handle fixing c:\whatever\whatever drive letter case.
+		// this stuff is technically pointless but someone pointed it out
+		// and it started to bother me too over time.
+
+		if(found = input.match(/^([a-z]):\\/))
+		if(found.length === 2) {
+			input = input.replace(
+				/^([a-z]):\\/,
+				`${found[1].toUpperCase()}:\\`
+			);
+
+			return input;
+		}
+
+		// handle fixing file:///c:/whatever/whatever drive letter case.
+
+		if(found = input.match(/^file:\/\/\/([a-z])%3A\//))
+		if(found.length === 2) {
+			input = input.replace(
+				/^file:\/\/\/([a-z])%3A\//,
+				`file:\/\/\/${found[1].toUpperCase()}%3A\/`
+			);
+
+			return input;
+		}
+
+		return input;
+	}
+
 };
 
 export default Util;
