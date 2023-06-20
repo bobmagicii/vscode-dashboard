@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 - 2023-06-19
+
+* Middle clicking a project will open it in a new window.
+* Right clicking a project will do nothing now.
+
 ## 1.0.2 - 2023-01-20
 
 * Dashboard will only auto-expose itself if the window is 100%
