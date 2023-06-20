@@ -109,13 +109,27 @@ class Project {
 		// button gets triggered for opening the projects.
 
 		(self.el)
-		.on('mousedown.open', function() {
+		.on('mousedown.open', function(ev1) {
 			jQuery(this)
-			.on('mouseup.open', function(){
+			.on('mouseup.open', function(ev2) {
 				let openNewWindow = !!parseInt(
 					jQuery(this)
 					.attr('data-open-new-window')
 				);
+
+				////////
+
+				// middle click force open new window.
+
+				if(ev2.button === 1)
+				openNewWindow = true;
+
+				// don't do anything on right click for now.
+
+				if(ev2.button >= 2)
+				return false;
+
+				////////
 
 				self.api.send(new Message(
 					'projectopen',
