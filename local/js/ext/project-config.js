@@ -158,7 +158,7 @@ extends TemplatedDialog {
 		for(const icon in Icons)
 		this.binIcon.append(
 			jQuery('<option />')
-			.text(icon)
+			.html(`<i class="codicon ${icon}"></i> ${icon}`)
 			.val(Icons[icon])
 		);
 

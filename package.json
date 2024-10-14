@@ -26,7 +26,7 @@
 		"vscode": "^1.62.0"
 	},
 	"extensionKind": [
-		"ui"
+		"ui", "workspace"
 	],
 	"galleryBanner": {
 		"color": "#262335",
